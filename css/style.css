@@ -178,9 +178,10 @@ a.hover_1:hover{
     display: inline-block;
     line-height: 0;
     position: relative;
-    vertical-align: middle;
+
 }
 .ddabongCnt{
+    color: #657786;
     display: inline-block;
     font-size: 12px;
     font-weight: bold;
