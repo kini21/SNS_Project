@@ -1,0 +1,238 @@
+body {
+  font-family: 나눔고딕, NG, "Apple SD Gothic Neo", sans-serif,'돋움',Helvetica, Dotum;
+  background-color: #f5f6f8;
+}
+body > .container{
+  padding-top: 60px;
+}
+.div {
+  display: block;
+}
+a.hover_1:hover{
+  color:#ffd800;
+}
+.sidebar {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.sidebar2{
+  margin-right: 10px;
+}
+.sidebarProfile {
+  position: relative;
+}
+.profileCardLink{
+  background-size: 100%;
+  background-color: #83abc6;
+  height: 75px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  background-position: 0 50%;
+  width: 100%;
+  padding: 0;
+  margin-top: -1px;
+  display: block!important;
+}
+.profileCardContent{
+  height: 80px;
+  background-color: rgb(255, 255, 255);
+  display: block;
+}
+.profileImgLink{
+  background-color: #fff;
+  border-radius: 50%;
+  margin: -30px 0 0 8px;
+  padding: 1px;
+  vertical-align: bottom;
+  display: inline-block!important;
+  max-width: 100%;
+}
+.img-circle{
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  color: #fff;
+}
+.profileUseridAndNick{
+  position: absolute;
+  top: 85px;
+  left: 90px;
+  width: 185px;
+}
+.userid{
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 25px;
+  margin: -1px 0 -2px 0;
+}
+.userNick{
+  display: inline-block!important;
+  max-width: 100%;
+  direction: ltr!important;
+  text-align: left!important;
+  unicode-bidi: embed;
+}
+.uN{
+  font-size: 12px;
+  padding-right: 5px;
+  color: #8f8282;
+}
+.main_content_wrap {
+  background: white;
+  border: 1px solid #ddd;
+}
+.main_contents {
+    background: white;
+    padding: 15px;
+    padding-top: 5px;
+    overflow: hidden;
+    min-height: 600px;
+    outline: 1px solid #ddd;
+}
+.timeline{
+    position: relative;
+    margin-left: 0;
+    padding-top:1px;
+    list-style: none;
+    padding-left:0px;
+}
+.timeline_li{
+    background: #fff;
+    background-clip: padding-box;
+    text-align: inherit;
+}
+.tl_text{
+  border-bottom: 1px solid #e6ecf0;
+  cursor: pointer;
+  position: relative;
+  min-height: 51px;
+}
+.content_img{
+  float: left;
+  margin-top: 1.5px;
+  margin-left: -58px;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+.nameGroup{
+  max-width: 100%;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+  white-space: nowrap!important;
+  word-wrap: normal!important;
+}
+.uid{
+  word-break: break-all;
+  color: #14171a;
+  font-size: 14px;
+  font-weight: bold;
+}
+.uname{
+  direction: ltr!important;
+  text-align: left!important;
+  unicode-bidi: embed;
+  font-size: 14px;
+  color: #4c2305;
+}
+.time{
+  margin-right:5px;
+  font-size: 14px;
+  color: #4c2305;
+}
+.text_box{
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: normal;
+}
+.content_footer{
+  display: table;
+  width: 100%;
+  font-size: 12px;
+  padding-top: 1px;
+}
+.button_list{
+    font-size: 0;
+    height: 24px;
+    line-height: 1;
+    margin-bottom: 2px;
+    margin-top: -5px;
+}
+.reply_btn{
+    display: inline-block;
+    min-width: 80px;
+}
+.btn2{
+    color: #657786;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0 2px;
+    position: relative;
+    text-decoration: none;
+}
+.iconBox{
+    display: inline-block;
+    line-height: 0;
+    position: relative;
+    vertical-align: middle;
+}
+.ddabongCnt{
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    margin-left: 6px;
+    position: relative;
+    vertical-align: text-bottom;
+}
+.content_bottom{
+    background: black;
+    border-radius: 0 0 10px 10px;
+    height: 25px;
+    overflow: hidden;
+    border-top: 1px solid #ddd;
+    clear: both;
+    opacity: 0.7;
+}
+.footer{
+    height:32px;
+    margin-top: 70px;
+    width: 100%;
+    background: #83abc6;
+}
+.bottom_ul{
+  width: 65px;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0px;
+}
+.MOVE_TOP_BTN{
+  float: left;
+  color: white;
+  text-shadow: 1px 1px 1px grey;
+  min-width: 65px;
+  font-weight: bold;
+  line-height: 30px;
+  margin: 0 8px;
+}
+a.MOVE_TOP_BTN:hover{
+  color:#ffd800;
+  text-decoration: none;
+  cursor:pointer;
+}
+.bottom_copyright{
+    margin: 0 auto;
+    text-align: center;
+}
+.text-muted{
+  font-size: 12px;
+  top: 32px;
+  position: relative;
+  color: white;
+  text-align:center;
+  font-weight: bold;
+}

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SNS Project</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#83abc6;">
+    <div class="container center-block">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">로고IMG</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#" style="color:white; text-shadow: 1px 1px 1px grey;">홈</a></li>
+          <li><a href="#" class="hover" style="color:white; text-shadow: 1px 1px 1px grey;">알림</a></li>
+          <li><a href="#" class="hover" style="color:white; text-shadow: 1px 1px 1px grey;">쪽지</a></li>
+          <li>
+            <a href="#" data-toggle="tooltip" data-placement="bottom" title="프로필 및 설정">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </a>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <label class="sr-only" for="form-control">친구 찾기</label>
+            <input type="text" class="form-control" placeholder="친구 찾기">
+          </div>
+          <button type="submit" class="btn btn-default">검색</button>
+        </form>
+        <form class="navbar-form navbar-right">
+          <button type="submit" class="btn btn-info" style="font-weight:bold;">글 쓰기</button>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav><!-- end of nav -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="sidebar">
+          <div class="sidebarProfile">
+            <a class="profileCardLink" href="#" aria-hidden="true"></a>
+            <div class="profileCardContent">
+              <a class="profileImgLink" href="#" title="nickname" aria-hidden="true">
+                <img src="../img/circle.gif" alt="70x70" class="img-circle" width="70" height="70">
+              </a>
+
+            <div class="profileUseridAndNick">
+                <div class="userid">
+                  <a href="#" style="color: inherit!important;">박호균</a>
+                </div>
+                <span class="userNick">
+                  <a class="uN" href="#">purplecow</a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      <div class="sidebar2">
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="내가 쓴 글 2345개">
+            내가 쓴 글 : 2345
+          </a>
+          <a href="#" class="list-group-item list-group-item-info" data-toggle="tooltip" data-placement="bottom" title="팔로잉 670명">
+            팔로잉 : 670
+          </a>
+        </div>
+    </div>
+    </div>
+      <div class="col-md-9">
+        <div class="main_content_wrap">
+          <div class="main_contents">
+            <div class="page-header" style="margin:0px; padding-bottom:0px;">
+              <h4 style="font-weight:bold;">게시글</h4>
+            </div>
+            <div class="timeline">
+              <ol class="timeline">
+                <li class="timeline_li" onMouseOver="this.style.backgroundColor='#f5f8fa';" onMouseOut="this.style.backgroundColor='#fff'">
+                  <div class="tl_text">
+                    <div class="content" style="margin-left:58px;">
+                      <div class="content_header" style="display: flex;">
+                         <a href="#" style="margin-right:5px;">
+                           <img class="content_img" src="../img/circle.gif" />
+                           <span class="nameGroup">
+                             <strong class="uid">박호균</strong>
+                           </span>
+                           <span class="uname">
+                              <b style="font-weight: normal">purplecow</b>
+                           </span>
+                         </a>
+                         <small class="time" data-toggle="tooltip" data-placement="top" title="오전 4:49 - 2017년 11월 24일">
+                            · 11월 24일
+                         </small>
+                      </div> <!-- End of content_header -->
+                        <div>
+                          <p class="text_box">
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                          </p>
+                        </div>
+                        <div class="content_footer">
+                          <div class="button_list">
+                            <div class="reply_btn">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-comment" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="ddabong" style="min-width:26px; display: inline-block;">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>
+                                </div>
+                                <span class="ddabongCnt">
+                                    9
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </li> <!-- end of content1 -->
+
+                <li class="timeline_li" onMouseOver="this.style.backgroundColor='#f5f8fa';" onMouseOut="this.style.backgroundColor='#fff'">
+                  <div class="tl_text">
+                    <div class="content" style="margin-left:58px;">
+                      <div class="content_header" style="display: flex;">
+                         <a href="#" style="margin-right:5px;">
+                           <img class="content_img" src="../img/circle.gif" />
+                           <span class="nameGroup">
+                             <strong class="uid">박호균</strong>
+                           </span>
+                           <span class="uname">
+                              <b style="font-weight: normal">purplecow</b>
+                           </span>
+                         </a>
+                         <small class="time" data-toggle="tooltip" data-placement="top" title="오전 4:49 - 2017년 11월 24일">
+                            · 11월 24일
+                         </small>
+                      </div> <!-- End of content_header -->
+                        <div>
+                          <p class="text_box">
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                          </p>
+                        </div>
+                        <div class="content_footer">
+                          <div class="button_list">
+                            <div class="reply_btn">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-comment" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="ddabong" style="min-width:26px; display: inline-block;">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </li> <!-- end of content1 -->
+
+
+                <li class="timeline_li" onMouseOver="this.style.backgroundColor='#f5f8fa';" onMouseOut="this.style.backgroundColor='#fff'">
+                  <div class="tl_text">
+                    <div class="content" style="margin-left:58px;">
+                      <div class="content_header" style="display: flex; padding-bottom: 1px;">
+                         <a href="#" style="margin-right:5px;">
+                           <img class="content_img" src="../img/circle.gif" />
+                           <span class="nameGroup">
+                             <strong class="uid">박호균</strong>
+                           </span>
+                           <span class="uname">
+                              <b style="font-weight: normal">purplecow</b>
+                           </span>
+                         </a>
+                         <small class="time" data-toggle="tooltip" data-placement="top" title="오전 4:49 - 2017년 11월 24일">
+                            · 11월 24일
+                         </small>
+                      </div> <!-- End of content_header -->
+                        <div>
+                          <p class="text_box">
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                          </p>
+                        </div>
+                        <div class="content_footer">
+                          <div class="button_list">
+                            <div class="reply_btn">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-comment" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="ddabong" style="min-width:26px; display: inline-block;">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </li> <!-- end of content1 -->
+
+                <li class="timeline_li" onMouseOver="this.style.backgroundColor='#f5f8fa';" onMouseOut="this.style.backgroundColor='#fff'">
+                  <div class="tl_text">
+                    <div class="content" style="margin-left:58px;">
+                      <div class="content_header" style="display: flex;">
+                         <a href="#" style="margin-right:5px;">
+                           <img class="content_img" src="../img/circle.gif" />
+                           <span class="nameGroup">
+                             <strong class="uid">박호균</strong>
+                           </span>
+                           <span class="uname">
+                              <b style="font-weight: normal">purplecow</b>
+                           </span>
+                         </a>
+                         <small class="time" data-toggle="tooltip" data-placement="top" title="오전 4:49 - 2017년 11월 24일">
+                            · 11월 24일
+                         </small>
+                      </div> <!-- End of content_header -->
+                        <div>
+                          <p class="text_box">
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                             그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!그림판 켜고 블로그 켜라!!
+                          </p>
+                        </div>
+                        <div class="content_footer">
+                          <div class="button_list">
+                            <div class="reply_btn">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-comment" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                            <div class="ddabong" style="min-width:26px; display: inline-block;">
+                              <a href="#" class="btn2">
+                                <div class="iconBox">
+                                  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> </span>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </li> <!-- end of content1 -->
+
+              </ol>
+            </div>
+
+          </div>
+        </div>
+        <div class="content_bottom"> </div>
+      </div>
+    </div>
+  </div>
+
+    <footer class="footer" style="border-bottom: #3c98d4 2px solid;">
+        <div class="container" style="position:relative;">
+          <ul class="bottom_ul">
+            <li style="text-align:center; float: left; position: relative;">
+              <a href="#" class="MOVE_TOP_BTN">위로가기</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <footer class="footer" style="height:95px; margin-top: 0px; position: absolute;
+        left: 0px; width: 100%; background: black; opacity: 0.7;">
+      <div class="container">
+        <div class="bottom_copyright">
+            <p class="text-muted">
+              Copyright OOOOO.com. All Right Reserved.</br>
+              Contact us, OOOOOOO@google.com
+            </p>
+        </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+      $('[data-toggle="tooltip"]').tooltip('toggle');
+      $('[data-toggle="tooltip"]').tooltip('hide');
+    </script>
+  </body>
+
+</html>
