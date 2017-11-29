@@ -251,10 +251,14 @@ ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
   line-height: 30px;
   margin: 0 8px;
 }
-a.MOVE_TOP_BTN:hover{
+a.MOVE_TOP_BTN:hover {
   color:#ffd800;
   text-decoration: none;
   cursor:pointer;
+}
+a.MOVE_TOP_BTN:focus{
+  color: #ffd800;
+  text-decoration: none;
 }
 .bottom_copyright{
     margin: 0 auto;
