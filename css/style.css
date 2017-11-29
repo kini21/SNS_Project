@@ -8,9 +8,12 @@ body > .container{
 .div {
   display: block;
 }
-a.hover_1:hover{
-  color:#ffd800;
+
+ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
+    color:#ffd800 !important;
+    font-weight:bold;
 }
+
 .sidebar {
   margin-right: 10px;
   margin-bottom: 10px;
