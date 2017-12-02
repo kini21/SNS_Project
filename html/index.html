@@ -8,6 +8,7 @@
   <title>SNS Project</title>
   <link href="../css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -160,7 +161,57 @@
             </ul>
           </li>
 
-          <li><a href="#" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;"><span class="glyphicon glyphicon-user"></span>&nbsp;프로필</a></li>
+          <li>
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;">
+              <span class="glyphicon glyphicon-user"></span>&nbsp;프로필
+            </a>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <div class="profile_body">
+
+
+              <div class="panel panel-profile">
+              <div class="panel-body">
+              <form id="profile-form" action="#" method="post" role="form">
+                <h2>프로필 수정</h2>
+
+                <!-- insert id -->
+                <div class="form-group">
+                  <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="아이디" value="" disabled>
+                </div>
+
+                <!-- insert username -->
+                <div class="form-group">
+                  <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="닉네임" value="">
+                </div>
+
+                <!-- insert email -->
+                <div class="form-group">
+                  <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="이메일" value="">
+                </div>
+
+                <!-- insert password -->
+                <div class="form-group">
+                  <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                </div>
+
+                <!-- register button -->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <input type="submit" name="profile-submit" id="profile-submit" tabindex="4" class="form-control btn btn-profile" value="정보수정">
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+              </div>
+            </div>
+              </div>
+              <!-- end of register form -->
+
+            </ul>
+          </li>
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
