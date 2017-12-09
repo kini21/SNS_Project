@@ -56,7 +56,7 @@
 
 
                       <!-- login form -->
-                      <form id="login-form" action="#" method="post" role="form" style="display: block;">
+                      <form id="login-form" action='<c:url value="/page/index.html" />' method="post" role="form" style="display: block;">
                         <h2>로그인</h2>
 
                         <!-- insert id -->

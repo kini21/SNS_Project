@@ -44,7 +44,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <div class="text_count">
@@ -61,7 +61,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <div class="text_count">
@@ -78,7 +78,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <div class="text_count">
@@ -107,7 +107,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <span><strong>사용자</strong></span>
@@ -127,7 +127,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <span><strong>사용자</strong></span>
@@ -147,7 +147,7 @@
               <a href="#">
                 <li class="nav_dropdown_menu_li">
                   <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src="../img/circle.gif" />
+                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
                     <div class="nav_text">
                       <div class="nav_text_box1">
                         <span><strong>사용자</strong></span>
@@ -289,7 +289,7 @@
             <a class="profileCardLink" href="#" aria-hidden="true"></a>
             <div class="profileCardContent">
               <a class="profileImgLink" href="#" title="nickname" aria-hidden="true">
-                <img src="../img/circle.gif" alt="70x70" class="img-circle" width="70" height="70">
+                <img src='<c:url value="/common/img/circle.gif" />' alt="70x70" class="img-circle" width="70" height="70">
               </a>
 
               <div class="profileUseridAndNick">
@@ -392,7 +392,7 @@
                     <div class="content" style="margin-left:58px;">
                       <div class="content_header" style="display: flex;">
                         <a href="#" style="margin-right:5px;">
-                           <img class="content_img" src="../img/circle.gif" />
+                           <img class="content_img" src='<c:url value="/common/img/circle.gif" />' />
                            <span class="nameGroup">
                              <strong class="uid">박호균</strong>
                            </span>
@@ -415,7 +415,7 @@
                         <div class="imgBox">
                           <div class="soleImg">
                             <div class="imgInnerContainer">
-                              <img src="../img/f029.png" style="width:100%; height:100%" />
+                              <img src='<c:url value="/common/img/f029.png" />' style="width:100%; height:100%" />
                             </div>
                           </div>
                         </div>
@@ -444,7 +444,7 @@
 
                                       <div class="content_header" style="display: flex;">
 
-                                        <img class="reply_content_img" src="../img/circle.gif" />
+                                        <img class="reply_content_img" src='<c:url value="/common/img/circle.gif" />' />
                                         <span class="reply_nameGroup">
                                                <a href="#"><strong class="uid">박호균</strong></a>
                                              </span>
@@ -504,7 +504,7 @@
                     <div class="content" style="margin-left:58px;">
                       <div class="content_header" style="display: flex;">
                         <a href="#" style="margin-right:5px;">
-                           <img class="content_img" src="../img/circle.gif" />
+                           <img class="content_img" src='<c:url value="/common/img/circle.gif" />' />
                            <span class="nameGroup">
                              <strong class="uid">박호균</strong>
                            </span>
@@ -555,7 +555,7 @@
                     <div class="content" style="margin-left:58px;">
                       <div class="content_header" style="display: flex;">
                         <a href="#" style="margin-right:5px;">
-                           <img class="content_img" src="../img/circle.gif" />
+                           <img class="content_img" src='<c:url value="/common/img/circle.gif" />' />
                            <span class="nameGroup">
                              <strong class="uid">박호균</strong>
                            </span>
@@ -605,7 +605,7 @@
                     <div class="content" style="margin-left:58px;">
                       <div class="content_header" style="display: flex;">
                         <a href="#" style="margin-right:5px;">
-                           <img class="content_img" src="../img/circle.gif" />
+                           <img class="content_img" src='<c:url value="/common/img/circle.gif" />' />
                            <span class="nameGroup">
                              <strong class="uid">박호균</strong>
                            </span>
@@ -655,7 +655,7 @@
                     <div class="content" style="margin-left:58px;">
                       <div class="content_header" style="display: flex;">
                         <a href="#" style="margin-right:5px;">
-                           <img class="content_img" src="../img/circle.gif" />
+                           <img class="content_img" src='<c:url value="/common/img/circle.gif" />' />
                            <span class="nameGroup">
                              <strong class="uid">박호균</strong>
                            </span>
@@ -678,7 +678,7 @@
                         <div class="imgBox">
                           <div class="soleImg">
                             <div class="imgInnerContainer">
-                              <img src="../img/f029.png" style="width:100%; height:100%" />
+                              <img src='<c:url value="/common/img/f029.png" />' style="width:100%; height:100%" />
                             </div>
                           </div>
                         </div>
@@ -748,7 +748,7 @@
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="../js/bootstrap.min.js"  '<c:url value="/common/js/bootstrap.min.js"/>'></script>
+  <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
   <script>
     $('[data-toggle="tooltip"]').tooltip('toggle');
     $('[data-toggle="tooltip"]').tooltip('hide');
