@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page session="true" %>
@@ -12,9 +13,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SNS Project</title>
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/style.css" rel="stylesheet" />
-  <link href="../css/login.css" rel="stylesheet" />
+  <link href='<c:url value="/common/css/bootstrap.min.css"/>' rel="stylesheet">
+  <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
+  <link href='<c:url value="/common/css/login.css"/>' rel="stylesheet" />
 </head>
 
 <body>
@@ -157,7 +158,7 @@
 
   <div class="container-fluid">
     <div class="row">
-        <img src="../img/background.png" alt="" style="resize: both; width:100%; max-width:100%; height:auto; float: center; margin:0; padding:0; overflow: auto" />
+        <img src='<c:url value="/common/img/background.png"/>' alt="" style="resize: both; width:100%; max-width:100%; height:auto; float: center; margin:0; padding:0; overflow: auto" />
     </div>
   </div>
 
@@ -174,8 +175,9 @@
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/login.js"></script>
+  <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
+  <script src='<c:url value="/common/js/login.js"/>'></script>
+  
   <script>
     $('[data-toggle="tooltip"]').tooltip('toggle');
     $('[data-toggle="tooltip"]').tooltip('hide');
