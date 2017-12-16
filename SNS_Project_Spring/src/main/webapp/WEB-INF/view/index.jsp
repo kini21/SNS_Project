@@ -98,74 +98,130 @@
 
 
           <li>
-            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;">
-              <span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지<span class="badge">50</span>
+
+            <a href="#listModal" data-toggle="modal" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey; outline: none;">
+              <span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지
             </a>
 
-            <span class="caret"></span>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <a href="#">
-                <li class="nav_dropdown_menu_li">
-                  <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
-                    <div class="nav_text">
-                      <div class="nav_text_box1">
-                        <span><strong>사용자</strong></span>
-                      </div>
-                      <div class="nav_text_box2">
-                        <div class="text_count">
-                          <span>다했다했다했다했다했다했다했다했다했다했다했다했다</span>
-                        </div>
-                      </div>
-                      <div class="nav_text_box3">
-                        <span>12월 1일</span>
-                      </div>
-                    </div>
+            <div class="modal fade bs-example-modal-lg" id="listModal" style="display: none; z-index: 1050;" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline:none;">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">쪽지</h4>
                   </div>
-                </li>
-              </a>
-              <a href="#">
-                <li class="nav_dropdown_menu_li">
-                  <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
-                    <div class="nav_text">
-                      <div class="nav_text_box1">
-                        <span><strong>사용자</strong></span>
-                      </div>
-                      <div class="nav_text_box2">
-                        <div class="text_count">
-                          <span>다했다했다했다했다했다했다했다했다했다했다했다했다</span>
-                        </div>
-                      </div>
-                      <div class="nav_text_box3">
-                        <span>12월 1일</span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </a>
-              <a href="#">
-                <li class="nav_dropdown_menu_li">
-                  <div class="row" style="width: 100%">
-                    <img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
-                    <div class="nav_text">
-                      <div class="nav_text_box1">
-                        <span><strong>사용자</strong></span>
-                      </div>
-                      <div class="nav_text_box2">
-                        <div class="text_count">
-                          <span>다했다했다했다했다했다했다했다했다했다했다했다했다</span>
-                        </div>
-                      </div>
-                      <div class="nav_text_box3">
-                        <span>12월 1일</span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </a>
+                  <div class="modal-body">
 
-            </ul>
+                      <table class="table">
+                        <tr>
+                          <th style="width:20%; text-align:center;">작성자</th>
+                          <th style="width:60%; text-align:center;">내용</th>
+                          <th style="width:20%; text-align:center;">일자</th>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a data-toggle="modal" href="#messageModal" style="outline:none;">
+                                준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                            </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a href="#">
+                            준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                          </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a href="#">
+                            준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                          </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a href="#">
+                            준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                          </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a href="#">
+                            준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                          </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:center;">김준기</td>
+                          <td class="text_count2" style="text-align:center;">
+                            <a href="#">
+                            준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                          </a>
+                          </td>
+                          <td style="text-align:center;">2017-12-16</td>
+                        </tr>
+                      </table>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">확인</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade bs-example-modal-lg" id="messageModal" style="display: none; z-index: 1060;" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline:none;">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">쪽지</h4>
+                  </div>
+                  <div class="modal-body">
+
+                      <table class="table">
+                        <tr>
+                          <td>작성자</td>
+                          <td>김준기</td>
+                          <td>작성일</td>
+                          <td>2017-12-16</td>
+                        </tr>
+                        <tr>
+                          <td colspan="4">
+                            <textarea style="width:100%; height:400px">
+                              준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+                            </textarea>
+                          </td>
+                        </tr>
+                      </table>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">확인</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
           </li>
 
           <li>

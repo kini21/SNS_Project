@@ -7,4 +7,3 @@
 
 <%-- <jsp:forward page="/page/index.html?tag=furn"/> <!-- 메인 페이지 --> --%>
 <jsp:forward page="/page/login.html"/>
-
