@@ -37,7 +37,7 @@
         <ul class="nav navbar-nav">
           <li>
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;">
-              <span class="glyphicon glyphicon-bullhorn"></span>&nbsp;알림
+              <span class="glyphicon glyphicon-bullhorn"></span>&nbsp;알림<span class="badge">50</span>
             </a>
             <span class="caret"></span>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -99,7 +99,7 @@
 
           <li>
             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;">
-              <span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지
+              <span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지<span class="badge">50</span>
             </a>
 
             <span class="caret"></span>
