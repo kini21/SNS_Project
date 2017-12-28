@@ -437,6 +437,24 @@ a.MOVE_TOP_BTN:hover {
   text-overflow:ellipsis;
 }
 
+.text_count2 {
+  max-width: 550px;
+  white-space:nowrap;
+}
+
+.text_count2 a {
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 50%;
+  overflow: hidden;
+  color: #000;
+}
+
+.text_count2 a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
 .profile_body {
   width: 500px;
   margin: 0 auto;
@@ -534,4 +552,12 @@ label {
 .btn-profile:focus {
   color: #fff;
   background-color: #2D3B55;
+}
+
+#listModal {
+  overflow: auto;
+}
+
+#messageModal {
+  overflow: auto;
 }

@@ -6,4 +6,3 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <jsp:forward page="/page/index.html"/>
-
