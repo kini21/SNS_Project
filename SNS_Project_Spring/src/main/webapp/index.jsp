@@ -5,6 +5,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<%-- <jsp:forward page="/page/index.html?tag=furn"/> <!-- 메인 페이지 --> --%>
-<jsp:forward page="/page/login.html"/>
+<jsp:forward page="/page/index.html"/>
 
