@@ -85,27 +85,27 @@
                       <!-- end of login form -->
 
                       <!-- register form -->
-                      <form id="register-form" action="#" method="post" role="form" style="display: none;">
+                      <form id="register-form" action="<c:url value='/user/insertUser.do' />" method="post" style="display: none;">
                         <h2>회원가입</h2>
 
-                        <!-- insert id -->
+                        <!-- insert loginid -->
                         <div class="form-group">
-                          <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="아이디" value="">
+                          <input type="text" name="loginid" tabindex="1" class="form-control" placeholder="아이디" value="">
                         </div>
-
-                        <!-- insert username -->
+						
+						 <!-- insert password -->
                         <div class="form-group">
-                          <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="닉네임" value="">
+                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                        </div>
+						
+                        <!-- insert nick -->
+                        <div class="form-group">
+                          <input type="text" name="nick" tabindex="1" class="form-control" placeholder="닉네임" value="">
                         </div>
 
                         <!-- insert email -->
                         <div class="form-group">
-                          <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="이메일" value="">
-                        </div>
-
-                        <!-- insert password -->
-                        <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <input type="email" name="email" tabindex="1" class="form-control" placeholder="이메일" value="">
                         </div>
 
                         <!-- register button -->

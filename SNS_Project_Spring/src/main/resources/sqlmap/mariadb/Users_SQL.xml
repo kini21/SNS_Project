@@ -2,72 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="users">
+<mapper namespace="UserDAO">
     
   <cache />
   
-  <select id="selectItems" parameterType="hashmap" resultType="hashmap">
-        SELECT * 
-          FROM COMPANY 
-         WHERE CNUM = #{cnum}
+  <select id="getUser" parameterType="com.sns.user.UserVO" resultType="com.sns.user.UserVO">
+       <![CDATA[ SELECT * FROM USERS WHERE UID = #{uid} ]]>
   </select>
   
-  <select id="selectAll" resultType="hashmap">
-        SELECT * 
-          FROM USERS
+  <select id="getUserList" resultType="com.sns.user.UserVO">
+        <![CDATA[ SELECT * FROM USERS ]]>
   </select>
-  
-  <select id="searchItems" parameterType="hashmap" resultType="hashmap">
-        SELECT * 
-          FROM COMPANY
-        <trim prefix="WHERE" prefixOverrides="AND |OR ">
-          <if test="cname != null">
-           AND CNAME IN (SELECT CNAME FROM COMPANY
-             <where>
-               <foreach collection="cname" item="cname" separator="OR">
-                 CNAME like CONCAT('%',#{cname},'%')
-               </foreach>
-               </where>)
-          </if>
-          <if test="caddr != null">
-	       AND CADDR IN (SELECT CADDR FROM COMPANY
-             <where>
-               <foreach collection="caddr" item="caddr" separator="OR">
-                 CADDR like CONCAT('%',#{caddr},'%')
-               </foreach>
-             </where>)
-          </if>
-          <if test="ctel != null">
-	       AND CTEL  IN (SELECT CTEL  FROM COMPANY
-             <where>
-               <foreach collection="ctel" item="ctel" separator="OR">
-                 CTEL like CONCAT('%',#{ctel},'%')
-               </foreach>
-             </where>)
-          </if>
-        </trim>
-  </select>
-  
-  <insert id="insertItems" parameterType="hashmap" >
-        INSERT INTO COMPANY( CNAME
-                           , CADDR
-                           , CTEL )
-                     VALUES( #{cname}
-                           , #{caddr}
-                           , #{ctel})
+   
+  <insert id="insertUser" parameterType="com.sns.user.UserVO" >
+        <![CDATA[ 
+        INSERT INTO USERS (loginid, password, email, nick)
+		VALUES(#{loginid},#{password},#{email},#{nick})
+		]]>
   </insert>
   
-  <update id="updateItems" parameterType="hashmap">
-        UPDATE COMPANY SET
-              CNAME = #{cname},
-              CADDR = #{caddr},
-              CTEL  = #{ctel}
-        WHERE CNUM  = #{cnum}
+  <update id="updateUser" parameterType="com.sns.user.UserVO">
+       <![CDATA[ 
+       UPDATE USERS SET
+              PASSWORD = #{password},
+              EMAIL = #{email},
+              NICK = #{nick} 
+        WHERE UID  = #{uid}
+        ]]>
   </update>
   
-  <delete id="deleteItems" parameterType="hashmap" >
-        DELETE FROM COMPANY
-         WHERE CNUM = #{cnum}
+  <delete id="deleteUser" parameterType="com.sns.user.UserVO" >
+       <![CDATA[ DELETE FROM USERS WHERE UID = #{uid} ]]>
   </delete>
   
 </mapper>
