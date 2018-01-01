@@ -56,17 +56,17 @@
 
 
                       <!-- login form -->
-                      <form id="login-form" action='<c:url value="/page/index.html" />' method="post" role="form" style="display: block;">
+                      <form id="login-form" action='<c:url value="/user/login.do" />' method="post" role="form" style="display: block;">
                         <h2>로그인</h2>
 
                         <!-- insert id -->
                         <div class="form-group">
-                          <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
+                          <input type="text" name="loginid" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
                         </div>
 
                         <!-- insert password -->
                         <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <input type="password" name="password" tabindex="2" class="form-control" placeholder="비밀번호">
                         </div>
 
                         <!-- remember id & find password -->
@@ -162,17 +162,7 @@
     </div>
   </div>
 
-  <footer class="footer" style="height:95px; margin-top: 0px; position: absolute; left: 0px; width: 100%; background: black; opacity: 0.7;">
-    <div class="container">
-      <div class="bottom_copyright">
-        <p class="text-muted">
-          Copyright OOOOO.com. All Right Reserved.</br>
-          Contact us, OOOOOOO@google.com
-        </p>
-      </div>
-    </div>
-    </div>
-  </footer>
+ <jsp:include page="footer.jsp" flush="false"/>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>

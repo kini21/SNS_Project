@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
 
-@Service("boardService")
+@Service("userService")
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;

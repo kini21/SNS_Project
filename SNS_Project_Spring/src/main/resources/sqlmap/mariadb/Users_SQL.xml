@@ -2,26 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="UserDAO">
+<mapper namespace="userDAO">
     
-  <cache />
-  
-  <select id="getUser" parameterType="com.sns.user.UserVO" resultType="com.sns.user.UserVO">
-       <![CDATA[ SELECT * FROM USERS WHERE UID = #{uid} ]]>
+  <select id="getUser" resultType="users">
+       <![CDATA[ SELECT * 
+       			 FROM USERS 
+                 WHERE LOGINID = #{loginid} AND PASSWORD = #{password} 
+       ]]>
   </select>
   
-  <select id="getUserList" resultType="com.sns.user.UserVO">
+  <select id="getUserList" resultType="users">
         <![CDATA[ SELECT * FROM USERS ]]>
   </select>
    
-  <insert id="insertUser" parameterType="com.sns.user.UserVO" >
+  <insert id="insertUser" parameterType="users" >
         <![CDATA[ 
         INSERT INTO USERS (loginid, password, email, nick)
 		VALUES(#{loginid},#{password},#{email},#{nick})
 		]]>
   </insert>
   
-  <update id="updateUser" parameterType="com.sns.user.UserVO">
+  <update id="updateUser" parameterType="users">
        <![CDATA[ 
        UPDATE USERS SET
               PASSWORD = #{password},
@@ -31,7 +32,7 @@
         ]]>
   </update>
   
-  <delete id="deleteUser" parameterType="com.sns.user.UserVO" >
+  <delete id="deleteUser" parameterType="users" >
        <![CDATA[ DELETE FROM USERS WHERE UID = #{uid} ]]>
   </delete>
   

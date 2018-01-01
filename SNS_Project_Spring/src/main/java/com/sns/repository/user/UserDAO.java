@@ -15,26 +15,26 @@ public class UserDAO {
 
     public void insertUser(UserVO vo) {
         System.out.println("===> Mybatis로 insertUser() 기능 처리");
-        mybatis.insert("UserDAO.insertUser", vo);
+        mybatis.insert("userDAO.insertUser", vo);
     }
 
     public void updateUser(UserVO vo) {
         System.out.println("===> Mybatis로 updateUser() 기능 처리");
-        mybatis.update("UserDAO.updateUser", vo);
+        mybatis.update("userDAO.updateUser", vo);
     }
 
     public void deleteUser(UserVO vo) {
         System.out.println("===> Mybatis로 deleteUser() 기능 처리");
-        mybatis.delete("UserDAO.deleteUser", vo);
+        mybatis.delete("userDAO.deleteUser", vo);
     }
 
     public UserVO getUser(UserVO vo) {
         System.out.println("===> Mybatis로 getUser() 기능 처리");
-        return (UserVO) mybatis.selectOne("UserDAO.getUser", vo);
+        return mybatis.selectOne("userDAO.getUser", vo);
     }
     
     public List<UserVO> getUserList(UserVO vo) {
         System.out.println("===> Mybatis로 getUserList() 기능 처리");
-        return mybatis.selectList("UserDAO.getUserList", vo);
+        return mybatis.selectList("userDAO.getUserList", vo);
     }
 }

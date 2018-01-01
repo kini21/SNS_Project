@@ -6,18 +6,18 @@ import com.sns.user.UserVO;
 public interface UserService {
 
 	// CRUD 기능의 메소드
-	// 글 등록
+	// 유저 등록
 	void insertUser(UserVO vo);
 
-	// 글 수정
+	// 유저 수정
 	void updateUser(UserVO vo);
 
-	// 글 삭제
+	// 유저 삭제
 	void deleteUser(UserVO vo);
 
-	// 글 상세 조회
+	// 유저 상세 조회
 	UserVO getUser(UserVO vo);
 
-	// 글 목록 조회
+	// 유저 목록 조회
 	List<UserVO> getUserList(UserVO vo);
 }

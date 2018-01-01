@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+                               "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 
+    <!-- Alias 설정 -->
+    <typeAliases>
+        <typeAlias alias="users" type="com.sns.user.UserVO"/>
+    </typeAliases>
+
+    <!-- Sql Mapper 설정 -->
+    <mappers>
+        <mapper resource="sqlmap/mariadb/Users_SQL.xml"/>
+    </mappers>
+</configuration>

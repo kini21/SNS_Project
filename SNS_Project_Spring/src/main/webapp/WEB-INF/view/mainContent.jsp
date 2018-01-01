@@ -17,6 +17,15 @@
     <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
 </head>
 <body>
+ 
+ <c:choose>
+	<c:when test="${welcomeMsg eq true}">
+	<div class="alert alert-success alert-dismissible" role="alert">
+  	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  	  <strong>환영합니다!</strong> 회원가입이 완료되었습니다!
+	</div>
+	</c:when>
+ </c:choose>
 	
 	        <div class="main_content_wrap">
           <div class="main_contents">

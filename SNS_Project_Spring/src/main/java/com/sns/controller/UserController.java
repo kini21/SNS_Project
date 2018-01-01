@@ -26,15 +26,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	/*@RequestMapping("index.do")
-	public String index(@RequestParam Map map, Model model, HttpSession session) {	
-		return "index";
-	}*/
-	
-	/*@RequestMapping("login.do")
-	public String login(Model model, HttpServletRequest req, HttpServletResponse res) {
-		return "login";
-	}*/
+	@RequestMapping("index.do")
+	public String index() {	
+	 	return "index";
+	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String loginView(@ModelAttribute("user") UserVO vo) {
@@ -43,14 +38,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
+	public String login(UserVO vo, HttpSession session) {
 		System.out.println("로그인 처리");
 		
 		/*if(vo.getId() == null || vo.getId().equals("")) {
 			throw new IllegalArgumentException("아이디는 반드시 입력해야 합니다.");
 		}*/
 		
-		UserVO user = userDAO.getUser(vo);
+		UserVO user = userService.getUser(vo);
 		if(user != null) {
 			session.setAttribute("userid", user.getLoginid());
 			session.setAttribute("userNick", user.getNick());
@@ -62,8 +57,9 @@ public class UserController {
 	
     // 회원가입 
     @RequestMapping("insertUser.do")
-    public String insertBoard(UserVO vo) throws IOException {
+    public String insertBoard(UserVO vo, Model model) throws IOException {
     	System.out.println("회원가입 처리");
+    	model.addAttribute("welcomeMsg",true);
         userService.insertUser(vo);
         return "index";
     }
