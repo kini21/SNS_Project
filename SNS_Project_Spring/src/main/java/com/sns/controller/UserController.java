@@ -46,6 +46,7 @@ public class UserController {
 		}*/
 		
 		UserVO user = userService.getUser(vo);
+		String returnPage = null;
 		if(user != null) {
 			session.setAttribute("userid", user.getLoginid());
 			session.setAttribute("userNick", user.getNick());
@@ -55,12 +56,27 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="logout.do")
+	public String logout(HttpSession session) {
+		System.out.println("로그아웃 처리");
+		session.invalidate();
+		return "login";
+	}
+	
     // 회원가입 
     @RequestMapping("insertUser.do")
     public String insertBoard(UserVO vo, Model model) throws IOException {
     	System.out.println("회원가입 처리");
-    	model.addAttribute("welcomeMsg",true);
-        userService.insertUser(vo);
-        return "index";
+    	String returnPage = null;
+    	
+    	/*if(vo.getLoginid() == null || vo.getPassword().equals("")) {
+    		model.addAttribute("msg","1");
+    		returnPage = "redirect:login.jsp";
+    	} else {*/
+	    	model.addAttribute("welcomeMsg",true);
+	        userService.insertUser(vo);
+	        returnPage = "index";
+    	
+	    return returnPage;
     }
 }

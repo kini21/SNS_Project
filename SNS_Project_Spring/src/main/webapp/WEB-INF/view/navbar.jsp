@@ -296,7 +296,7 @@
           <button type="submit" class="btn btn-default">검색</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;"><span class="glyphicon glyphicon-log-in"></span>&nbsp;로그아웃</a></li>
+          <li><a href="<c:url value='/user/logout.do' />" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;"><span class="glyphicon glyphicon-log-in"></span>&nbsp;로그아웃</a></li>
         </ul>
         <form class="navbar-form navbar-right">
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#writeModal" style="font-weight:bold; outline: none;">

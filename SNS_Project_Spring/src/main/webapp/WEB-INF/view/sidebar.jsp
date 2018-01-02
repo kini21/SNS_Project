@@ -28,10 +28,10 @@
 
               <div class="profileUseridAndNick">
                 <div class="userid">
-                  <a href="#" style="color: inherit!important;">박호균</a>
+                  <a href="#" style="color: inherit!important;">${userNick}</a>
                 </div>
                 <span class="userNick">
-                  <a class="uN" href="#">purplecow</a>
+                  <a class="uN" href="#">@${userid}</a>
                 </span>
               </div>
 
