@@ -31,10 +31,10 @@ function register_check() {
     var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
     //email의 유효성 검사
 
-	if(loginid == ""){
+	if(loginid === ""){
 			alert("아이디를 입력하세요.");
-			$("#loginid").focus(); // 입력포커스 이동
-			return; // 함수 종료
+			document.register_form.loginid.focus();
+			return; 
 	} 
 	else if(!regExp1.test(loginid)) {
            alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요!");
@@ -43,9 +43,9 @@ function register_check() {
            return false;
     }
     
-	if(password == ""){
+	if(password === ""){
 			alert("비밀번호를 입력하세요.");
-			$("#password").focus();
+			document.register_form.password.focus();
 			return;
 	}
 	else if (!regExp1.test(password))
@@ -55,22 +55,30 @@ function register_check() {
         document.register_form.password.focus();
         return false;
     }
-	else if ((cpassword.slice(0, cpassword.length) === id.slice(0, id.length))) 
+	else if ((password.slice(0, password.length) === loginid.slice(0, loginid.length))) 
     {
-        alert("비밀번호가 ID와 동일하면 안됩니다.");
-        patext.value = "";
-        patext.focus();
-        cpatext.value = "";
-        cpatext.focus();
+        alert("비밀번호가 아이디와 동일하면 안됩니다.");
+        document.register_form.loginid.value = "";
+        document.register_form.loginid.focus();
+        document.register_form.password.value = "";
+        document.register_form.password.focus();
         return false;
     }
 
-	if(email == ""){
+	if(email === ""){
 		alert("이메일을 입력하세요.");
 		$("#email").focus();
 		return;
 	}
-	if(nick== ""){
+	else if (!regExp2.test(email))
+    {
+        alert("올바른 이메일 형식이 아닙니다.");
+        document.register_form.email.value = "";
+        document.register_form.email.focus();
+        return false;
+    }
+	
+	if(nick === ""){
 		alert("닉네임을 입력하세요.");
 		$("#nick").focus();
 		return;
