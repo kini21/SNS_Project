@@ -28,10 +28,10 @@
 
               <div class="profileUseridAndNick">
                 <div class="userid">
-                  <a href="#" style="color: inherit!important;">${userNick}</a>
+                  <a href="#" style="color: inherit!important;">${user.nick}</a>
                 </div>
                 <span class="userNick">
-                  <a class="uN" href="#">@${userid}</a>
+                  <a class="uN" href="#">@${user.loginid}</a>
                 </span>
               </div>
 

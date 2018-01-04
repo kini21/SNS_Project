@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,18 +39,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(UserVO vo, HttpSession session) {
-		System.out.println("로그인 처리");
-		
-		/*if(vo.getId() == null || vo.getId().equals("")) {
-			throw new IllegalArgumentException("아이디는 반드시 입력해야 합니다.");
-		}*/
-		
+	public String login(UserVO vo, HttpSession session) {		
 		UserVO user = userService.getUser(vo);
-		String returnPage = null;
+		
 		if(user != null) {
-			session.setAttribute("userid", user.getLoginid());
-			session.setAttribute("userNick", user.getNick());
+			System.out.println("로그인 처리");
+			session.setAttribute("user", user);
 			return "index";
 		} else {
 			return "login";
@@ -65,18 +60,11 @@ public class UserController {
 	
     // 회원가입 
     @RequestMapping("insertUser.do")
-    public String insertBoard(UserVO vo, Model model) throws IOException {
-    	System.out.println("회원가입 처리");
-    	String returnPage = null;
-    	
-    	/*if(vo.getLoginid() == null || vo.getPassword().equals("")) {
-    		model.addAttribute("msg","1");
-    		returnPage = "redirect:login.jsp";
-    	} else {*/
-	    	model.addAttribute("welcomeMsg",true);
-	        userService.insertUser(vo);
-	        returnPage = "index";
-    	
-	    return returnPage;
+    public String insertBoard(UserVO vo, Model model, HttpSession session) throws IOException {    		
+    		System.out.println("회원가입 처리");
+    		model.addAttribute("welcomeMsg",true);
+    		userService.insertUser(vo);
+    		session.setAttribute("user", userService.getUser(vo));
+    		return "index";
+    	}
     }
-}

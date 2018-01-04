@@ -16,7 +16,32 @@
   <link href='<c:url value="/common/css/bootstrap.min.css"/>' rel="stylesheet">
   <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
   <link href='<c:url value="/common/css/login.css"/>' rel="stylesheet" />
+  <script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+
 </head>
+<script type="text/javascript">
+$(document).ready(function(){                
+  $('#loginid').keyup(function(){ 
+
+     var addr = "<c:url value='/user/loginIdCheck.do' />";
+     var loginid = $('#loginid').val();
+
+     if(loginid.length > 0){
+        $.post(addr, {"loginid":loginid}, function(data){
+          if(data.ret =='y'){
+            $('#idcheck').html('<span style="color:#ff0000">사용불가</span>');
+                 }
+          else{
+              $('#idcheck').html('<span style="color:#0000ff">사용가능</span>');
+                 }
+              });    
+            }
+      else {
+             $('#idcheck').text('중복확인');
+           }
+       });
+    });
+</script>   
 <script>
 function register_check() {
 	event.preventDefault();
@@ -37,7 +62,7 @@ function register_check() {
 			return; 
 	} 
 	else if(!regExp1.test(loginid)) {
-           alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요!");
+           alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
            document.register_form.loginid.value = "";
            document.register_form.loginid.focus();
            return false;
@@ -50,7 +75,7 @@ function register_check() {
 	}
 	else if (!regExp1.test(password))
     {
-        alert("비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요!");
+        alert("비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
         document.register_form.password.value = "";
         document.register_form.password.focus();
         return false;
@@ -80,9 +105,17 @@ function register_check() {
 	
 	if(nick === ""){
 		alert("닉네임을 입력하세요.");
-		$("#nick").focus();
+		document.register_form.nick.focus();
 		return;
-	}	
+	}
+	if(document.register_form.nick.value.length >= 7 ) {
+        alert('닉네임은 6자 미만으로 입력하세요.');
+        document.register_form.nick.value = "";
+        document.register_form.nick.focus();
+        return false;
+    }
+	
+	register_form.submit();
 }
 </script>
 <body>
@@ -145,19 +178,23 @@ function register_check() {
 
                         <!-- login button -->
                         <div class="col-xs-6 form-group pull-right">
-                          <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="로그인">
+                          <input type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="로그인">
                         </div>
 
                       </form>
                       <!-- end of login form -->
 
                       <!-- register form -->
-                      <form id="register-form" name="register_form" action="<c:url value='/user/insertUser.do' />" method="post" style="display: none;">
+                      <form id="register-form" name="register_form" action="<c:url value="/user/insertUser.do" />" method="post" style="display: none;">
                         <h2>회원가입</h2>
 						
                         <!-- insert loginid -->
                         <div class="form-group">
                           <input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="">
+                        </div>
+                        
+                        <div class="form-group">
+                        	<label id="idcheck">중복확인</label>              	
                         </div>
 						
 						 <!-- insert password -->
@@ -167,19 +204,19 @@ function register_check() {
 
                         <!-- insert email -->
                         <div class="form-group">
-                          <input type="email" name="email" id="email" tabindex="4" class="form-control" placeholder="이메일" value="">
+                          <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="이메일" value="">
                         </div>
 						
 						<!-- insert nick -->
                         <div class="form-group">
-                          <input type="text" name="nick" id="nick" tabindex="3" class="form-control" placeholder="닉네임" value="">
+                          <input type="text" name="nick" id="nick" tabindex="4" class="form-control" placeholder="닉네임" value="">
                         </div>
 						
                         <!-- register button -->
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
-                              <input type="button" id="register_submit" onClick="register_check();" tabindex="4" class="form-control btn btn-register" value="회원가입">
+                              <input type="button" id="register_submit" onClick="register_check();" tabindex="5" class="form-control btn btn-register" value="회원가입">
                             </div>
                           </div>
                         </div>

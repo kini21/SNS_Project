@@ -246,22 +246,22 @@
 
                           <!-- insert id -->
                           <div class="form-group">
-                            <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="아이디" value="">
-                          </div>
-
-                          <!-- insert username -->
-                          <div class="form-group">
-                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="닉네임" value="">
-                          </div>
-
-                          <!-- insert email -->
-                          <div class="form-group">
-                            <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="이메일" value="">
+                            <input type="text" name="id" id="id" tabindex="1" class="form-control" value="${user.loginid}" readonly>
                           </div>
 
                           <!-- insert password -->
                           <div class="form-group">
-                            <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                            <input type="password" name="password" id="password" tabindex="1" class="form-control" value="${user.password}">
+                          </div>
+
+                          <!-- insert email -->
+                          <div class="form-group">
+                            <input type="text" name="email" id="email" tabindex="2" class="form-control" value="${user.email}">
+                          </div>
+
+                          <!-- insert nick -->
+                          <div class="form-group">
+                            <input type="text" name="nick" id="nick" tabindex="3" class="form-control" value="${user.nick}">
                           </div>
 
                           <!-- register button -->
@@ -290,8 +290,8 @@
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
-            <label class="sr-only" for="form-control">친구 찾기</label>
-            <input type="text" class="form-control" placeholder="친구 찾기">
+            <label class="sr-only" for="form-control">팔로우 검색</label>
+            <input type="text" class="form-control" placeholder="팔로우 검색">
           </div>
           <button type="submit" class="btn btn-default">검색</button>
         </form>
@@ -300,7 +300,7 @@
         </ul>
         <form class="navbar-form navbar-right">
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#writeModal" style="font-weight:bold; outline: none;">
-            글 쓰기
+           		 글 쓰기
           </button>
 
           <!-- Modal -->

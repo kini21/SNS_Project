@@ -14,6 +14,14 @@
   <select id="getUserList" resultType="users">
         <![CDATA[ SELECT * FROM USERS ]]>
   </select>
+  
+  <select id="existUserId" parameterType="String" resultType="int">
+        <![CDATA[ 
+           SELECT COUNT(*) AS USERIDCNT 
+           FROM USERS
+           WHERE LOGINID = #{loginid}
+           ]]>
+  </select>
    
   <insert id="insertUser" parameterType="users" >
         <![CDATA[ 

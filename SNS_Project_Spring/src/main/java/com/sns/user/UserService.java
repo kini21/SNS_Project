@@ -20,4 +20,6 @@ public interface UserService {
 
 	// 유저 목록 조회
 	List<UserVO> getUserList(UserVO vo);
+	
+	int getExistUserId(String loginid);
 }
