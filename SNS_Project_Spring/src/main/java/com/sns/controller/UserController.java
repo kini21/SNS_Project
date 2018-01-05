@@ -1,24 +1,16 @@
 package com.sns.controller;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.sns.repository.user.UserDAO;
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
 
@@ -70,13 +62,12 @@ public class UserController {
     		return "index";
     	}
    
-   /*@RequestMapping(value="getUserList.do") 
+   @RequestMapping(value="getUserList.do") 
    public String getUserList(UserVO vo, Model model) {
     	System.out.println("유저 목록 검색 처리");
-    	
     	if(vo.getSearchKeyword() == null) { vo.setSearchKeyword(""); }
     	model.addAttribute("user",userService.getUserList(vo));
-    	return mav;
-    }*/
+    	return "getUserList";
+    }
     
 }

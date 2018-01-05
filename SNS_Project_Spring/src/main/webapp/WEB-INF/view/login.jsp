@@ -21,28 +21,36 @@
 </head>
 <script type="text/javascript">
 $(document).ready(function(){                
-  $('#loginid').keyup(function(){ 
-
+  $('#loginid').keyup(function(){
+	  var a = id_chk();
+  });
+});
+</script>   
+<script>
+function id_chk() {
      var addr = "<c:url value='/user/loginIdCheck.do' />";
      var loginid = $('#loginid').val();
 
-     if(loginid.length > 0){
+     if(loginid.length >= 4){
         $.post(addr, {"loginid":loginid}, function(data){
           if(data.ret =='y'){
-            $('#idcheck').html('<span style="color:#ff0000">사용불가</span>');
+            $('#idcheck').val('사용불가');
+            $('#idcheck').css('color', 'red');
+            return false;
                  }
           else{
-              $('#idcheck').html('<span style="color:#0000ff">사용가능</span>');
+              $('#idcheck').val('사용가능');
+              $('#idcheck').css('color', 'blue');
+              return true;
                  }
               });    
             }
       else {
-             $('#idcheck').text('중복확인');
+             $('#idcheck').val('4자 미만');
+             $('#idcheck').css('color', 'black');
+             return false;
            }
-       });
-    });
-</script>   
-<script>
+}
 function register_check() {
 	event.preventDefault();
 	
@@ -114,8 +122,11 @@ function register_check() {
         document.register_form.nick.focus();
         return false;
     }
-		document.register_form.submit();	
-	
+	if(!id_chk()) {
+		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
+	} else {
+		document.register_form.submit();
+	}
 }
 </script>
 <body>
@@ -194,7 +205,7 @@ function register_check() {
                         </div>
                         
                         <div class="form-group">
-                        	<label id="idcheck">중복확인</label>              	
+                        	<input type="text" id="idcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
                         </div>
 						
 						 <!-- insert password -->
