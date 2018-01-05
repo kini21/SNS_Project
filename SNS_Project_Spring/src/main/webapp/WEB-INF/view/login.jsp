@@ -71,7 +71,7 @@ function register_check() {
 	if(password === ""){
 			alert("비밀번호를 입력하세요.");
 			document.register_form.password.focus();
-			return;
+			return false;
 	}
 	else if (!regExp1.test(password))
     {
@@ -106,7 +106,7 @@ function register_check() {
 	if(nick === ""){
 		alert("닉네임을 입력하세요.");
 		document.register_form.nick.focus();
-		return;
+		return false;
 	}
 	if(document.register_form.nick.value.length >= 7 ) {
         alert('닉네임은 6자 미만으로 입력하세요.');
@@ -114,8 +114,8 @@ function register_check() {
         document.register_form.nick.focus();
         return false;
     }
+		document.register_form.submit();	
 	
-	register_form.submit();
 }
 </script>
 <body>

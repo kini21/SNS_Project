@@ -1,6 +1,7 @@
 package com.sns.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sns.repository.user.UserDAO;
 import com.sns.user.UserService;
@@ -27,7 +29,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("index.do")
+	@RequestMapping(value="index.do")
 	public String index() {	
 	 	return "index";
 	}
@@ -59,12 +61,22 @@ public class UserController {
 	}
 	
     // 회원가입 
-    @RequestMapping("insertUser.do")
-    public String insertBoard(UserVO vo, Model model, HttpSession session) throws IOException {    		
+    @RequestMapping(value="insertUser.do")
+    public String insertUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
     		System.out.println("회원가입 처리");
     		model.addAttribute("welcomeMsg",true);
     		userService.insertUser(vo);
     		session.setAttribute("user", userService.getUser(vo));
     		return "index";
     	}
-    }
+   
+   /*@RequestMapping(value="getUserList.do") 
+   public String getUserList(UserVO vo, Model model) {
+    	System.out.println("유저 목록 검색 처리");
+    	
+    	if(vo.getSearchKeyword() == null) { vo.setSearchKeyword(""); }
+    	model.addAttribute("user",userService.getUserList(vo));
+    	return mav;
+    }*/
+    
+}

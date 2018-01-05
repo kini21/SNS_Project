@@ -16,6 +16,20 @@
 	<link href='<c:url value="/common/css/bootstrap.min.css"/>' rel="stylesheet">
     <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
 </head>
+<script>
+function follow_search() {
+	event.preventDefault();
+	
+	var searchKeyword = $("#searchKeyword").val();
+	
+	if(searchKeyword = ""){
+		alert("검색어를 입력해주세요.")
+	}
+	
+	document.search_form.submit();	
+	
+}
+</script>
 <body>
 
 	    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#83abc6;">
@@ -246,21 +260,25 @@
 
                           <!-- insert id -->
                           <div class="form-group">
-                            <input type="text" name="id" id="id" tabindex="1" class="form-control" value="${user.loginid}" readonly>
+                          	<label>아이디</label>
+                            <input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" value="${user.loginid}" readonly>
                           </div>
 
                           <!-- insert password -->
                           <div class="form-group">
+                          	<label>비밀번호</label>
                             <input type="password" name="password" id="password" tabindex="1" class="form-control" value="${user.password}">
                           </div>
 
                           <!-- insert email -->
                           <div class="form-group">
+                          	<label>이메일</label>
                             <input type="text" name="email" id="email" tabindex="2" class="form-control" value="${user.email}">
                           </div>
 
                           <!-- insert nick -->
                           <div class="form-group">
+                          	<label>닉네임</label>
                             <input type="text" name="nick" id="nick" tabindex="3" class="form-control" value="${user.nick}">
                           </div>
 
@@ -288,13 +306,86 @@
 
           </li>
         </ul>
-        <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-left" name="search_form" <%-- action='<c:url value="/user/getUserList.do" />' --%> role="search">
           <div class="form-group">
             <label class="sr-only" for="form-control">팔로우 검색</label>
-            <input type="text" class="form-control" placeholder="팔로우 검색">
+            <input type="text" name="searchKeyword" id="searchKeyword" class="form-control" placeholder="팔로우 검색">
           </div>
-          <button type="submit" class="btn btn-default">검색</button>
+          <button type="button" id="search_submit" onClick="follow_search();" class="btn btn-default" data-toggle="modal" data-target="#followSearchModal">검색</button>
         </form>
+                
+        <!-- Modal -->
+          <div class="modal fade" id="followSearchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="background-color:#83abc6; border-radius: 6px 6px 0 0;">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="writeLabel" style="color: #fff;">팔로우 검색 목록</h4>
+                </div>
+
+                  <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>닉네임</th>
+                            <th>아이디</th>
+                            <th>이메일</th>
+                            <th>#</th>
+                          </tr>
+                        </thead>
+                        <!-- <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>박호균</td>
+                            <td>purplecow</td>
+                            <td>언팔로우</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>한광식</td>
+                            <td>Mugunghwa</td>
+                            <td>언팔로우</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>조재형</td>
+                            <td>BNF KOREA</td>
+                            <td>언팔로우</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>김준기</td>
+                            <td>넷오우션</td>
+                            <td>언팔로우</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>블루코코</td>
+                            <td>BLUECOCO</td>
+                            <td>언팔로우</td>
+                          </tr>
+                        </tbody> -->
+                        
+                        <c:forEach items="${userList }" var="user">
+                          <tbody>
+							<tr>
+							    <td>${user.nick }</td>
+							    <td>${user.loginid }</td>
+							    <td>${user.email }</td>
+							    <td>언팔로우</td>
+							</tr>
+						  </tbody>
+						</c:forEach>
+                      </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        
         <ul class="nav navbar-nav navbar-right">
           <li><a href="<c:url value='/user/logout.do' />" style="font-weight: bold; color:white; text-shadow: 1px 1px 1px grey;"><span class="glyphicon glyphicon-log-in"></span>&nbsp;로그아웃</a></li>
         </ul>

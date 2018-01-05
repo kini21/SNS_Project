@@ -12,7 +12,7 @@
   </select>
   
   <select id="getUserList" resultType="users">
-        <![CDATA[ SELECT * FROM USERS ]]>
+        <![CDATA[ SELECT * FROM USERS WHERE NICK LIKE CONCAT('%',#{searchKeyword},'%')]]>
   </select>
   
   <select id="existUserId" parameterType="String" resultType="int">

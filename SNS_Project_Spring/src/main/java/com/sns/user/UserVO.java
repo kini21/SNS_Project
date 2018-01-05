@@ -6,6 +6,7 @@ public class UserVO {
 	private String password;
 	private String email;
 	private String nick;
+	private String searchKeyword;
 	
 	public int getUid() {
 		return uid;
@@ -36,6 +37,12 @@ public class UserVO {
 	}
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
 	}
 	
 	@Override
