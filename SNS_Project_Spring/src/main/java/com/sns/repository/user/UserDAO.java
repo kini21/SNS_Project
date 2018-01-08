@@ -33,9 +33,9 @@ public class UserDAO {
         return mybatis.selectOne("userDAO.getUser", vo);
     }
     
-    public List<UserVO> getUserList(UserVO vo) {
+    public List<UserVO> getUserList(String searchKeyword) {
         System.out.println("===> Mybatis로 getUserList() 기능 처리");
-        return mybatis.selectList("userDAO.getUserList", vo);
+        return mybatis.selectList("userDAO.getUserList", searchKeyword);
     }
     
     public int getExistUserId(String loginid) {

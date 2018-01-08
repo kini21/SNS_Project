@@ -15,21 +15,56 @@
 	<title>navbar</title>
 	<link href='<c:url value="/common/css/bootstrap.min.css"/>' rel="stylesheet">
     <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
+    <script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){                
+  $('#search_submit').bind("click",function(){
+	  
+	  var searchKeyword = $("#searchKeyword").val();
+	  
+	  if(searchKeyword === ""){
+			alert("검색어를 입력해주세요.")
+			return false;
+	  } else{ 
+		  follow_search();
+	  }
+  });
+});
+</script>
 <script>
 function follow_search() {
 	event.preventDefault();
+
+	var addr = "<c:url value='/user/getUserList.do' />";
 	
-	var searchKeyword = $("#searchKeyword").val();
-	
-	if(searchKeyword = ""){
-		alert("검색어를 입력해주세요.")
-	}
-	
-	document.search_form.submit();	
-	
+	$.ajax({
+        url : addr,
+        type: "get",
+        data : { "searchKeyword" : $("#searchKeyword").val() },
+        success : function(responseData){
+            
+            var html = '';
+            
+            $("#ajax").remove();
+            $(responseData.userlist).each(
+            		function(){
+		            html += '<tr>';
+		            html += '<td>' +  this.nick + '<td>';
+		            html += '<td>'+ this.loginid + '<td>';
+		            html += '<td>' + this.email + '<td>';
+		            html += '<td>언팔로우<td>';
+		            html += '</tr>';
+            		
+		            $('#userListTable > tbody:last').empty();
+		            $('#userListTable > tbody:last').append(html);
+			        });// end each
+			    }// end
+			});// end ajax		
 }
-</script>
+</script> 
 <body>
 
 	    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#83abc6;">
@@ -306,12 +341,12 @@ function follow_search() {
 
           </li>
         </ul>
-        <form class="navbar-form navbar-left" name="search_form" <%-- action='<c:url value="/user/getUserList.do" />' --%> role="search">
+        <form class="navbar-form navbar-left" name="search_form" action='<c:url value="/user/getUserList.do" />' role="search">
           <div class="form-group">
             <label class="sr-only" for="form-control">팔로우 검색</label>
             <input type="text" name="searchKeyword" id="searchKeyword" class="form-control" placeholder="팔로우 검색">
           </div>
-          <button type="button" id="search_submit" onClick="follow_search();" class="btn btn-default" data-toggle="modal" data-target="#followSearchModal">검색</button>
+          <button type="button" id="search_submit" class="btn btn-default" data-toggle="modal" data-target="#followSearchModal">검색</button>
         </form>
                 
         <!-- Modal -->
@@ -324,7 +359,8 @@ function follow_search() {
                 </div>
 
                   <div class="modal-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="userListTable">
+                        
                         <thead>
                           <tr>
                             <th>닉네임</th>
@@ -333,49 +369,9 @@ function follow_search() {
                             <th>#</th>
                           </tr>
                         </thead>
-                        <!-- <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>박호균</td>
-                            <td>purplecow</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>한광식</td>
-                            <td>Mugunghwa</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td>조재형</td>
-                            <td>BNF KOREA</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>김준기</td>
-                            <td>넷오우션</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>블루코코</td>
-                            <td>BLUECOCO</td>
-                            <td>언팔로우</td>
-                          </tr>
-                        </tbody> -->
-                        
-                        <c:forEach items="${userList }" var="user">
-                          <tbody>
-							<tr>
-							    <td>${user.nick }</td>
-							    <td>${user.loginid }</td>
-							    <td>${user.email }</td>
-							    <td>언팔로우</td>
-							</tr>
-						  </tbody>
-						</c:forEach>
+                        <tbody>
+                         
+                        </tbody>              
                       </table>
                   </div>
                   <div class="modal-footer">

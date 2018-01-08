@@ -19,7 +19,7 @@ public interface UserService {
 	UserVO getUser(UserVO vo);
 
 	// 유저 목록 조회
-	List<UserVO> getUserList(UserVO vo);
+	List<UserVO> getUserList(String searchKeyword);
 	
 	int getExistUserId(String loginid);
 }

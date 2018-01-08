@@ -11,7 +11,7 @@
        ]]>
   </select>
   
-  <select id="getUserList" resultType="users">
+  <select id="getUserList" parameterType="String" resultType="users">
         <![CDATA[ SELECT * FROM USERS WHERE NICK LIKE CONCAT('%',#{searchKeyword},'%')]]>
   </select>
   

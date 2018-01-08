@@ -31,14 +31,12 @@ Spring MVC 설정 시 정적 파일 (CSS, IMAGE, JS), Default 요청 처리 하�
 	
 	<mvc:annotation-driven />
 	
-	<!-- ajax Json View -->
-    <!-- 
+	<!-- ajax Json View --> 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver" p:order="0"/>
 	
     <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" id="jsonView">
         <property name="contentType" value="application/json;charset=UTF-8"/>
     </bean>
-     -->
     <!-- ajax Json View -->
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">

@@ -1,6 +1,7 @@
 package com.sns.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
@@ -62,12 +65,14 @@ public class UserController {
     		return "index";
     	}
    
-   @RequestMapping(value="getUserList.do") 
-   public String getUserList(UserVO vo, Model model) {
+   @RequestMapping(value="getUserList.do", method=RequestMethod.GET) 
+   public ModelAndView getUserList(@RequestParam("searchKeyword") String searchKeyword, ModelAndView mav) {
     	System.out.println("유저 목록 검색 처리");
-    	if(vo.getSearchKeyword() == null) { vo.setSearchKeyword(""); }
-    	model.addAttribute("user",userService.getUserList(vo));
-    	return "getUserList";
+    	    	
+    	List<UserVO> vo = userService.getUserList(searchKeyword);
+    	mav.addObject("userlist", vo);
+    	mav.setViewName("jsonView");
+    	return mav;
     }
     
 }

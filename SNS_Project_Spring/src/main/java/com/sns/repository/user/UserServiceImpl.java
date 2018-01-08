@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public List<UserVO> getUserList(UserVO vo) {
-        return userDAO.getUserList(vo);
+    public List<UserVO> getUserList(String searchKeyword) {
+        return userDAO.getUserList(searchKeyword);
     }
     
     @Override
