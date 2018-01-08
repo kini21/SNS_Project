@@ -124,6 +124,7 @@ function register_check() {
     }
 	if(!id_chk()) {
 		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
+		return false;
 	} else {
 		document.register_form.submit();
 	}
