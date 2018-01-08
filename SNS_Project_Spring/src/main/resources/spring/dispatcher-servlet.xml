@@ -37,7 +37,23 @@ Spring MVC 설정 시 정적 파일 (CSS, IMAGE, JS), Default 요청 처리 하�
     <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" id="jsonView">
         <property name="contentType" value="application/json;charset=UTF-8"/>
     </bean>
-    <!-- ajax Json View -->
+    
+    <!-- 로그아웃 후 뒤로가기 클릭시 다시 세션이 연결되던 문제 해결 Post 사용시만 작동한다. -->
+    <mvc:interceptors>
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			        <property name="cacheSeconds" value="0" />
+			        <property name="useExpiresHeader" value="true" />
+			        <property name="useCacheControlHeader" value="true" />
+			        <property name="useCacheControlNoStore" value="true" />
+		<!--           예외처리 하여 캐쉬 적용이 가능 하다.
+		     <property name="cacheMappings">
+		                   <props>
+		                      <prop key="/test/test/**">86400</prop>
+		                   </props>
+		      </property>
+		--> 
+		    	</bean>
+	</mvc:interceptors>
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
 	        <property name="prefix" value="/WEB-INF/view/"/>
