@@ -38,6 +38,11 @@ function id_chk() {
             $('#idcheck').css('color', 'red');
             return false;
                  }
+          else if(loginid.length >= 13){
+              $('#idcheck').val('12자 초과');
+              $('#idcheck').css('color', 'red');
+              return false;
+            }
           else{
               $('#idcheck').val('사용가능');
               $('#idcheck').css('color', 'blue');
@@ -45,11 +50,11 @@ function id_chk() {
                  }
               });    
             }
-      else {
-             $('#idcheck').val('4자 미만');
-             $('#idcheck').css('color', 'black');
-             return false;
-           }
+      else{
+          $('#idcheck').val('4자 미만');
+          $('#idcheck').css('color', 'red');
+          return false;
+        }
 }
 function register_check() {
 	event.preventDefault();
