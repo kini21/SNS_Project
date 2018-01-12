@@ -38,19 +38,17 @@ function id_chk() {
             $('#idcheck').css('color', 'red');
             return false;
                  }
-          else if(loginid.length >= 13){
+          else if(loginid.length >= 13) {
               $('#idcheck').val('12자 초과');
               $('#idcheck').css('color', 'red');
               return false;
-            }
-          else{
+           } else {
               $('#idcheck').val('사용가능');
               $('#idcheck').css('color', 'blue');
               return true;
-                 }
-              });    
-            }
-      else{
+           }
+         });    
+      } else{
           $('#idcheck').val('4자 미만');
           $('#idcheck').css('color', 'red');
           return false;
@@ -127,11 +125,11 @@ function register_check() {
         document.register_form.nick.focus();
         return false;
     }
-	if(!id_chk()) {
+	if($('#idcheck').val() == '사용가능') {
+		document.register_form.submit();
+	} else {
 		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
 		return false;
-	} else {
-		document.register_form.submit();
 	}
 }
 </script>

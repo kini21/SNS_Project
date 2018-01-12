@@ -36,7 +36,7 @@
               PASSWORD = #{password},
               EMAIL = #{email},
               NICK = #{nick} 
-        WHERE UID  = #{uid}
+        WHERE LOGINID = #{loginid}
         ]]>
   </update>
   
