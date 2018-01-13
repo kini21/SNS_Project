@@ -22,4 +22,6 @@ public interface UserService {
 	List<UserVO> getUserList(String searchKeyword);
 	
 	int getExistUserId(String loginid);
+	
+	int getExistUserEmail(String email);
 }

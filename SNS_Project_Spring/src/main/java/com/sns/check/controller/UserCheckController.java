@@ -32,4 +32,17 @@ public class UserCheckController {
        }
        return map;
    }
+   
+   @RequestMapping(value="/user/loginEmailCheck.do", method = {RequestMethod.GET,RequestMethod.POST}, produces="application/json")
+   public @ResponseBody Map<String, String> loginEmailCheck(@RequestParam("email")String email){
+
+       Map<String, String> map = new HashMap<String,String>();
+       int r = userService.getExistUserEmail(email);
+
+       map.put("ret", "y");
+       if(r<=0){
+           map.put("ret", "n");
+       }
+       return map;
+   }
 }
