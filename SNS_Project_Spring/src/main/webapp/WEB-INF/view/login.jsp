@@ -17,7 +17,74 @@
   <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
   <link href='<c:url value="/common/css/login.css"/>' rel="stylesheet" />
 </head>
+<script>
+function register_check() {
+	event.preventDefault();
+	
+	var loginid = $("#loginid").val();
+	var password = $("#password").val();
+	var email = $("#email").val();
+	var nick = $("#nick").val();
+	
+	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
+    //id와 비밀번호의 유효성 검사
+    var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
+    //email의 유효성 검사
 
+	if(loginid === ""){
+			alert("아이디를 입력하세요.");
+			document.register_form.loginid.focus();
+			return; 
+	} 
+	else if(!regExp1.test(loginid)) {
+           alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요!");
+           document.register_form.loginid.value = "";
+           document.register_form.loginid.focus();
+           return false;
+    }
+    
+	if(password === ""){
+			alert("비밀번호를 입력하세요.");
+			document.register_form.password.focus();
+			return;
+	}
+	else if (!regExp1.test(password))
+    {
+        alert("비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요!");
+        document.register_form.password.value = "";
+        document.register_form.password.focus();
+        return false;
+    }
+	else if ((password.slice(0, password.length) === loginid.slice(0, loginid.length))) 
+    {
+        alert("비밀번호가 아이디와 동일하면 안됩니다.");
+        document.register_form.loginid.value = "";
+        document.register_form.loginid.focus();
+        document.register_form.password.value = "";
+        document.register_form.password.focus();
+        return false;
+    }
+
+	if(email === ""){
+		alert("이메일을 입력하세요.");
+		$("#email").focus();
+		return;
+	}
+	else if (!regExp2.test(email))
+    {
+        alert("올바른 이메일 형식이 아닙니다.");
+        document.register_form.email.value = "";
+        document.register_form.email.focus();
+        return false;
+    }
+	
+	if(nick === ""){
+		alert("닉네임을 입력하세요.");
+		$("#nick").focus();
+		return;
+	}	
+}
+</script>
 <body>
 
   <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#83abc6;">
@@ -56,17 +123,17 @@
 
 
                       <!-- login form -->
-                      <form id="login-form" action='<c:url value="/page/index.html" />' method="post" role="form" style="display: block;">
+                      <form id="login-form" action='<c:url value="/user/login.do" />' method="post" role="form" style="display: block;">
                         <h2>로그인</h2>
 
                         <!-- insert id -->
                         <div class="form-group">
-                          <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
+                          <input type="text" name="loginid" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
                         </div>
 
                         <!-- insert password -->
                         <div class="form-group">
-                          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <input type="password" name="password" tabindex="2" class="form-control" placeholder="비밀번호">
                         </div>
 
                         <!-- remember id & find password -->
@@ -85,34 +152,34 @@
                       <!-- end of login form -->
 
                       <!-- register form -->
-                      <form id="register-form" action="#" method="post" role="form" style="display: none;">
+                      <form id="register-form" name="register_form" action="<c:url value='/user/insertUser.do' />" method="post" style="display: none;">
                         <h2>회원가입</h2>
-
-                        <!-- insert id -->
+						
+                        <!-- insert loginid -->
                         <div class="form-group">
-                          <input type="text" name="id" id="id" tabindex="1" class="form-control" placeholder="아이디" value="">
+                          <input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="">
                         </div>
-
-                        <!-- insert username -->
-                        <div class="form-group">
-                          <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="닉네임" value="">
-                        </div>
-
-                        <!-- insert email -->
-                        <div class="form-group">
-                          <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="이메일" value="">
-                        </div>
-
-                        <!-- insert password -->
+						
+						 <!-- insert password -->
                         <div class="form-group">
                           <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
                         </div>
 
+                        <!-- insert email -->
+                        <div class="form-group">
+                          <input type="email" name="email" id="email" tabindex="4" class="form-control" placeholder="이메일" value="">
+                        </div>
+						
+						<!-- insert nick -->
+                        <div class="form-group">
+                          <input type="text" name="nick" id="nick" tabindex="3" class="form-control" placeholder="닉네임" value="">
+                        </div>
+						
                         <!-- register button -->
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
-                              <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="회원가입">
+                              <input type="button" id="register_submit" onClick="register_check();" tabindex="4" class="form-control btn btn-register" value="회원가입">
                             </div>
                           </div>
                         </div>
@@ -155,24 +222,14 @@
     <!-- /.container-fluid -->
   </nav>
   <!-- end of nav -->
-
+  
   <div class="container-fluid">
     <div class="row">
         <img src='<c:url value="/common/img/background.png"/>' alt="" style="resize: both; width:100%; max-width:100%; height:auto; float: center; margin:0; padding:0; overflow: auto" />
     </div>
   </div>
 
-  <footer class="footer" style="height:95px; margin-top: 0px; position: absolute; left: 0px; width: 100%; background: black; opacity: 0.7;">
-    <div class="container">
-      <div class="bottom_copyright">
-        <p class="text-muted">
-          Copyright OOOOO.com. All Right Reserved.</br>
-          Contact us, OOOOOOO@google.com
-        </p>
-      </div>
-    </div>
-    </div>
-  </footer>
+ <jsp:include page="footer.jsp" flush="false"/>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>

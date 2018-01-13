@@ -12,36 +12,38 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 		
 	<context:component-scan base-package="com.sns" />
-<!-- 
-Spring MVC 설정 시 정적 파일 (CSS, IMAGE, JS), Default 요청 처리 하기
- * VIEW에서 정적 파일을 못 읽어올 때 사용한다.
-	 
- * dispacther-servlet에서 설정예제
-    - <mvc:resources location="/common/js/**" mapping="/common/js/" />
-	 
- * view에 사용예제
-    - view에서 사용 시에 <c:url>을 반드시 사용해야 한다.
-    - CSS   : <link href="<c:url value="/common/css/search.css" />" rel="stylesheet" type="text/css">
-    - JS    : <script type="text/javascript" src="<c:url value="/common/js/menu.js" />"></script>
-    - IMAGE : <img src="<c:url value="/common/img/logo.png" />">
- -->
+
 	<mvc:resources location="/common/js/**" mapping="/common/js/" />
 	<mvc:resources location="/common/css/**" mapping="/common/css/" />
 	<mvc:resources location="/common/img/**" mapping="/common/img/" />
 	
 	<mvc:annotation-driven />
 	
-	<!-- ajax Json View -->
+	<!-- ajax Json View --> 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver" p:order="0"/>
 	
-    <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" id="jsonView">
+    <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" id="jsonView">
         <property name="contentType" value="application/json;charset=UTF-8"/>
     </bean>
     
-    <!-- ajax Json View -->
+    <!-- 로그아웃 후 뒤로가기 클릭시 다시 세션이 연결되던 문제 해결 Post 사용시만 작동한다. -->
+    <mvc:interceptors>
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			        <property name="cacheSeconds" value="0" />
+			        <property name="useExpiresHeader" value="true" />
+			        <property name="useCacheControlHeader" value="true" />
+			        <property name="useCacheControlNoStore" value="true" />
+		<!--           예외처리 하여 캐쉬 적용이 가능 하다.
+		     <property name="cacheMappings">
+		                   <props>
+		                      <prop key="/test/test/**">86400</prop>
+		                   </props>
+		      </property>
+		--> 
+		    	</bean>
+	</mvc:interceptors>
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
-	        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
 	        <property name="prefix" value="/WEB-INF/view/"/>
 	        <property name="suffix" value=".jsp"/>
 	</bean>

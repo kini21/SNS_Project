@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="postfileDAO">
+    
+  <select id="getPostFile" resultType="postfile">
+       <![CDATA[ SELECT * 
+       			 FROM POST_FILE
+                 WHERE PID = ${pid} 
+       ]]>
+  </select>
+  
+  <select id="selectGroupKey" parameterType="hashmap" resultType="string">
+		SELECT REPLACE(UUID() , '-' , '') AS GUID
+  </select>
+  
+  <select id="getPostFileList" resultType="postfile">
+        <![CDATA[ SELECT * FROM POST_FILE ]]>
+  </select>
+   
+  <insert id="insertPostFile" parameterType="postfile" >
+        <![CDATA[ 
+        INSERT INTO POST_FILE ( PID
+                              , GROUP_KEY
+                              , FILE_KEY
+                              , FILE_REALNAME
+                              , FILE_NAME
+                              , FILE_PATH
+                              , FILE_LENGTH
+                              , FILE_TYPE
+                              , DEL_YN
+                              , REG_ID
+                              , REG_DATE )
+                       VALUES ( ${pid}
+                              , #{group_key}
+                              , ${file_key}
+                              , #{file_realname}
+                              , #{file_name}
+                              , #{file_path}
+                              , ${file_length}
+                              , #{file_type}
+                              , 'N'
+                              , #{reg_id}
+                              , SYSDATE() )
+		]]>
+  </insert>
+  
+  <delete id="deletePostFile" parameterType="postfile" >
+       <![CDATA[ DELETE FROM POST_FILE WHERE PID = #{pid} ]]>
+  </delete>
+  
+</mapper>
