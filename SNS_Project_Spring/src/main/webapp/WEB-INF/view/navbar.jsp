@@ -290,7 +290,7 @@ function follow_search() {
                       <div class="col-lg-12">
 
                         <!-- profile form -->
-                        <form id="profile-form" action="#" method="post" role="form">
+                        <form id="profile-form" action='<c:url value="/user/updateUser.do" />' method="post" role="form">
                           <h2>프로필 수정</h2>
 
                           <!-- insert id -->

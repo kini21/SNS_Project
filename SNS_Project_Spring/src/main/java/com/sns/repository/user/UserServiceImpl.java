@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
     public int getExistUserId(String loginid) {
     	return userDAO.getExistUserId(loginid);
     }
+    
+    @Override
+    public int getExistUserEmail(String email) {
+    	return userDAO.getExistUserEmail(email);
+    }
 }

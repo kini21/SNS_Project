@@ -10,7 +10,7 @@
                  WHERE LOGINID = #{loginid} AND PASSWORD = #{password} 
        ]]>
   </select>
-  
+    
   <select id="getUserList" parameterType="String" resultType="users">
         <![CDATA[ SELECT * FROM USERS WHERE NICK LIKE CONCAT('%',#{searchKeyword},'%')]]>
   </select>
@@ -20,6 +20,14 @@
            SELECT COUNT(*) AS USERIDCNT 
            FROM USERS
            WHERE LOGINID = #{loginid}
+           ]]>
+  </select>
+  
+  <select id="existUserEmail" parameterType="String" resultType="int">
+        <![CDATA[ 
+           SELECT COUNT(*) AS USEREMAILCNT 
+           FROM USERS
+           WHERE EMAIL = #{email}
            ]]>
   </select>
    
@@ -36,7 +44,7 @@
               PASSWORD = #{password},
               EMAIL = #{email},
               NICK = #{nick} 
-        WHERE UID  = #{uid}
+        WHERE LOGINID = #{loginid}
         ]]>
   </update>
   

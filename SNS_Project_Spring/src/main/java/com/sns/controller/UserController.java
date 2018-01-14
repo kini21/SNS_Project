@@ -72,6 +72,15 @@ public class UserController {
     		session.setAttribute("user", userService.getUser(vo));
     		return "index";
     	}
+    
+ // 회원정보 수정
+    @RequestMapping(value="updateUser.do")
+    public String updateUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
+    		System.out.println("회원정보 수정 처리");
+    		userService.updateUser(vo);
+    		session.setAttribute("user", userService.getUser(vo));
+    		return "index";
+    	}
    
    @RequestMapping(value="getUserList.do", method=RequestMethod.GET) 
    public ModelAndView getUserList(@RequestParam("searchKeyword") String searchKeyword, ModelAndView mav) {

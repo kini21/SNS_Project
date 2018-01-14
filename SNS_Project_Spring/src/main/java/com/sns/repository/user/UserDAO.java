@@ -43,4 +43,9 @@ public class UserDAO {
     	System.out.println("===> Mybatis로 getExistUserId() 기능 처리");
         return mybatis.selectOne("userDAO.existUserId", loginid);
     }
+    
+    public int getExistUserEmail(String email) {
+    	System.out.println("===> Mybatis로 getExistUserEmail() 기능 처리");
+        return mybatis.selectOne("userDAO.existUserEmail", email);
+    }
 }

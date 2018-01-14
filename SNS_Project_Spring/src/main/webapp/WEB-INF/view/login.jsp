@@ -24,6 +24,9 @@ $(document).ready(function(){
   $('#loginid').keyup(function(){
 	  var a = id_chk();
   });
+  $('#email').keyup(function() {
+	 var a = email_chk(); 
+  });
 });
 </script>
 <script type="text/javascript">
@@ -56,23 +59,44 @@ function id_chk() {
             $('#idcheck').css('color', 'red');
             return false;
                  }
-          else if(loginid.length >= 13){
+          else if(loginid.length >= 13) {
               $('#idcheck').val('12자 초과');
               $('#idcheck').css('color', 'red');
               return false;
-            }
-          else{
+           } else {
               $('#idcheck').val('사용가능');
               $('#idcheck').css('color', 'blue');
               return true;
-                 }
-              });    
-            }
-      else{
+           }
+         });    
+      } else{
           $('#idcheck').val('4자 미만');
           $('#idcheck').css('color', 'red');
           return false;
         }
+}
+
+function email_chk() {
+	var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
+    var addr = "<c:url value='/user/loginEmailCheck.do' />";
+    var email = $('#email').val();
+    if (regExp2.test(email)) {
+        $.post(addr, {"email":email}, function(data) {
+         if(data.ret =='y'){
+            $('#emailcheck').val('사용불가');
+            $('#emailcheck').css('color', 'red');
+            return false;
+         	} else {
+              $('#emailcheck').val('사용가능');
+              $('#emailcheck').css('color', 'blue');
+              return true;
+         }
+        });    
+     } else{
+       $('#emailcheck').val('사용불가');
+       $('#emailcheck').css('color', 'red');
+       return false;
+     }
 }
 function register_check() {
 	event.preventDefault();
@@ -145,9 +169,13 @@ function register_check() {
         document.register_form.nick.focus();
         return false;
     }
-	
+
 	if($('#idcheck').val() == '사용가능') {
-		document.register_form.submit();
+		if($('#emailcheck').val() == '사용가능') {
+			document.register_form.submit();
+		} else {
+			alert("이메일이 중복됩니다. 다른 이메일로 다시 입력해주세요.");
+		}
 	} else {
 		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
 		return false;
@@ -245,6 +273,10 @@ function register_check() {
                         <!-- insert email -->
                         <div class="form-group">
                           <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="이메일" value="">
+                        </div>
+                        
+                        <div class="form-group">
+                        	<input type="text" id="emailcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
                         </div>
 						
 						<!-- insert nick -->
