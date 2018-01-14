@@ -12,19 +12,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 		
 	<context:component-scan base-package="com.sns" />
-<!-- 
-Spring MVC 설정 시 정적 파일 (CSS, IMAGE, JS), Default 요청 처리 하기
- * VIEW에서 정적 파일을 못 읽어올 때 사용한다.
-	 
- * dispacther-servlet에서 설정예제
-    - <mvc:resources location="/common/js/**" mapping="/common/js/" />
-	 
- * view에 사용예제
-    - view에서 사용 시에 <c:url>을 반드시 사용해야 한다.
-    - CSS   : <link href="<c:url value="/common/css/search.css" />" rel="stylesheet" type="text/css">
-    - JS    : <script type="text/javascript" src="<c:url value="/common/js/menu.js" />"></script>
-    - IMAGE : <img src="<c:url value="/common/img/logo.png" />">
- -->
+
 	<mvc:resources location="/common/js/**" mapping="/common/js/" />
 	<mvc:resources location="/common/css/**" mapping="/common/css/" />
 	<mvc:resources location="/common/img/**" mapping="/common/img/" />
@@ -58,6 +46,11 @@ Spring MVC 설정 시 정적 파일 (CSS, IMAGE, JS), Default 요청 처리 하�
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
 	        <property name="prefix" value="/WEB-INF/view/"/>
 	        <property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- MULTIPART RESOLVERS -->  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="1000000000" />
 	</bean>
 	
 </beans>
