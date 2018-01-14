@@ -1,8 +1,11 @@
 package com.sns.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +39,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(UserVO vo, HttpSession session) {		
+	public String login(HttpServletRequest req, HttpSession session) {		
+		
+		String loginid = req.getParameter("loginid");
+		String password = req.getParameter("password");
+		   
+		UserVO vo = new UserVO();
+		vo.setLoginid(loginid);
+	    vo.setPassword(password);
+		
 		UserVO user = userService.getUser(vo);
 		
-		if(user != null) {
-			System.out.println("로그인 처리");
-			session.setAttribute("user", user);
-			return "index";
-		} else {
-			return "login";
-		}
+		System.out.println("로그인 처리");
+		session.setAttribute("user", user);
+		return "index";
+		
 	}
 	
 	@RequestMapping(value="logout.do")

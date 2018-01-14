@@ -1,6 +1,8 @@
 package com.sns.user;
 
 import java.util.List;
+import java.util.Map;
+
 import com.sns.user.UserVO;
 
 public interface UserService {

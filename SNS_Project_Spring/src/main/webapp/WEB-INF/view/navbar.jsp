@@ -52,10 +52,10 @@ function follow_search() {
             $(responseData.userlist).each(
             		function(){
 		            html += '<tr>';
-		            html += '<td>' +  this.nick + '<td>';
-		            html += '<td>'+ this.loginid + '<td>';
-		            html += '<td>' + this.email + '<td>';
-		            html += '<td>언팔로우<td>';
+		            html += '<td>' +  this.nick + '</td>';
+		            html += '<td>'+ this.loginid + '</td>';
+		            html += '<td>' + this.email + '</td>';
+		            html += '<td>언팔로우</td>';
 		            html += '</tr>';
             		
 		            $('#userListTable > tbody:last').empty();
