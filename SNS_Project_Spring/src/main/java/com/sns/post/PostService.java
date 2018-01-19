@@ -20,5 +20,8 @@ public interface PostService {
 		
 		// 포스트 목록 조회
 		List<PostVO> getPostList();
+		
+		// 특정 유저의 포스트 목록 조회
+		List<PostVO> getUserPostList(PostVO vo);
 
 }

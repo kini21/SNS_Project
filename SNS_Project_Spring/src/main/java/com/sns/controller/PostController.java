@@ -3,6 +3,7 @@ package com.sns.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,9 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,13 +27,77 @@ import com.sns.post.PostService;
 import com.sns.post.PostVO;
 import com.sns.post.file.PostFileService;
 import com.sns.post.file.PostFileVO;
+import com.sns.user.UserService;
+import com.sns.user.UserVO;
 
 @Controller
 @RequestMapping("post")
 public class PostController {
 	
+	@Autowired private UserService userService;
 	@Autowired private PostService postService;
 	@Autowired private PostFileService postfileService;
+	
+	@RequestMapping(value="mainContent.do")
+	public String mainContent(Model model, HttpSession session) {
+		List postInfoList = new ArrayList();	// view로 전달할 데이터를 저장하는 변수.
+		
+//		session을 이용해 현재 사용자의 정보를 가져온다.
+		UserVO sessionInfo = (UserVO) session.getAttribute("user");
+		UserVO user = userService.getUser(sessionInfo);
+		
+//		session을 이용해 현재 사용자의 포스트 게시판을 가져온다.
+		PostVO selectpost = new PostVO();
+		selectpost.setUser_uid(sessionInfo.getUid());
+		
+		List<PostVO> postList = postService.getUserPostList(selectpost);
+		
+		for(int i=0; i<postList.size(); i++) {
+			
+			Map postInfo = new HashMap();	// postInfoList에 값을 순차적으로 저장하기 위한 변수 선언.
+			
+//			사용자 정보 중 view에 출력하기 위한 정보 저장.
+			postInfo.put("nick", user.getNick());	// 닉네임.
+			postInfo.put("loginid", user.getLoginid());		// ID.
+			
+//			포스트 게시판을 출력하기 위해 필요한 정보 저장.
+			postInfo.put("contents", postList.get(i).getContents());	// 본문
+			
+//			날짜를 양식에 맞춰서 저장한다.
+			String pdate = postList.get(i).getPdate();
+			String[] datetime = pdate.split("\\s+");
+			String[] date = datetime[0].split("-");
+			String[] time = datetime[1].split(":");
+			String times = (Integer.parseInt(time[0]) >= 12) ?  "오후 " + (Integer.parseInt(time[0])-12) : "오전 " + time[0];
+			
+			postInfo.put("datetime",  times + ":" + time[1] + " - " + date[0] + "년 " + date[1] + "월 " + date[2] + "일"); // tooltipe에 저장되는 날짜 정보.
+			postInfo.put("date", date[1] + "월 " + date[2] + "일"); // view에 출력되는 날짜 정보.
+			
+//			게시글에 해당되는 파일을 가져온다.
+			PostFileVO selectfile = new PostFileVO();
+			selectfile.setPid(postList.get(i).getPid());
+			
+			List<PostFileVO> postFile = postfileService.getPostFile(selectfile);
+			
+//			view에서 보여질 전체 이미지를 저장한다.
+			List imageList = new ArrayList();
+			for(int j=0; j<postFile.size(); j++) {
+				String image_path = File.separator + "common" + File.separator + "post" + File.separator + postFile.get(j).getFile_name() + "." + postFile.get(j).getFile_type();
+				Map image = new HashMap();
+				image.put("image", image_path);
+				
+				imageList.add(image);
+			}
+			postInfo.put("imageList", imageList);
+			
+//			postInfo를 순차적으로 postInfoList에 저장한다.
+			postInfoList.add(postInfo);
+		}
+//		view로 postInfoList를 전달한다.
+		model.addAttribute("postInfoList", postInfoList);
+		
+		return "mainContent";
+	}
 	
 	@RequestMapping(value="writePost.do", method=RequestMethod.POST)
 	public ModelAndView writePost(MultipartHttpServletRequest req, HttpServletResponse res) {

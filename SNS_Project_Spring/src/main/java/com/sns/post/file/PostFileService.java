@@ -12,11 +12,8 @@ public interface PostFileService {
 			// 포스트 파일 삭제
 			void deletePostFile(PostFileVO vo);
 
-			// 포스트 파일 상세 조회
-			PostFileVO getPostFile(PostFileVO vo);
-			
-			// 포스트 파일 목록 조회
-			List<PostFileVO> getPostFileList();
+			// 포스트 파일 상세 목록 조회
+			List<PostFileVO> getPostFile(PostFileVO vo);
 			
 			// 그룹키 생성
 			String getGroupKey();

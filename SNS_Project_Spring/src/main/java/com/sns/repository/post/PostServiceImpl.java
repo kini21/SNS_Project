@@ -39,4 +39,9 @@ public class PostServiceImpl implements PostService {
 		return postDAO.getPostList();
 	}
 
+	@Override
+	public List<PostVO> getUserPostList(PostVO vo) {
+		return postDAO.getUserPostList(vo);
+	}
+
 }

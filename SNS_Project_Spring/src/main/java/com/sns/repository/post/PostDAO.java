@@ -39,5 +39,10 @@ public class PostDAO {
         System.out.println("===> Mybatis로 getPostList() 기능 처리");
         return mybatis.selectList("postDAO.getPostList", null);
     }
+    
+    public List<PostVO> getUserPostList(PostVO vo) {
+        System.out.println("===> Mybatis로 getUserPostList() 기능 처리");
+        return mybatis.selectList("postDAO.getUserPostList", vo);
+    }
 
 }

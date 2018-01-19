@@ -29,7 +29,7 @@
 				<jsp:include page="sidebar.jsp" flush="false" />
 			</div>
 			<div class="col-md-9">
-				<jsp:include page="mainContent.jsp" flush="false" />
+				<jsp:include page="/post/mainContent.do"></jsp:include>
 			</div>
 		</div>
 	</div>

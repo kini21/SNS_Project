@@ -18,15 +18,21 @@
               FROM POST
         ]]>
   </select>
+  
+  <select id="getUserPostList" resultType="post">
+        <![CDATA[
+            SELECT *
+              FROM POST
+             WHERE USER_UID = ${user_uid}
+        ]]>
+  </select>
    
   <insert id="insertPost" parameterType="post" >
         <![CDATA[ 
             INSERT INTO POST ( CONTENTS
-                             , USER_UID
-                             , PDATE )
+                             , USER_UID)
 		              VALUES ( #{contents}
-		                     , #{user_uid}
-		                     , SYSDATE() )
+		                     , #{user_uid})
 		]]>
   </insert>
   

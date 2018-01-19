@@ -24,14 +24,9 @@ public class PostFileDAO {
         mybatis.delete("postfileDAO.deletePostFile", vo);
     }
 
-    public PostFileVO getPostFile(PostFileVO vo) {
+    public List<PostFileVO> getPostFile(PostFileVO vo) {
         System.out.println("===> Mybatis로 getPostFile() 기능 처리");
-        return mybatis.selectOne("postfileDAO.getPostFile", vo);
-    }
-    
-    public List<PostFileVO> getPostFileList() {
-        System.out.println("===> Mybatis로 getPostFileList() 기능 처리");
-        return mybatis.selectList("postfileDAO.getPostFileList", null);
+        return mybatis.selectList("postfileDAO.getPostFile", vo);
     }
     
     public String getGroupKey() {

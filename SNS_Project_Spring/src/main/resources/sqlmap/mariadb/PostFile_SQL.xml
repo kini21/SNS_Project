@@ -14,10 +14,6 @@
   <select id="selectGroupKey" parameterType="hashmap" resultType="string">
 		SELECT REPLACE(UUID() , '-' , '') AS GUID
   </select>
-  
-  <select id="getPostFileList" resultType="postfile">
-        <![CDATA[ SELECT * FROM POST_FILE ]]>
-  </select>
    
   <insert id="insertPostFile" parameterType="postfile" >
         <![CDATA[ 

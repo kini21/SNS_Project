@@ -25,13 +25,8 @@ public class PostFileServiceImpl implements PostFileService {
 	}
 
 	@Override
-	public PostFileVO getPostFile(PostFileVO vo) {
+	public List<PostFileVO> getPostFile(PostFileVO vo) {
 		return postfileDAO.getPostFile(vo);
-	}
-
-	@Override
-	public List<PostFileVO> getPostFileList() {
-		return postfileDAO.getPostFileList();
 	}
 
 	@Override

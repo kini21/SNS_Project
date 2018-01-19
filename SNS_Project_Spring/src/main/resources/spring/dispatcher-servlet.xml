@@ -16,6 +16,7 @@
 	<mvc:resources location="/common/js/**" mapping="/common/js/" />
 	<mvc:resources location="/common/css/**" mapping="/common/css/" />
 	<mvc:resources location="/common/img/**" mapping="/common/img/" />
+	<mvc:resources location="/common/post/**" mapping="/common/post/" />
 	
 	<mvc:annotation-driven />
 	
