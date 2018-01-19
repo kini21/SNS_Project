@@ -110,18 +110,14 @@
 													</div>
 													
 													<!-- 본문 이미지 영역 -->									
- 													<div class="imgBoxContainer">
- 														<div class="imgBox">
-															<c:forEach items="${postInfoList.imageList}" var="imageList" varStatus="status2">	
-																<div class="soleImg">
-																	<div class="imgInnerContainer">
-																	<!-- (수정사항) 그림이 가로로 정렬되서 나오지 않고 세로로 정렬되서 나옴. -->
-																		<img src="<c:url value='${imageList.image}' />" style="width: 100%; height: 100%" />
-																	</div>
-																</div>
-															</c:forEach>
-														</div>
+													<div class="imgBoxContainer">
+														<c:forEach items="${postInfoList.imageList}" var="imageList" varStatus="status2">
+															<div class="imgBox">	
+																<img src="<c:url value='${imageList.image}' />" style="width: 100%; height: 100%" />
+															</div>
+														</c:forEach>
 													</div>
+													
 												</div>
 											</a>
 											
