@@ -220,7 +220,7 @@ function register_check() {
 
 
                       <!-- login form -->
-                      <form id="login-form" name="login_form" <%-- action="<c:url value="/user/login.do" />" --%>  method="post" role="form" style="display: block;">
+                      <form id="login-form" name="login_form" method="post" role="form" style="display: block;">
                         <h2>로그인</h2>
 
                         <!-- insert id -->

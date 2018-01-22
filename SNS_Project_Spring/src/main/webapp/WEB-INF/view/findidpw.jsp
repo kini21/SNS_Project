@@ -29,8 +29,6 @@ function email_chk() {
 	  } else if (regExp2.test(email)) {
 	        $.post(addr, {"email":email}, function(data) {
 	            if(data.emailcheck =='yes'){
-	           	    /* $('#emailCheck').html('<span>존재하는 이메일입니다.</span>');
-	                $('#emailCheck').css('color', 'red'); */
 	                $("#send_email").attr("action", "<c:url value= '/user/sendidpw.do' />").submit();
 	               return true;
 	            	} else {
