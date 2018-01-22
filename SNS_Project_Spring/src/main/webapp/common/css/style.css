@@ -176,35 +176,16 @@ ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
 }
 
 .imgBoxContainer {
-  margin-top: -10px;
+  height:150px;
+  width: 700px;
 }
 
 .imgBox {
   border-radius: 5px;
   display: inline-block;
-  overflow: hidden;
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  max-height: 400px;
-  max-width: 400px;
-}
-
-.soleImg {
-  padding-top: calc(0.66625 * 100% - 0.5px);
-}
-
-.imgInnerContainer {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 100%;
-  height: 95%;
+  height: 100%;
+  width: 150px;
+  margin-left: 3px;
 }
 
 .content_footer {
@@ -238,9 +219,9 @@ ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
 }
 
 .iconBox {
-  display: inline-block;
+  /* display: inline-block; */
   line-height: 0;
-  position: relative;
+  /* position: relative; */
 }
 
 .ddabongCnt {
@@ -437,24 +418,6 @@ a.MOVE_TOP_BTN:hover {
   text-overflow:ellipsis;
 }
 
-.text_count2 {
-  max-width: 550px;
-  white-space:nowrap;
-}
-
-.text_count2 a {
-  display: inline-block;
-  text-overflow: ellipsis;
-  max-width: 50%;
-  overflow: hidden;
-  color: #000;
-}
-
-.text_count2 a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
 .profile_body {
   width: 500px;
   margin: 0 auto;
@@ -552,12 +515,4 @@ label {
 .btn-profile:focus {
   color: #fff;
   background-color: #2D3B55;
-}
-
-#listModal {
-  overflow: auto;
-}
-
-#messageModal {
-  overflow: auto;
 }
