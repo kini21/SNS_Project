@@ -48,4 +48,9 @@ public class UserDAO {
     	System.out.println("===> Mybatis로 getExistUserEmail() 기능 처리");
         return mybatis.selectOne("userDAO.existUserEmail", email);
     }
+    
+    public UserVO getFindIDPW(UserVO vo) {
+        System.out.println("===> Mybatis로 getFindIDPW() 기능 처리");
+        return mybatis.selectOne("userDAO.getFindIDPW", vo);
+    }
 }

@@ -63,9 +63,9 @@ public class UserCheckController {
        Map<String, String> map = new HashMap<String,String>();
        int r = userService.getExistUserEmail(email);
 
-       map.put("ret", "y");
+       map.put("emailcheck", "yes");
        if(r<=0){
-           map.put("ret", "n");
+           map.put("emailcheck", "no");
        }
        return map;
    }

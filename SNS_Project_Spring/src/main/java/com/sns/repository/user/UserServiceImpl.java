@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
     public int getExistUserEmail(String email) {
     	return userDAO.getExistUserEmail(email);
     }
+    
+    @Override
+	public UserVO getFindIDPW(UserVO vo) {
+		return userDAO.getFindIDPW(vo);
+	}
 }

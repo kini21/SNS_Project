@@ -26,4 +26,6 @@ public interface UserService {
 	int getExistUserId(String loginid);
 	
 	int getExistUserEmail(String email);
+	
+	UserVO getFindIDPW(UserVO vo);
 }

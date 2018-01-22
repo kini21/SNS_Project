@@ -30,6 +30,13 @@
            WHERE EMAIL = #{email}
            ]]>
   </select>
+  
+  <select id="getFindIDPW" resultType="users">
+	      <![CDATA[
+	      SELECT NICK AS NICK, LOGINID AS LOGINID, EMAIL AS EMAIL, PASSWORD AS PASSWORD
+		  FROM USERS WHERE EMAIL = #{email};
+		  ]]>
+  </select>
    
   <insert id="insertUser" parameterType="users" >
         <![CDATA[ 

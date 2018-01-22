@@ -241,7 +241,7 @@ function register_check() {
                         <div class="col-xs-6 form-group pull-left checkbox">
                           <input id="checkbox1" type="checkbox" name="remember">
                           <label for="checkbox1">ID 저장</label>
-                          <a href="#" class="forgot-password">비밀번호 찾기</a>
+                          <a href="<c:url value="/user/findidpw.do" />" class="forgot-password">아이디  · 비밀번호 찾기</a>
                         </div>
                         
                         <!-- login button -->
