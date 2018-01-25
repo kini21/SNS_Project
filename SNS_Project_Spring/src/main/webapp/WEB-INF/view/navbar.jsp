@@ -57,7 +57,6 @@
 					html += '<tr>';
 					html += '<td>' + this.nick + '</td>';
 					html += '<td>' + this.loginid + '</td>';
-					html += '<td>' + this.email + '</td>';
 					html += '<td>언팔로우</td>';
 					html += '</tr>';
 
@@ -432,7 +431,7 @@
 											<th>닉네임</th>
 											<th>아이디</th>
 											<th>이메일</th>
-											<th>#</th>
+											<th>팔로잉 여부</th>
 										</tr>
 									</thead>
 									<tbody>

@@ -85,6 +85,7 @@ public class UserController {
     @RequestMapping(value="updateUser.do")
     public String updateUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
     		System.out.println("회원정보 수정 처리");
+    		model.addAttribute("updateCompleteMsg",true);
     		userService.updateUser(vo);
     		session.setAttribute("user", userService.getUser(vo));
     		return "index";
