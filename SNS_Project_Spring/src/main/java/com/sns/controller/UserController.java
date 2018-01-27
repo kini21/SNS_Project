@@ -114,7 +114,7 @@ public class UserController {
      
      System.out.println(user.getEmail());
      System.out.println(user.getLoginid());
-     String setfrom = "youremail@gmail.com";         
+     String setfrom = "bigchoong@gmail.com";         
      String tomail  = user.getEmail();     // 받는 사람 이메일
      String title   = user.getNick() + "님의 아이디와 비밀번호 입니다.";      // 제목
      String content = user.getNick() + "님의 아이디는 " 
