@@ -103,8 +103,8 @@
 
 	function result(data) {
 		if (data.success) {
-			/* window.location.href="<c:url value='/page/index.html' />"; */
-			window.location.reload();
+			window.location.href="<c:url value='/user/index.do' />";
+			/* window.location.reload(); */
 		}
 	}
 </script>
