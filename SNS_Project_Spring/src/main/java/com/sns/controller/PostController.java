@@ -68,9 +68,17 @@ public class PostController {
 			String[] datetime = pdate.split("\\s+");
 			String[] date = datetime[0].split("-");
 			String[] time = datetime[1].split(":");
-			String times = (Integer.parseInt(time[0]) >= 12) ?  "오후 " + (Integer.parseInt(time[0])-12) : "오전 " + time[0];
+			String ampm = (Integer.parseInt(time[0]) >= 12 && Integer.parseInt(time[0]) < 24) ?  "오후 " : "오전 ";
+			String hour = null;
+			if(Integer.parseInt(time[0]) > 12 && Integer.parseInt(time[0]) < 24) {
+				hour = Integer.toString(Integer.parseInt(time[0])-12);
+			} else if(Integer.parseInt(time[0]) == 24) {
+				hour = "0";
+			} else {
+				hour = time[0];
+			}
 			
-			postInfo.put("datetime",  times + ":" + time[1] + " - " + date[0] + "년 " + date[1] + "월 " + date[2] + "일"); // tooltipe에 저장되는 날짜 정보.
+			postInfo.put("datetime",  ampm + hour + ":" + time[1] + " - " + date[0] + "년 " + date[1] + "월 " + date[2] + "일"); // tooltipe에 저장되는 날짜 정보.
 			postInfo.put("date", date[1] + "월 " + date[2] + "일"); // view에 출력되는 날짜 정보.
 			
 //			게시글에 해당되는 파일을 가져온다.

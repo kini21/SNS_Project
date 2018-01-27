@@ -117,15 +117,16 @@
 														<p class="text_box">${postInfoList.contents}</p>
 													</div>
 													
-													<!-- 본문 이미지 영역 -->									
-													<div class="imgBoxContainer">
-														<c:forEach items="${postInfoList.imageList}" var="imageList" varStatus="status2">
-															<div class="imgBox">	
-																<img src="<c:url value='${imageList.image}' />" style="width: 100%; height: 100%" />
-															</div>
-														</c:forEach>
-													</div>
-													
+													<!-- 본문 이미지 영역 -->
+													<c:if test="${not empty postInfoList.imageList}">							
+														<div class="imgBoxContainer">
+															<c:forEach items="${postInfoList.imageList}" var="imageList" varStatus="status2">
+																<div class="imgBox">	
+																	<img src="<c:url value='${imageList.image}' />" style="width: 100%; height: 100%" />
+																</div>
+															</c:forEach>
+														</div>
+													</c:if>
 												</div>
 											</a>
 											
