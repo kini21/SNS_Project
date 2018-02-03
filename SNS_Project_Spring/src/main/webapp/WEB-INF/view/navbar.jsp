@@ -111,41 +111,36 @@
 
 <body>
 
-	<nav class="navbar navbar-default navbar-fixed-top"
-		style="background-color: #83abc6;">
+	<nav class="navbar navbar-default navbar-fixed-top" style="background-color: #83abc6;">
 		<div class="container center-block">
 
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">BLUECOCO</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"
-						style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey;">
-							<span class="glyphicon glyphicon-bullhorn"></span>&nbsp;알림<span
-							class="badge">50</span>
-					</a> <span class="caret"></span>
+					<li>
+						<a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey;">
+							<span class="glyphicon glyphicon-bullhorn"></span>&nbsp;알림<span class="badge">50</span>
+						</a>
+						<span class="caret"></span>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 							<a href="#">
 								<li class="nav_dropdown_menu_li">
 									<div class="row" style="width: 100%">
-										<img class="nav_content_img"
-											src='<c:url value="/common/img/circle.gif" />' />
+										<img class="nav_content_img" src='<c:url value="/common/img/circle.gif" />' />
 										<div class="nav_text">
 											<div class="nav_text_box1">
 												<div class="text_count">
-													<span><strong>사용자</strong>님이 <strong>장소</strong>에
-														게시글을 올렸습니다.</span>
+													<span><strong>사용자</strong>님이 <strong>장소</strong>에 게시글을 올렸습니다.</span>
 												</div>
 											</div>
 											<div class="nav_text_box2">
@@ -153,7 +148,7 @@
 											</div>
 										</div>
 									</div>
-							</li>
+								</li>
 							</a>
 							<a href="#">
 								<li class="nav_dropdown_menu_li">
@@ -194,22 +189,20 @@
 							</li>
 							</a>
 
-						</ul></li>
+						</ul>
+					</li>
 
 
-					<li><a href="#listModal" data-toggle="modal"
-						style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
-							<span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지 <span
-							class="badge">50</span>
-					</a>
+					<li>
+						<a href="#listModal" data-toggle="modal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
+							<span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지 <span class="badge">50</span>
+						</a>
 
-						<div class="modal fade bs-example-modal-lg" id="listModal"
-							style="display: none; z-index: 1050;" aria-hidden="true">
+						<div class="modal fade bs-example-modal-lg" id="listModal" style="display: none; z-index: 1050;" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true" style="outline: none;">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline: none;">
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">쪽지</h4>
@@ -224,11 +217,11 @@
 											</tr>
 											<tr>
 												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													data-toggle="modal" href="#messageModal"
-													style="outline: none;">
+												<td class="text_count2" style="text-align: center;">
+													<a data-toggle="modal" href="#messageModal" style="outline: none;">
 														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
+													</a>
+												</td>
 												<td style="text-align: center;">2017-12-16</td>
 											</tr>
 											<tr>
@@ -275,21 +268,18 @@
 
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">취소</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 										<button type="button" class="btn btn-primary">확인</button>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="modal fade bs-example-modal-lg" id="messageModal"
-							style="display: none; z-index: 1060;" aria-hidden="true">
+						<div class="modal fade bs-example-modal-lg" id="messageModal" style="display: none; z-index: 1060;" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true" style="outline: none;">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline: none;">
 											<span aria-hidden="true">&times;</span>
 										</button>
 										<h4 class="modal-title">쪽지</h4>
@@ -304,17 +294,16 @@
 												<td>2017-12-16</td>
 											</tr>
 											<tr>
-												<td colspan="4"><textarea
-														style="width: 100%; height: 400px">
-                              준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-                            </textarea></td>
+												<td colspan="4">
+													<textarea style="width: 100%; height: 400px">준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+													</textarea>
+												</td>
 											</tr>
 										</table>
 
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">취소</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 										<button type="button" class="btn btn-primary">확인</button>
 									</div>
 								</div>
@@ -397,30 +386,23 @@
 
 
 
-				<form class="navbar-form navbar-left" name="search_form"
-					action='<c:url value="/user/getUserList.do" />' role="search">
+				<form class="navbar-form navbar-left" name="search_form" action='<c:url value="/user/getUserList.do" />' role="search">
 					<div class="form-group">
-						<label class="sr-only" for="form-control">팔로우 검색</label> <input
-							type="text" name="searchKeyword" id="searchKeyword"
-							class="form-control" placeholder="팔로우 검색">
+						<label class="sr-only" for="form-control">팔로우 검색</label>
+						<input type="text" name="searchKeyword" id="searchKeyword" class="form-control" placeholder="팔로우 검색">
 					</div>
-					<button type="button" id="search_submit" class="btn btn-default"
-						data-toggle="modal" data-target="#followSearchModal">검색</button>
+					<button type="button" id="search_submit" class="btn btn-default" data-toggle="modal" data-target="#followSearchModal">검색</button>
 				</form>
 
 				<!-- Modal -->
-				<div class="modal fade" id="followSearchModal" tabindex="-1"
-					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal fade" id="followSearchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
-							<div class="modal-header"
-								style="background-color: #83abc6; border-radius: 6px 6px 0 0;">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
+							<div class="modal-header" style="background-color: #83abc6; border-radius: 6px 6px 0 0;">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="writeLabel" style="color: #fff;">팔로우
-									검색 목록</h4>
+								<h4 class="modal-title" id="writeLabel" style="color: #fff;">팔로우 검색 목록</h4>
 							</div>
 
 							<div class="modal-body">
@@ -439,8 +421,7 @@
 								</table>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary"
-									data-dismiss="modal">확인</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 							</div>
 
 						</div>
@@ -448,9 +429,11 @@
 				</div>
 
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value='/user/logout.do' />"
-						style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey;"><span
-							class="glyphicon glyphicon-log-in"></span>&nbsp;로그아웃</a></li>
+					<li>
+						<a href="<c:url value='/user/logout.do' />" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey;">
+							<span class="glyphicon glyphicon-log-in"></span>&nbsp;로그아웃
+						</a>
+					</li>
 				</ul>
 
 				<!-- 글쓰기 영역 -->
