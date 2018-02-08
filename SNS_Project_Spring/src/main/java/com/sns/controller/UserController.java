@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sns.follow.FollowService;
+import com.sns.follow.FollowVO;
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
 
@@ -29,14 +32,16 @@ import com.sns.user.UserVO;
 @RequestMapping("user")
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private JavaMailSender mailSender;
+	@Autowired private UserService userService;
+	@Autowired private FollowService followService;
+	@Autowired private JavaMailSender mailSender;
 	
 	@RequestMapping(value="index.do")
-	public String index() {	
+	public String index(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		FollowVO fvo = new FollowVO();
+		fvo.setFrom_uid(user.getUid());
+		session.setAttribute("follow", followService.countFollow(fvo));
 	 	return "index";
 	}
 	
@@ -47,7 +52,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(HttpServletRequest req, HttpSession session) {		
+	public String login(HttpServletRequest req, HttpSession session, Model model) {		
 		
 		String loginid = req.getParameter("loginid");
 		String password = req.getParameter("password");
@@ -60,7 +65,8 @@ public class UserController {
 		
 		System.out.println("로그인 처리");
 		session.setAttribute("user", user);
-		return "index";
+		
+		return "redirect:index.do";
 		
 	}
 	
@@ -77,8 +83,11 @@ public class UserController {
     		System.out.println("회원가입 처리");
     		model.addAttribute("welcomeMsg",true);
     		userService.insertUser(vo);
-    		session.setAttribute("user", userService.getUser(vo));
-    		return "index";
+    		
+    		UserVO user = userService.getUser(vo);
+    		session.setAttribute("user", user);
+    		
+    		return "redirect:index.do";
     	}
     
  // 회원정보 수정
@@ -87,7 +96,10 @@ public class UserController {
     		System.out.println("회원정보 수정 처리");
     		model.addAttribute("updateCompleteMsg",true);
     		userService.updateUser(vo);
-    		session.setAttribute("user", userService.getUser(vo));
+    		
+    		UserVO user = userService.getUser(vo);
+    		session.setAttribute("user", user);
+    		
     		return "index";
     	}
    

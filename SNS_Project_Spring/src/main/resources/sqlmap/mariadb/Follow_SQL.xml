@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="followDAO">
+        
+  <select id="getFollowList" resultType="follow">
+        <![CDATA[
+            SELECT *
+              FROM FOLLOW
+             WHERE USER_UID = ${user_uid}
+        ]]>
+  </select>
+   
+  <insert id="insertFollow" parameterType="follow">
+        <![CDATA[ 
+            INSERT INTO FOLLOW ( FROM_UID
+                             , TO_UID)
+		              VALUES ( #{from_uid}
+		                     , #{to_uid})
+		]]>
+  </insert>
+  
+  <delete id="deleteFollow" parameterType="follow" >
+       <![CDATA[ 
+           DELETE FROM FOLLOW
+            WHERE FROM_UID = ${from_uid} AND TO_UID = ${to_uid}
+       ]]>
+  </delete>
+  
+  <select id="checkFollow" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*) AS CHKFOLLOWCNT
+              FROM FOLLOW
+             WHERE FROM_UID = ${from_uid} AND TO_UID = ${to_uid}
+        ]]>
+  </select>
+  
+  <select id="countFollow" resultType="int">
+        
+            SELECT COUNT(*) AS COUNTFOLLOW
+              FROM FOLLOW
+             WHERE FROM_UID = ${from_uid}
+  </select>
+  
+</mapper>

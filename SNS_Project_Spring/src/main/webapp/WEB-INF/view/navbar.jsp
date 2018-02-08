@@ -41,7 +41,8 @@
 		event.preventDefault();
 
 		var addr = "<c:url value='/user/getUserList.do' />";
-
+		var id = '${user.loginid}';
+		
 		$.ajax({
 			url : addr,
 			type : "get",
@@ -54,12 +55,20 @@
 
 				$("#ajax").remove();
 				$(responseData.userlist).each(function() {
-					html += '<tr>';
+					
+				  if(id == this.loginid){
+					    html += '<tr style="cursor:pointer" onclick=\"otherUserTimeline() \">';
+						html += '<td>' + this.nick + '</td>';
+						html += '<td>' + this.loginid + '</td>';
+						html += '<td>나</td>';
+						html += '</tr>';
+				  }	else{ 
+					html += '<tr style="cursor:pointer" onclick=\"otherUserTimeline(\'' + this.uid + '\')\">';
 					html += '<td>' + this.nick + '</td>';
 					html += '<td>' + this.loginid + '</td>';
 					html += '<td>언팔로우</td>';
 					html += '</tr>';
-
+				 } 
 					$('#userListTable > tbody:last').empty();
 					$('#userListTable > tbody:last').append(html);
 				});// end each
@@ -67,7 +76,17 @@
 		});// end ajax		
 	}
 </script>
+<script>
+function otherUserTimeline(uid){
+	if(uid > 0){
+		window.location.href= '<c:url value="/follow/getOtherUser.do" />?uid=' + uid;
+	} else {
+		window.location.href= '<c:url value="/user/index.do" />';
+	}
+	
+}
 
+</script>
 <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
 <script src="<c:url value='/common/js/file.choose.js' />"></script>
 <!-- file choose -->
@@ -434,7 +453,7 @@
 										</tr>
 									</thead>
 									<tbody>
-
+									
 									</tbody>
 								</table>
 							</div>

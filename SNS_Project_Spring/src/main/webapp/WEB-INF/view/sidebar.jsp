@@ -15,9 +15,64 @@
 	<title>sidebar</title>
 	<link href='<c:url value="/common/css/bootstrap.min.css"/>' rel="stylesheet">
     <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
+    <script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
-<body>
-	
+<script type="text/javascript">
+    $(document).ready(function() {
+       $("#follow").on('click', function() {           
+           var insertAddr = "<c:url value='/follow/insertFollow.do' />";
+           var delAddr = "<c:url value='/follow/deleteFollow.do' />";
+   	  	   var from_uid = "${user.uid}";
+   	  	   var to_uid = "${otherUser.uid}";
+              
+            if($('#follow').attr('data-following') == 'false') { // FOLLOW
+                $.post(insertAddr, {"from_uid" : from_uid, "to_uid" : to_uid} , function(data) {
+                });
+                
+                $('#follow').attr('data-following', 'true');
+                $(this).removeClass('btn btn-default btn-lg');
+                $('#follow').mouseover(function(){
+                	$('#follow').text('언팔로우');
+                	$(this).removeClass('btn btn-info btn-lg');
+                	$(this).addClass('btn btn-danger btn-lg');
+                });
+                $('#follow').mouseout(function(){
+                	$('#follow').text('팔로잉');
+                	$(this).removeClass('btn btn-danger btn-lg');
+                	$(this).addClass('btn btn-info btn-lg');
+                });
+            }  else { // UNFOLLOW
+                $.post(delAddr, {"from_uid" : from_uid, "to_uid" : to_uid} , function(data) {
+                });
+                $('#follow').attr('data-following', 'false');
+                $('#follow').mouseover(function(){
+                	$('#follow').text('팔로우');
+                	$(this).removeClass('btn btn-danger btn-lg').addClass('btn btn-default btn-lg');
+                });
+                $('#follow').mouseout(function(){
+                	$('#follow').text('팔로우');
+                	$(this).removeClass('btn btn-info btn-lg').addClass('btn btn-default btn-lg');
+                });
+            } 
+       });
+       
+       if($('#follow').attr('data-following') == 'true') {
+    		   $('#follow').mouseover(function(){
+               	$('#follow').text('언팔로우');
+               	$(this).removeClass('btn btn-info btn-lg');
+               	$(this).addClass('btn btn-danger btn-lg');
+               });
+               $('#follow').mouseout(function(){
+               	$('#follow').text('팔로잉');
+               	$(this).removeClass('btn btn-danger btn-lg');
+               	$(this).addClass('btn btn-info btn-lg');
+               });
+       }
+   });
+</script>
+	<body>
           <div class="sidebar">
           <div class="sidebarProfile">
             <a class="profileCardLink" href="#" aria-hidden="true"></a>
@@ -25,15 +80,31 @@
               <a class="profileImgLink" href="#" title="nickname" aria-hidden="true">
                 <img src='<c:url value="/common/img/circle.gif" />' alt="70x70" class="img-circle" width="70" height="70">
               </a>
+          
+               <c:choose>
+				    <c:when test="${otherUser ne null}">
+				    <input type="hidden" id="to_uid" value="${otherUser.uid}" />
+				      <div class="profileUseridAndNick">
+		                <div class="userid">
+		                  <a href="#" style="color: inherit!important;">${otherUser.nick}</a>
+		                </div>
+		                <span class="userNick">
+		                  <a class="uN" href="#">@${otherUser.loginid}</a>
+		                </span>
+		              </div>
+				    </c:when>
 
-              <div class="profileUseridAndNick">
-                <div class="userid">
-                  <a href="#" style="color: inherit!important;">${user.nick}</a>
-                </div>
-                <span class="userNick">
-                  <a class="uN" href="#">@${user.loginid}</a>
-                </span>
-              </div>
+				    <c:otherwise>
+					 <div class="profileUseridAndNick">
+		                <div class="userid">
+		                  <a href="#" style="color: inherit!important;">${user.nick}</a>
+		                </div>
+		                <span class="userNick">
+		                  <a class="uN" href="#">@${user.loginid}</a>
+		                </span>
+		              </div>
+				    </c:otherwise>				
+			   </c:choose>
 
             </div>
           </div>
@@ -41,12 +112,25 @@
 
         <div class="sidebar2">
           <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="내가 쓴 글 2345개">
-            내가 쓴 글 : 2345개
-          </a>
-            <a href="#" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="팔로잉 670명">
-            팔로잉 : 670명
-          </a>
+            <c:choose>
+        	   <c:when test="${otherUser ne null}">
+          			<a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="${otherUser.nick}님이 쓴 글 2345개">
+		            	${otherUser.nick}님이 쓴 글 : 2345개
+		            </a>
+		            <a href="#" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="${otherUser.nick}님의 팔로잉  ${otherFollow}명">
+		            	${otherUser.nick}님의 팔로잉 : ${otherFollow}명
+		            </a>
+		            
+		        </c:when>
+		        <c:otherwise>
+		            <a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="내가 쓴 글 2345개">
+		            	내가  쓴 글 : 2345개
+		            </a>
+		            <a href="#" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="팔로잉 ${follow}명">
+		            	팔로우 : ${follow}명
+		            </a>
+		        </c:otherwise>				
+			   </c:choose>
           </div>
 
           <!-- Modal -->
@@ -109,7 +193,20 @@
               </div>
             </div>
           </div>
-
+           <c:if test="${otherUser ne null}">			 
+			<c:choose>
+			   <c:when test="${checkFollow eq true}">
+			   <div style="text-align:center;">	  
+				<button type="button" data-following="true" id="follow" class="btn btn-info btn-lg">팔로잉</button>
+			   </div>
+			   </c:when>
+			  <c:otherwise>
+			   <div style="text-align:center;">	  
+				<button type="button" data-following="false" id="follow" class="btn btn-default btn-lg">팔로우</button>
+			   </div>
+			  </c:otherwise>
+			 </c:choose>
+  			</c:if>
         </div>	
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

@@ -25,8 +25,8 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
-				<jsp:include page="sidebar.jsp" flush="false" />
+			<div class="col-md-3">				
+				  	<jsp:include page="sidebar.jsp" flush="false" />			
 			</div>
 			<div class="col-md-9">
 				<jsp:include page="/post/mainContent.do"></jsp:include>
