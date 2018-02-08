@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,9 +69,17 @@ public class PostController {
 			String[] datetime = pdate.split("\\s+");
 			String[] date = datetime[0].split("-");
 			String[] time = datetime[1].split(":");
-			String times = (Integer.parseInt(time[0]) >= 12) ?  "오후 " + (Integer.parseInt(time[0])-12) : "오전 " + time[0];
+			String ampm = (Integer.parseInt(time[0]) >= 12 && Integer.parseInt(time[0]) < 24) ?  "오후 " : "오전 ";
+			String hour = null;
+			if(Integer.parseInt(time[0]) > 12 && Integer.parseInt(time[0]) < 24) {
+				hour = Integer.toString(Integer.parseInt(time[0])-12);
+			} else if(Integer.parseInt(time[0]) == 24) {
+				hour = "0";
+			} else {
+				hour = time[0];
+			}
 			
-			postInfo.put("datetime",  times + ":" + time[1] + " - " + date[0] + "년 " + date[1] + "월 " + date[2] + "일"); // tooltipe에 저장되는 날짜 정보.
+			postInfo.put("datetime",  ampm + hour + ":" + time[1] + " - " + date[0] + "년 " + date[1] + "월 " + date[2] + "일"); // tooltipe에 저장되는 날짜 정보.
 			postInfo.put("date", date[1] + "월 " + date[2] + "일"); // view에 출력되는 날짜 정보.
 			
 //			게시글에 해당되는 파일을 가져온다.
@@ -79,22 +88,36 @@ public class PostController {
 			
 			List<PostFileVO> postFile = postfileService.getPostFile(selectfile);
 			
-//			view에서 보여질 전체 이미지를 저장한다.
-			List imageList = new ArrayList();
+//			view에서 보여질 이미지(메인/첫번째/세부)를 저장한다.
+			List mainImage = new ArrayList();
+			List firstImage = new ArrayList();
+			List detailImage = new ArrayList();
+			
 			for(int j=0; j<postFile.size(); j++) {
 				String image_path = File.separator + "common" + File.separator + "post" + File.separator + postFile.get(j).getFile_name() + "." + postFile.get(j).getFile_type();
 				Map image = new HashMap();
 				image.put("image", image_path);
+				if(j==0) {
+					mainImage.add(image);
+					firstImage.add(image);
+				} else if(j < 3) {
+					mainImage.add(image);
+					detailImage.add(image);
+				} else {
+					detailImage.add(image);
+				}
 				
-				imageList.add(image);
 			}
-			postInfo.put("imageList", imageList);
+			postInfo.put("mainImage", mainImage);
+			postInfo.put("firstImage", firstImage);
+			postInfo.put("detailImage", detailImage);
 			
 //			postInfo를 순차적으로 postInfoList에 저장한다.
 			postInfoList.add(postInfo);
 		}
 //		view로 postInfoList를 전달한다.
 		model.addAttribute("postInfoList", postInfoList);
+		System.out.println(postInfoList.toString());
 		
 		return "mainContent";
 	}
