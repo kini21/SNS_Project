@@ -1,5 +1,7 @@
 package com.sns.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -63,4 +65,17 @@ public class FollowController {
 		 	return "index";
 		}
 	 
+	   @RequestMapping(value="getFollowList.do", method=RequestMethod.GET) 
+	   public ModelAndView getUserList(ModelAndView mav, HttpServletRequest req) {
+	    	System.out.println("유저 목록 검색 처리");
+	    	
+	    	int from_uid = Integer.parseInt(req.getParameter("from_uid"));
+	    	FollowVO vo = new FollowVO();
+	    	vo.setFrom_uid(from_uid);
+	    	
+	    	List<UserVO> user = followService.getFollowList(vo);
+	    	mav.addObject("followlist", user);
+	    	mav.setViewName("jsonView");
+	    	return mav;
+	    }
 }

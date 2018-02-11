@@ -70,7 +70,56 @@
                	$(this).addClass('btn btn-info btn-lg');
                });
        }
+       
+       $("#followingModal").click(function(e) {
+    	   
+    	   var addr = "<c:url value='/follow/getFollowList.do' />";
+   		   var from_uid = 0;
+   		   
+   		   if("${otherUser.uid}" > 0){
+   			   from_uid = "${otherUser.uid}";
+   		   } else {
+   			   from_uid = "${user.uid}";
+   		   }
+   		   
+   		$.ajax({
+   			url : addr,
+   			type : "get",
+   			data : {
+   				"from_uid" : from_uid
+   			},
+   			success : function(responseData) {
+
+   				var html = '';
+				var no = 1;
+				
+   				$("#ajax").remove();
+   				$(responseData.followlist).each(function() { 
+   				 
+   					html += '<tr style="cursor:pointer" onclick=\"otherUserTimeline(\'' + this.uid + '\')\">';
+   					html += '<td>' + no++ + '</td>';
+   					html += '<td>' + this.nick + '</td>';
+   					html += '<td>' + this.loginid + '</td>';
+   					html += '</tr>';
+   				 
+   					$('#follwingList > tbody:last').empty();
+   					$('#follwingList > tbody:last').append(html);
+   				});// end each
+   			}// end
+   		});// end ajax
+    	   
+      });
    });
+</script>
+<script>
+function otherUserTimeline(uid){
+	if(uid > 0){
+		window.location.href= '<c:url value="/follow/getOtherUser.do" />?uid=' + uid;
+	} else {
+		window.location.href= '<c:url value="/user/index.do" />';
+	}
+	
+}
 </script>
 	<body>
           <div class="sidebar">
@@ -117,7 +166,7 @@
           			<a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="${otherUser.nick}님이 쓴 글 2345개">
 		            	${otherUser.nick}님이 쓴 글 : 2345개
 		            </a>
-		            <a href="#" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="${otherUser.nick}님의 팔로잉  ${otherFollow}명">
+		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="${otherUser.nick}님의 팔로잉  ${otherFollow}명">
 		            	${otherUser.nick}님의 팔로잉 : ${otherFollow}명
 		            </a>
 		            
@@ -126,8 +175,8 @@
 		            <a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="내가 쓴 글 2345개">
 		            	내가  쓴 글 : 2345개
 		            </a>
-		            <a href="#" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="팔로잉 ${follow}명">
-		            	팔로우 : ${follow}명
+		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="팔로잉 ${follow}명">
+		            	팔로잉 : ${follow}명
 		            </a>
 		        </c:otherwise>				
 			   </c:choose>
@@ -139,50 +188,29 @@
               <div class="modal-content">
                 <div class="modal-header" style="background-color:#83abc6; border-radius: 6px 6px 0 0;">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="writeLabel" style="color: #fff;">팔로잉 목록</h4>
+                  
+                  <c:choose>
+        	        <c:when test="${otherUser ne null}">                  
+                      <h4 class="modal-title" id="writeLabel" style="color: #fff;">${otherUser.nick}님의 팔로잉 목록</h4>
+                    </c:when>
+                    <c:otherwise>
+                      <h4 class="modal-title" id="writeLabel" style="color: #fff;">내 팔로잉 목록</h4>
+                    </c:otherwise> 
+                  </c:choose>
+                  
                 </div>
 
                   <div class="modal-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="follwingList">
                         <thead>
                           <tr>
-                            <th>No</th>
-                            <th>아이디</th>
+                            <th>No.</th>
                             <th>닉네임</th>
-                            <th>#</th>
+                            <th>아이디</th>                            
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>박호균</td>
-                            <td>purplecow</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>한광식</td>
-                            <td>Mugunghwa</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td>조재형</td>
-                            <td>BNF KOREA</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>김준기</td>
-                            <td>넷오우션</td>
-                            <td>언팔로우</td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>블루코코</td>
-                            <td>BLUECOCO</td>
-                            <td>언팔로우</td>
-                          </tr>
+                         
                         </tbody>
                       </table>
                   </div>

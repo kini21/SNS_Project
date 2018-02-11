@@ -1,13 +1,13 @@
 package com.sns.repository.follow;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sns.follow.FollowService;
 import com.sns.follow.FollowVO;
+import com.sns.user.UserVO;
 
 @Service("followService")
 public class FollowServiceImpl implements FollowService{
@@ -29,7 +29,7 @@ public class FollowServiceImpl implements FollowService{
 	}
 	
 	@Override
-    public List<FollowVO> getFollowList(FollowVO vo) {
+    public List<UserVO> getFollowList(FollowVO vo) {
         return followDAO.getFollowList(vo);
     }
 	

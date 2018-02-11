@@ -4,11 +4,11 @@
  
 <mapper namespace="followDAO">
         
-  <select id="getFollowList" resultType="follow">
+  <select id="getFollowList" resultType="users">
         <![CDATA[
-            SELECT *
-              FROM FOLLOW
-             WHERE USER_UID = ${user_uid}
+            SELECT UID AS UID, LOGINID AS LOGINID, NICK AS NICK 
+            FROM USERS WHERE UID IN 
+            (SELECT TO_UID FROM FOLLOW WHERE FROM_UID = ${from_uid});
         ]]>
   </select>
    
@@ -36,8 +36,7 @@
         ]]>
   </select>
   
-  <select id="countFollow" resultType="int">
-        
+  <select id="countFollow" resultType="int">  
             SELECT COUNT(*) AS COUNTFOLLOW
               FROM FOLLOW
              WHERE FROM_UID = ${from_uid}

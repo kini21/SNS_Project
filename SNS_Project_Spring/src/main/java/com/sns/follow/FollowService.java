@@ -1,7 +1,8 @@
 package com.sns.follow;
 
 import java.util.List;
-import java.util.Map;
+
+import com.sns.user.UserVO;
 
 public interface FollowService {
 	
@@ -11,7 +12,7 @@ public interface FollowService {
 	
 	int checkFollow(FollowVO vo);
 	
-	List<FollowVO> getFollowList(FollowVO vo);
+	List<UserVO> getFollowList(FollowVO vo);
 	
 	int countFollow(FollowVO vo);
 }
