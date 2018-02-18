@@ -39,6 +39,7 @@ public class PostController {
 	@Autowired private PostService postService;
 	@Autowired private PostFileService postfileService;
 	
+//	timeline view.
 	@RequestMapping(value="mainContent.do")
 	public String mainContent(Model model, HttpSession session) {
 		List postInfoList = new ArrayList();	// view로 전달할 데이터를 저장하는 변수.
@@ -100,7 +101,7 @@ public class PostController {
 				if(j==0) {
 					mainImage.add(image);
 					firstImage.add(image);
-				} else if(j < 3) {
+				} else if(j < 4) {
 					mainImage.add(image);
 					detailImage.add(image);
 				} else {
@@ -117,7 +118,6 @@ public class PostController {
 		}
 //		view로 postInfoList를 전달한다.
 		model.addAttribute("postInfoList", postInfoList);
-		System.out.println(postInfoList.toString());
 		
 		return "mainContent";
 	}

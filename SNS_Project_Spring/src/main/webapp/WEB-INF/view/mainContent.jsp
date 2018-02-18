@@ -123,9 +123,16 @@
 														<c:if test="${not empty postInfoList.mainImage}">
 															<div class="imgBoxContainer">
 																<c:forEach items="${postInfoList.mainImage}" var="mainImage" varStatus="status2">
-																	<div class="imgBox">
-																		<img src="<c:url value='${mainImage.image}' />" style="width: 100%; height: 100%" />
-																	</div>
+																	<c:if test="${status2.count lt 4}">
+																		<div class="imgBox">
+																			<img src="<c:url value='${mainImage.image}' />" style="width: 100%; height: 100%" />
+																		</div>
+																	</c:if>
+																	<c:if test="${status2.count eq 4}">
+																		<div class="imgBox">
+																			<p>...</p>
+																		</div>
+																	</c:if>
 																</c:forEach>
 															</div>
 														</c:if>
