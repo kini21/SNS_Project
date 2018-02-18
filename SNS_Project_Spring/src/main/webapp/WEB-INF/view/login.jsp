@@ -39,10 +39,28 @@ $(document).ready(function(){
   });
   
 });
-</script>   
+</script>
+<script type="text/javascript">
+function logincheck() {
+	
+	  	var addr = "<c:url value='/user/loginIdPwCheck.do' />";
+	  
+	      $.post(addr, {"login_id" : $("#login_id").val(), "pass_word" : $("#pass_word").val()}, function(data){
+	        if(data.idpwcheck =='yes'){
+	          $('#idpwcheck').html('<span>아이디 또는 비밀번호가 일치하지 않습니다.</span>');
+	          $('#idpwcheck').css('color', 'red');
+	          return false;
+	        } else {
+	        	$("#login-form").attr("action", "<c:url value= '/user/login.do' />").submit();
+	        	return true;
+	        }
+	               }
+	         );
+}  
+</script>
 <script>
 function id_chk() {
-     var addr = "<c:url value='/user/loginIdCheck.do' />";
+     var addr = "<c:url value='/user/existloginIdCheck.do' />";
      var loginid = $('#loginid').val();
      var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
 
@@ -217,31 +235,35 @@ function reg_chk() {
 
 
                       <!-- login form -->
-                      <form id="login-form" action='<c:url value="/user/login.do" />' method="post" role="form" style="display: block;">
+                      <form id="login-form" name="login_form" method="post" role="form" style="display: block;">
                         <h2>로그인</h2>
 
                         <!-- insert id -->
                         <div class="form-group">
-                          <input type="text" name="loginid" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
+                          <input type="text" name="loginid" id="login_id" tabindex="1" class="form-control" placeholder="사용자 아이디" value="">
                         </div>
 
                         <!-- insert password -->
                         <div class="form-group">
-                          <input type="password" name="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <input type="password" name="password" id="pass_word" tabindex="2" class="form-control" placeholder="비밀번호">
                         </div>
-
+						
+						<div class="form-group">
+                        	<label id="idpwcheck"> </label>            	
+                        </div>
+						
                         <!-- remember id & find password -->
                         <div class="col-xs-6 form-group pull-left checkbox">
                           <input id="checkbox1" type="checkbox" name="remember">
-                          <label for="checkbox1">ID 저장</label> ∙
-                          <a href="#" class="forgot-password">비밀번호 찾기</a>
+                          <label for="checkbox1">ID 저장</label>
+                          <a href="<c:url value="/user/findidpw.do" />" class="forgot-password">아이디  · 비밀번호 찾기</a>
                         </div>
-
+                        
                         <!-- login button -->
                         <div class="col-xs-6 form-group pull-right">
-                          <input type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="로그인">
+                          <input type="button" name="login-submit" id="login_submit" onClick="logincheck()" tabindex="3" class="form-control btn btn-login" value="로그인">
                         </div>
-
+                        
                       </form>
                       <!-- end of login form -->
 
@@ -288,7 +310,7 @@ function reg_chk() {
                           <div class="row">
                           <center>
                             <div class="col-sm-6 col-sm-offset-3">
-                              	<input type="button" id="register_submit" style="width: auto;" tabindex="5" class="form-control btn btn-register" disabled='true' value="회원가입">
+                              	<input type="submit" id="register_submit" style="width: auto;" tabindex="5" class="form-control btn btn-register" disabled='true' value="회원가입">
                             </div>
                             </center>
                           </div>

@@ -5,10 +5,10 @@
 <mapper namespace="userDAO">
     
   <select id="getUser" resultType="users">
-       <![CDATA[ SELECT * 
-       			 FROM USERS 
-                 WHERE LOGINID = #{loginid} AND PASSWORD = #{password} 
-       ]]>
+        SELECT * FROM USERS 
+               WHERE 1 = 1
+               <if test="loginid != null and password != null">AND LOGINID = #{loginid} AND PASSWORD = #{password} </if>
+               <if test="uid > 0">AND UID = #{uid} </if>      
   </select>
     
   <select id="getUserList" parameterType="String" resultType="users">
@@ -29,6 +29,13 @@
            FROM USERS
            WHERE EMAIL = #{email}
            ]]>
+  </select>
+  
+  <select id="getFindIDPW" resultType="users">
+	      <![CDATA[
+	      SELECT NICK AS NICK, LOGINID AS LOGINID, EMAIL AS EMAIL, PASSWORD AS PASSWORD
+		  FROM USERS WHERE EMAIL = #{email};
+		  ]]>
   </select>
    
   <insert id="insertUser" parameterType="users" >

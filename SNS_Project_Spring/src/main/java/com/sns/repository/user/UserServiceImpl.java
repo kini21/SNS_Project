@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public void updateUser(UserVO vo) {
-    	userDAO.updateUser(vo);
+    		userDAO.updateUser(vo);
     }
     
     @Override
     public void deleteUser(UserVO vo) {
-    	userDAO.deleteUser(vo);
+    		userDAO.deleteUser(vo);
     }
     
     @Override
@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     public int getExistUserEmail(String email) {
     	return userDAO.getExistUserEmail(email);
     }
+    
+    @Override
+	public UserVO getFindIDPW(UserVO vo) {
+		return userDAO.getFindIDPW(vo);
+	}
 }

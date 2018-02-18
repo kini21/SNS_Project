@@ -1,6 +1,7 @@
 package com.sns.user;
 
 import java.util.List;
+
 import com.sns.user.UserVO;
 
 public interface UserService {
@@ -24,4 +25,6 @@ public interface UserService {
 	int getExistUserId(String loginid);
 	
 	int getExistUserEmail(String email);
+	
+	UserVO getFindIDPW(UserVO vo);
 }

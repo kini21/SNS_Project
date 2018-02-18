@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="postDAO">
+    
+  <select id="getPost" resultType="post">
+       <![CDATA[ 
+           SELECT * 
+             FROM POST
+            WHERE PID = ${pid} 
+       ]]>
+  </select>
+  
+  <select id="getPostList" resultType="post">
+        <![CDATA[
+            SELECT *
+              FROM POST
+        ]]>
+  </select>
+  
+  <select id="getUserPostList" resultType="post">
+        <![CDATA[
+            SELECT *
+              FROM POST
+             WHERE USER_UID = ${user_uid}
+        ]]>
+  </select>
+   
+  <insert id="insertPost" parameterType="post" >
+        <![CDATA[ 
+            INSERT INTO POST ( CONTENTS
+                             , USER_UID)
+		              VALUES ( #{contents}
+		                     , #{user_uid})
+		]]>
+  </insert>
+  
+  <update id="updatePost" parameterType="post">
+       <![CDATA[ 
+           UPDATE USERS SET
+                  CONTENTS = #{contents},
+                  PDATE    = #{pdate} 
+            WHERE PID      = ${pid}
+        ]]>
+  </update>
+  
+  <delete id="deletePost" parameterType="post" >
+       <![CDATA[ 
+           DELETE FROM POST
+            WHERE PID = ${pid}
+       ]]>
+  </delete>
+  
+</mapper>
