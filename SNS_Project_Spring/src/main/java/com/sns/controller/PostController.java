@@ -41,16 +41,27 @@ public class PostController {
 	
 //	timeline view.
 	@RequestMapping(value="mainContent.do")
-	public String mainContent(Model model, HttpSession session) {
+	public String mainContent(UserVO vo, Model model, HttpSession session) {
+		System.out.println(vo.toString());
 		List postInfoList = new ArrayList();	// view로 전달할 데이터를 저장하는 변수.
-		
+
 //		session을 이용해 현재 사용자의 정보를 가져온다.
 		UserVO sessionInfo = (UserVO) session.getAttribute("user");
-		UserVO user = userService.getUser(sessionInfo);
+		UserVO user = null;
 		
-//		session을 이용해 현재 사용자의 포스트 게시판을 가져온다.
+		if(vo.getUid() == 0 || sessionInfo.getUid() == vo.getUid()) {
+			
+//			현재 로그인 된 사용자의 정보를 가져온다.
+			user = userService.getUser(sessionInfo);
+		} else {
+			
+//			팔로우 된 사용자의 정보를 가져온다.
+			user = userService.getUser(vo);
+		}
+		
+//		사용자의 포스트 게시판을 가져온다.
 		PostVO selectpost = new PostVO();
-		selectpost.setUser_uid(sessionInfo.getUid());
+		selectpost.setUser_uid(user.getUid());
 		
 		List<PostVO> postList = postService.getUserPostList(selectpost);
 		

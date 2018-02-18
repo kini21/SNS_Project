@@ -23,6 +23,7 @@ public class FollowController {
 	   
 	   @Autowired private FollowService followService;	   
 	   @Autowired private UserService userService;
+
 		
 	   @RequestMapping(value="insertFollow.do", method = RequestMethod.POST)
 	   public ModelAndView insertFollow(FollowVO vo, ModelAndView mav){
@@ -62,6 +63,7 @@ public class FollowController {
 		    fvo.setFrom_uid(temp);
 		    
 		    model.addAttribute("otherFollow", followService.countFollow(fvo));
+			
 		 	return "index";
 		}
 	 
