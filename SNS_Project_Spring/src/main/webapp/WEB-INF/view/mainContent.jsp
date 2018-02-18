@@ -101,6 +101,19 @@
 													<small class="time" data-toggle="tooltip" data-placement="top" title="${postInfoList.datetime}">
 														· ${postInfoList.date}
 													</small>
+													<div style="width:80%;">&nbsp;</div>
+													<!-- 수정 & 삭제 -->
+													<div class="dropdown">
+														<span class="dropdown-toggle" id="writeAndDel" data-toggle="dropdown" aria-expanded="true">
+															&nbsp;
+															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+															<span class="caret"></span>
+														</span>
+														<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
+															<li role="presentation"><a role="menuitem" tabindex="-1" href="#">수정</a></li>
+															<li role="presentation"><a role="menuitem" tabindex="-1" href="#">삭제</a></li>
+														</ul>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -129,6 +142,7 @@
 																</c:forEach>
 															</div>
 														</c:if>
+														
 													</div>
 												</a>
 
@@ -175,11 +189,15 @@
 
 																		<!-- 세부페이지 모달 이미지 영역 -->
 																		<div class="row" style="width: 100%; margin-left: auto;">
+																		<c:if test="${empty postInfoList.firstImage and empty postInfoList.detailImage}">
+																			&nbsp;
+																		</c:if>
+																		<c:if test="${not empty postInfoList.firstImage and not empty postInfoList.detailImage}">
 																			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 100%; margin-top: 50px;">
 
 																				<!-- Wrapper for slides -->
 																				<div class="carousel-inner" role="listbox">
-																					<c:if test="${not empty postInfoList.firstImage}">
+																					
 																						<c:forEach items="${postInfoList.firstImage}" var="firstImage" varStatus="status">
 
 																							<div class="item active">
@@ -187,15 +205,15 @@
 																								<div class="carousel-caption"></div>
 																							</div>
 																						</c:forEach>
-																					</c:if>
-																					<c:if test="${not empty postInfoList.detailImage}">
+																					
+																					
 																						<c:forEach items="${postInfoList.detailImage}" var="detailImage" varStatus="status">
 																							<div class="item">
 																								<img src="<c:url value='${detailImage.image}' />" alt="">
 																								<div class="carousel-caption"></div>
 																							</div>
 																						</c:forEach>
-																					</c:if>
+																					
 
 																				</div>
 
@@ -209,7 +227,7 @@
 																					<span class="sr-only">Next</span>
 																				</a>
 																			</div>
-
+																			</c:if>
 																		</div>
 																	</div>
 
