@@ -103,6 +103,7 @@
 													</small>
 													<div style="width:80%;">&nbsp;</div>
 													<!-- 수정 & 삭제 -->
+													<c:if test="${sessionScope.user.loginid eq postInfoList.loginid}">
 													<div class="dropdown">
 														<span class="dropdown-toggle" id="writeAndDel" data-toggle="dropdown" aria-expanded="true">
 															&nbsp;
@@ -110,10 +111,15 @@
 															<span class="caret"></span>
 														</span>
 														<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
-															<li role="presentation"><a role="menuitem" tabindex="-1" href="#">수정</a></li>
-															<li role="presentation"><a role="menuitem" tabindex="-1" href="#">삭제</a></li>
+															<li role="presentation">
+																<a role="menuitem" tabindex="-1" href="#">수정</a>
+															</li>
+															<li role="presentation">
+																<a role="menuitem" tabindex="-1" href="#" onclick="javascript:postDelete(${postInfoList.pid});">삭제</a>
+															</li>
 														</ul>
 													</div>
+													</c:if>
 												</div>
 											</div>
 										</div>
@@ -221,7 +227,6 @@
 																							</div>
 																						</c:forEach>
 																					
-
 																				</div>
 
 																				<!-- Controls -->
@@ -399,6 +404,42 @@
 	<script>
 		$('[data-toggle="tooltip"]').tooltip('toggle');
 		$('[data-toggle="tooltip"]').tooltip('hide');
+	</script>
+	
+	<script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+	<!-- ajax javascript -->
+	<script>
+		function postDelete(pid) {
+			event.preventDefault();
+			
+			if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+				var param = JSON.stringify({
+					"pid" : pid
+				});
+	
+				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					url : "<c:url value='/post/postDelete.do' />",
+					method : "POST",
+					dataType : "JSON",
+					data : param,
+					success : function() {
+	
+						alert("삭제되었습니다.");
+						
+						window.location.href="<c:url value='/user/index.do' />";
+						
+					},// success end
+					error : function() {
+						alert("에러!!!");
+					}
+				});// end ajax
+			} else {   //취소
+			    return;
+			}
+			
+			
+		}
 	</script>
 </body>
 </html>

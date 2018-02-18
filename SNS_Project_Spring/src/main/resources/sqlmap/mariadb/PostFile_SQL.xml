@@ -43,7 +43,7 @@
   </insert>
   
   <delete id="deletePostFile" parameterType="postfile" >
-       <![CDATA[ DELETE FROM POST_FILE WHERE PID = #{pid} ]]>
+       <![CDATA[ DELETE FROM POST_FILE WHERE PID = ${pid} ]]>
   </delete>
   
 </mapper>

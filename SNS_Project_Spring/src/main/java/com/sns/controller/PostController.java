@@ -12,12 +12,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,6 +63,7 @@ public class PostController {
 			postInfo.put("loginid", user.getLoginid());		// ID.
 			
 //			포스트 게시판을 출력하기 위해 필요한 정보 저장.
+			postInfo.put("pid", postList.get(i).getPid());			// post ID
 			postInfo.put("contents", postList.get(i).getContents());	// 본문
 			
 //			날짜를 양식에 맞춰서 저장한다.
@@ -187,6 +188,21 @@ public class PostController {
 		message.put("success", true);
 		
 		return new ModelAndView("jsonView", message);
+	}
+	
+//	타임라인에 포스트 된 정보를 삭제한다.
+	@RequestMapping("postDelete.do")
+	public ModelAndView postDelete(@RequestBody PostVO post) {
+//		file 테이블 정보 삭제.
+		PostFileVO postfile = new PostFileVO();
+		postfile.setPid(post.getPid());
+		
+		postfileService.deletePostFile(postfile);
+		
+//		post 테이블 정보 삭제.
+		postService.deletePost(post);
+		
+		return new ModelAndView("jsonView");
 	}
 
 }
