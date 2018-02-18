@@ -23,39 +23,59 @@
 $(document).ready(function(){                
   $('#loginid').keyup(function(){
 	  var a = id_chk();
+	  reg_chk();
   });
   $('#email').keyup(function() {
-	 var a = email_chk(); 
+	 var a = email_chk();
+	 reg_chk();
   });
+  $('#password').keyup(function() {
+	 var a = password_chk();
+	 reg_chk();
+  });
+  $('#nick').keyup(function() {
+	 var a = nick_chk();
+	 reg_chk();
+  });
+  
 });
 </script>   
 <script>
 function id_chk() {
      var addr = "<c:url value='/user/loginIdCheck.do' />";
      var loginid = $('#loginid').val();
+     var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
 
      if(loginid.length >= 4){
         $.post(addr, {"loginid":loginid}, function(data){
-          if(data.ret =='y'){
-            $('#idcheck').val('사용불가');
-            $('#idcheck').css('color', 'red');
-            return false;
-                 }
-          else if(loginid.length >= 13) {
-              $('#idcheck').val('12자 초과');
-              $('#idcheck').css('color', 'red');
-              return false;
-           } else {
-              $('#idcheck').val('사용가능');
-              $('#idcheck').css('color', 'blue');
-              return true;
-           }
+			if(data.ret =='y'){
+				$('#register_form_id_text').attr('class', 'form-group has-error has-feedback');
+				$('#register_form_id_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+				$('#reg_id_chk').val('아이디가 중복되었습니다.');
+				return false;
+			} else if(loginid.length >= 13) {
+				$('#register_form_id_text').attr('class', 'form-group has-error has-feedback');
+				$('#register_form_id_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+				$('#reg_id_chk').val('아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.');
+				return false;
+			} else if(!regExp1.test(loginid)) {
+				$('#register_form_id_text').attr('class', 'form-group has-error has-feedback');
+				$('#register_form_id_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+				$('#reg_id_chk').val('아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.');
+				return false;
+			} else {
+				$('#register_form_id_text').attr('class', 'form-group has-success has-feedback');
+				$('#register_form_id_icon').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+				$('#reg_id_chk').val('1');
+				return true;
+			}
          });    
       } else{
-          $('#idcheck').val('4자 미만');
-          $('#idcheck').css('color', 'red');
-          return false;
-        }
+        $('#register_form_id_text').attr('class', 'form-group has-error has-feedback');
+        $('#register_form_id_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+        $('#reg_id_chk').val('아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.');
+        return false;
+      }
 }
 
 function email_chk() {
@@ -65,101 +85,97 @@ function email_chk() {
     if (regExp2.test(email)) {
         $.post(addr, {"email":email}, function(data) {
          if(data.ret =='y'){
-            $('#emailcheck').val('사용불가');
-            $('#emailcheck').css('color', 'red');
+				$('#register_form_email_text').attr('class', 'form-group has-error has-feedback');
+				$('#register_form_email_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+				$('#reg_em_chk').val('이메일이 중복되었습니다.');
             return false;
          	} else {
-              $('#emailcheck').val('사용가능');
-              $('#emailcheck').css('color', 'blue');
-              return true;
-         }
+				$('#register_form_email_text').attr('class', 'form-group has-success has-feedback');
+				$('#register_form_email_icon').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+				$('#reg_em_chk').val('1');
+           		return true;
+         	}
         });    
      } else{
-       $('#emailcheck').val('사용불가');
-       $('#emailcheck').css('color', 'red');
+    	 	$('#register_form_email_text').attr('class', 'form-group has-error has-feedback');
+		$('#register_form_email_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+		$('#reg_em_chk').val('이메일 형식이 잘못되었습니다.');
        return false;
      }
 }
-function register_check() {
-	event.preventDefault();
-	
-	var loginid = $("#loginid").val();
-	var password = $("#password").val();
-	var email = $("#email").val();
-	var nick = $("#nick").val();
-	
+
+function password_chk() {
 	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
-    //id와 비밀번호의 유효성 검사
-    var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
-    //email의 유효성 검사
-
-	if(loginid === ""){
-			alert("아이디를 입력하세요.");
-			document.register_form.loginid.focus();
-			return; 
-	} 
-	else if(!regExp1.test(loginid)) {
-           alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
-           document.register_form.loginid.value = "";
-           document.register_form.loginid.focus();
-           return false;
-    }
-    
+	var loginid = $('#loginid').val();
+	var password = $('#password').val();
 	if(password === ""){
-			alert("비밀번호를 입력하세요.");
-			document.register_form.password.focus();
-			return false;
-	}
-	else if (!regExp1.test(password))
-    {
-        alert("비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
-        document.register_form.password.value = "";
-        document.register_form.password.focus();
-        return false;
-    }
-	else if ((password.slice(0, password.length) === loginid.slice(0, loginid.length))) 
-    {
-        alert("비밀번호가 아이디와 동일하면 안됩니다.");
-        document.register_form.loginid.value = "";
-        document.register_form.loginid.focus();
-        document.register_form.password.value = "";
-        document.register_form.password.focus();
-        return false;
-    }
-
-	if(email === ""){
-		alert("이메일을 입력하세요.");
-		$("#email").focus();
-		return;
-	}
-	else if (!regExp2.test(email))
-    {
-        alert("올바른 이메일 형식이 아닙니다.");
-        document.register_form.email.value = "";
-        document.register_form.email.focus();
-        return false;
-    }
-	
-	if(nick === ""){
-		alert("닉네임을 입력하세요.");
-		document.register_form.nick.focus();
+		$('#reg_pw_chk').val('비밀번호를 입력해주세요.');
+		document.register_form.password.focus();
+		$('#register_form_password_text').attr('class', 'form-group has-error has-feedback');
+		$('#register_form_password_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
 		return false;
-	}
-	if(document.register_form.nick.value.length >= 7 ) {
-        alert('닉네임은 6자 미만으로 입력하세요.');
-        document.register_form.nick.value = "";
-        document.register_form.nick.focus();
-        return false;
-    }
-	if($('#idcheck').val() == '사용가능') {
-		if($('#emailcheck').val() == '사용가능') {
-			document.register_form.submit();
-		} else {
-			alert("이메일이 중복됩니다. 다른 이메일로 다시 입력해주세요.");
-		}
+	} else if (!regExp1.test(password)) {
+	    $('#reg_pw_chk').val('비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요.');
+	    $('#register_form_password_text').attr('class', 'form-group has-error has-feedback');
+		$('#register_form_password_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+	    return false;
+	} else if ((password.slice(0, password.length) === loginid.slice(0, loginid.length))) {
+	    $('#reg_pw_chk').val('비밀번호는 아이디와 동일하면 안됩니다.');
+	    $('#register_form_password_text').attr('class', 'form-group has-error has-feedback');
+		$('#register_form_password_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+	    return false;
 	} else {
-		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
-		return false;
+		$('#reg_pw_chk').val('1');
+		$('#register_form_password_text').attr('class', 'form-group has-success has-feedback');
+		$('#register_form_password_icon').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+	}
+}
+
+function nick_chk() {
+	var regExp = ["운영자", "admin", "관리자"];
+	var nick = $('#nick').val();
+	for(var i=0; i<regExp.length; i++) {
+		if(nick == regExp[i]) {
+			$('#reg_nn_chk').val('사용할 수 없는 닉네임입니다.');
+			$('#register_form_nick_text').attr('class', 'form-group has-error has-feedback');
+			$('#register_form_nick_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+			return false;
+		} else {
+			$('#reg_nn_chk').val('1');
+			$('#register_form_nick_text').attr('class', 'form-group has-success has-feedback');
+			$('#register_form_nick_icon').attr('class', 'glyphicon glyphicon-ok form-control-feedback');
+		}
+	}
+	if(nick == "") {
+		$('#reg_nn_chk').val('닉네임을 입력해주세요.');
+		$('#register_form_nick_text').attr('class', 'form-group has-error has-feedback');
+		$('#register_form_nick_icon').attr('class', 'glyphicon glyphicon-remove form-control-feedback');
+	}
+	return true;
+}
+
+function reg_chk() {
+	var id_t = $('#reg_id_chk').val();
+	var pw_t = $('#reg_pw_chk').val();
+	var em_t = $('#reg_em_chk').val();
+	var nn_t = $('#reg_nn_chk').val();
+	
+	if(id_t == 1 && pw_t == 1 && em_t == 1 && nn_t == 1) {
+		$('#register_submit').attr('disabled', false);
+		$('#register_submit').val('회원가입');
+		return true;
+	} else {
+		$('#register_submit').attr('disabled', true);
+	}
+	
+	if(id_t != 1) {
+		$('#register_submit').val(id_t);
+	} else if(pw_t != 1) {
+		$('#register_submit').val(pw_t);
+	} else if(em_t != 1) {
+		$('#register_submit').val(em_t);
+	} else if(nn_t != 1) {
+		$('#register_submit').val(nn_t);
 	}
 }
 </script>
@@ -233,40 +249,48 @@ function register_check() {
                       <form id="register-form" name="register_form" action="<c:url value="/user/insertUser.do" />" method="post" style="display: none;">
                         <h2>회원가입</h2>
 						
+						<!-- 아이디 비밀번호 이메일 닉네임 체크 -->
+						<input type="hidden" id="reg_id_chk" value="아이디를 입력해주세요.">
+						<input type="hidden" id="reg_pw_chk" value="비밀번호를 입력해주세요.">
+						<input type="hidden" id="reg_em_chk" value="이메일을 입력해주세요.">
+						<input type="hidden" id="reg_nn_chk" value="닉네임을 입력해주세요.">
+						
                         <!-- insert loginid -->
-                        <div class="form-group">
-                          <input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="">
+                        <div class="form-group has-error has-feedback" id="register_form_id_text">
+                          	<input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="" aria-describedby="inputSuccess2Status">
+                          	<span id="register_form_id_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+							<!-- <input type="text" class="form-control" id="inputSuccess1"> -->
                         </div>
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                         	<input type="text" id="idcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
-                        </div>
+                        </div> -->
 						
 						 <!-- insert password -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_password_text">
                           <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <span id="register_form_password_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
 
                         <!-- insert email -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_email_text">
                           <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="이메일" value="">
-                        </div>
-                        
-                        <div class="form-group">
-                        	<input type="text" id="emailcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
+                          <span id="register_form_email_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
 						
 						<!-- insert nick -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_nick_text">
                           <input type="text" name="nick" id="nick" tabindex="4" class="form-control" placeholder="닉네임" value="">
+                          <span id="register_form_nick_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
-						
                         <!-- register button -->
                         <div class="form-group">
                           <div class="row">
+                          <center>
                             <div class="col-sm-6 col-sm-offset-3">
-                              <input type="button" id="register_submit" onClick="register_check();" tabindex="5" class="form-control btn btn-register" value="회원가입">
+                              	<input type="button" id="register_submit" style="width: auto;" tabindex="5" class="form-control btn btn-register" disabled='true' value="회원가입">
                             </div>
+                            </center>
                           </div>
                         </div>
 
