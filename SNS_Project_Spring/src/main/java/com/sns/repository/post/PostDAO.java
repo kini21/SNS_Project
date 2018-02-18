@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sns.post.PostVO;
-import com.sns.user.UserVO;
 
 @Repository("postDAO")
 public class PostDAO {

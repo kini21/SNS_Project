@@ -8,6 +8,7 @@
         <typeAlias alias="users" type="com.sns.user.UserVO"/>
         <typeAlias alias="post" type="com.sns.post.PostVO"/>
         <typeAlias alias="postfile" type="com.sns.post.file.PostFileVO"/>
+        <typeAlias alias="follow" type="com.sns.follow.FollowVO"/>
     </typeAliases>
 
     <!-- Sql Mapper 설정 -->
@@ -15,5 +16,6 @@
         <mapper resource="sqlmap/mariadb/Users_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/Post_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/PostFile_SQL.xml"/>
+        <mapper resource="sqlmap/mariadb/Follow_SQL.xml"/>
     </mappers>
 </configuration>
