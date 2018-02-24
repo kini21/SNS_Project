@@ -17,170 +17,41 @@
   <link href='<c:url value="/common/css/style.css"/>' rel="stylesheet" />
   <link href='<c:url value="/common/css/login.css"/>' rel="stylesheet" />
   <script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+  <script src='<c:url value="/common/js/join.check.js"/>'></script>
 
 </head>
-<script type="text/javascript">
-$(document).ready(function(){                
-  $('#loginid').keyup(function(){
-	  var a = id_chk();
-  });
-  $('#email').keyup(function() {
-	 var a = email_chk(); 
-  });
-});
-</script>
-<script type="text/javascript">
-function logincheck() {
-	
-	  	var addr = "<c:url value='/user/loginIdPwCheck.do' />";
-	  
-	      $.post(addr, {"login_id" : $("#login_id").val(), "pass_word" : $("#pass_word").val()}, function(data){
-	        if(data.idpwcheck =='yes'){
-	          $('#idpwcheck').html('<span>아이디 또는 비밀번호가 일치하지 않습니다.</span>');
-	          $('#idpwcheck').css('color', 'red');
-	          return false;
-	        } else {
-	        	$("#login-form").attr("action", "<c:url value= '/user/login.do' />").submit();
-	        	return true;
-	        }
-	               }
-	         );
-}  
-</script>
 <script>
-function id_chk() {
-     var addr = "<c:url value='/user/existloginIdCheck.do' />";
-     var loginid = $('#loginid').val();
-
-     if(loginid.length >= 4){
-        $.post(addr, {"loginid":loginid}, function(data){
-          if(data.idcheck =='yes'){
-            $('#idcheck').val('사용불가');
-            $('#idcheck').css('color', 'red');
-            return false;
-                 }
-          else if(loginid.length >= 13) {
-              $('#idcheck').val('12자 초과');
-              $('#idcheck').css('color', 'red');
-              return false;
-           } else {
-              $('#idcheck').val('사용가능');
-              $('#idcheck').css('color', 'blue');
-              return true;
-           }
-         });    
-      } else{
-          $('#idcheck').val('4자 미만');
-          $('#idcheck').css('color', 'red');
-          return false;
-        }
-}
-
-function email_chk() {
-	var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
-    var addr = "<c:url value='/user/loginEmailCheck.do' />";
-    var email = $('#email').val();
-    if (regExp2.test(email)) {
-        $.post(addr, {"email":email}, function(data) {
-         if(data.ret =='y'){
-            $('#emailcheck').val('사용불가');
-            $('#emailcheck').css('color', 'red');
-            return false;
-         	} else {
-              $('#emailcheck').val('사용가능');
-              $('#emailcheck').css('color', 'blue');
-              return true;
-         }
-        });    
-     } else{
-       $('#emailcheck').val('사용불가');
-       $('#emailcheck').css('color', 'red');
-       return false;
-     }
-}
-function register_check() {
-	event.preventDefault();
-	
-	var loginid = $("#loginid").val();
-	var password = $("#password").val();
-	var email = $("#email").val();
-	var nick = $("#nick").val();
-	
-	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
-    //id와 비밀번호의 유효성 검사
-    var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
-    //email의 유효성 검사
-
-	if(loginid === ""){
-			alert("아이디를 입력하세요.");
-			document.register_form.loginid.focus();
-			return; 
-	} 
-	else if(!regExp1.test(loginid)) {
-           alert("아이디는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
-           document.register_form.loginid.value = "";
-           document.register_form.loginid.focus();
-           return false;
-    }
-    
-	if(password === ""){
-			alert("비밀번호를 입력하세요.");
-			document.register_form.password.focus();
-			return false;
-	}
-	else if (!regExp1.test(password))
-    {
-        alert("비밀번호는 4자에서 12자의 영문 또는 숫자로 입력해주세요.");
-        document.register_form.password.value = "";
-        document.register_form.password.focus();
-        return false;
-    }
-	else if ((password.slice(0, password.length) === loginid.slice(0, loginid.length))) 
-    {
-        alert("비밀번호가 아이디와 동일하면 안됩니다.");
-        document.register_form.loginid.value = "";
-        document.register_form.loginid.focus();
-        document.register_form.password.value = "";
-        document.register_form.password.focus();
-        return false;
-    }
-
-	if(email === ""){
-		alert("이메일을 입력하세요.");
-		$("#email").focus();
-		return;
-	}
-	else if (!regExp2.test(email))
-    {
-        alert("올바른 이메일 형식이 아닙니다.");
-        document.register_form.email.value = "";
-        document.register_form.email.focus();
-        return false;
-    }
-	
-	if(nick === ""){
-		alert("닉네임을 입력하세요.");
-		document.register_form.nick.focus();
-		return false;
-	}
-	if(document.register_form.nick.value.length >= 7 ) {
-        alert('닉네임은 6자 미만으로 입력하세요.');
-        document.register_form.nick.value = "";
-        document.register_form.nick.focus();
-        return false;
-    }
-
-	if($('#idcheck').val() == '사용가능') {
-		if($('#emailcheck').val() == '사용가능') {
-			document.register_form.submit();
-		} else {
-			alert("이메일이 중복됩니다. 다른 이메일로 다시 입력해주세요.");
+	function jsrun(i) {
+		var j = "";
+		var k = "";
+		switch(i) {
+		case 'logincheck':
+			j = "<c:url value='/user/loginIdPwCheck.do' />";
+			k = "<c:url value= '/user/login.do' />";
+			logincheck(j, k);
+			break;
+		case 'id_chk':
+			j = "<c:url value='/user/existloginIdCheck.do' />";
+			id_chk(j);
+			break;
+		case 'email_chk':
+			j = "<c:url value='/user/loginEmailCheck.do' />";
+			email_chk(j);
+			break;
+		case 'password_chk':
+			password_chk();
+			break;
+		case 'nick_chk':
+			nick_chk();
+			break;
+		case 'reg_chk':
+			reg_chk();
+			break;
+			
 		}
-	} else {
-		alert("아이디가 중복됩니다. 다른 아이디로 다시 입력해주세요.");
-		return false;
 	}
-}
+	
+	
 </script>
 <body>
 
@@ -246,7 +117,7 @@ function register_check() {
                         
                         <!-- login button -->
                         <div class="col-xs-6 form-group pull-right">
-                          <input type="button" name="login-submit" id="login_submit" onClick="logincheck()" tabindex="3" class="form-control btn btn-login" value="로그인">
+                          <input type="button" name="login-submit" id="login_submit" onClick="jsrun('logincheck');" tabindex="3" class="form-control btn btn-login" value="로그인">
                         </div>
                         
                       </form>
@@ -256,40 +127,48 @@ function register_check() {
                       <form id="register-form" name="register_form" action="<c:url value="/user/insertUser.do" />" method="post" style="display: none;">
                         <h2>회원가입</h2>
 						
+						<!-- 아이디 비밀번호 이메일 닉네임 체크 -->
+						<input type="hidden" id="reg_id_chk" value="아이디를 입력해주세요.">
+						<input type="hidden" id="reg_pw_chk" value="비밀번호를 입력해주세요.">
+						<input type="hidden" id="reg_em_chk" value="이메일을 입력해주세요.">
+						<input type="hidden" id="reg_nn_chk" value="닉네임을 입력해주세요.">
+						
                         <!-- insert loginid -->
-                        <div class="form-group">
-                          <input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="">
+                        <div class="form-group has-error has-feedback" id="register_form_id_text">
+                          	<input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" placeholder="아이디" value="" aria-describedby="inputSuccess2Status">
+                          	<span id="register_form_id_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+							<!-- <input type="text" class="form-control" id="inputSuccess1"> -->
                         </div>
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                         	<input type="text" id="idcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
-                        </div>
+                        </div> -->
 						
 						 <!-- insert password -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_password_text">
                           <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="비밀번호">
+                          <span id="register_form_password_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
 
                         <!-- insert email -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_email_text">
                           <input type="email" name="email" id="email" tabindex="3" class="form-control" placeholder="이메일" value="">
-                        </div>
-                        
-                        <div class="form-group">
-                        	<input type="text" id="emailcheck" style="border:0; background-color: rgba(0,0,0,0); align-text: center;" value="중복확인" readonly>              	
+                          <span id="register_form_email_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
 						
 						<!-- insert nick -->
-                        <div class="form-group">
+                        <div class="form-group has-error has-feedback" id="register_form_nick_text">
                           <input type="text" name="nick" id="nick" tabindex="4" class="form-control" placeholder="닉네임" value="">
+                          <span id="register_form_nick_icon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
-						
                         <!-- register button -->
                         <div class="form-group">
                           <div class="row">
+                          <center>
                             <div class="col-sm-6 col-sm-offset-3">
-                              <input type="button" id="register_submit" onClick="register_check();" tabindex="5" class="form-control btn btn-register" value="회원가입">
+                              	<input type="submit" id="register_submit" style="width: auto;" tabindex="5" class="form-control btn btn-register" disabled='true' value="회원가입">
                             </div>
+                            </center>
                           </div>
                         </div>
 
