@@ -118,7 +118,7 @@ public class UserController {
 	
 	// mailSending 코드
    @RequestMapping(value="sendidpw.do")
-   public String mailSending(UserVO vo, HttpServletResponse response) {
+   public String mailSending(UserVO vo, HttpServletResponse res) {
      
      UserVO user = userService.getFindIDPW(vo);
      
@@ -144,11 +144,10 @@ public class UserController {
       
        mailSender.send(message);
        
-       response.setContentType("text/html; charset=UTF-8");
-       PrintWriter out = response.getWriter();
+       res.setContentType("text/html; charset=UTF-8");
+       PrintWriter out = res.getWriter();
        out.println("<script>alert('성공적으로 메일을 발송했습니다.');</script>");
        out.flush();
-
 
      } catch(Exception e){
        System.out.println(e);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="messageDAO">
+           
+  <insert id="insertMessage" parameterType="message">
+        <![CDATA[ 
+            INSERT INTO MESSAGE ( FROM_UID, TO_UID, CONTENTS)
+		              VALUES ( #{from_uid}, (SELECT UID FROM USERS WHERE LOGINID = #{loginid}), #{contents})
+		]]>
+  </insert>
+  
+  <delete id="deleteMessage" parameterType="message" >
+       <![CDATA[ 
+           DELETE FROM MESSAGE WHERE MID = #{mid}
+       ]]>
+  </delete>
+  
+  <select id="readMessage" resultType="message">
+        <![CDATA[
+            SELECT (SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID) AS SENDER,
+            (SELECT LOGINID FROM USERS WHERE UID=M.TO_UID) AS RECEIVER,
+            M.CONTENTS, DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
+            FROM MESSAGE M WHERE M.MID = #{mid};
+        ]]>
+  </select>
+  
+  <select id="receiveAllMessage" resultType="message">  
+        <![CDATA[
+            SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID) AS RECEIVERANDSENDER,
+            M.CONTENTS, DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
+            FROM MESSAGE M, USERS U 
+            WHERE M.TO_UID = #{to_uid} AND U.UID=M.TO_UID
+            ORDER BY MDATE DESC;
+        ]]>
+  </select>
+  
+  <select id="sendAllMessage" resultType="message">  
+        <![CDATA[
+            SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.TO_UID) AS RECEIVERANDSENDER,
+            M.CONTENTS, DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
+            FROM MESSAGE M, USERS U 
+            WHERE M.FROM_UID = #{from_uid} AND U.UID=M.FROM_UID
+            ORDER BY MDATE DESC;
+        ]]>
+  </select>
+  
+</mapper>

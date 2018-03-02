@@ -166,7 +166,7 @@ function otherUserTimeline(uid){
           			<a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="${otherUser.nick}님이 쓴 글 2345개">
 		            	${otherUser.nick}님이 쓴 글 : 2345개
 		            </a>
-		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="${otherUser.nick}님의 팔로잉  ${otherFollow}명">
+		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#followModal" title="${otherUser.nick}님의 팔로잉  ${otherFollow}명">
 		            	${otherUser.nick}님의 팔로잉 : ${otherFollow}명
 		            </a>
 		            
@@ -175,7 +175,7 @@ function otherUserTimeline(uid){
 		            <a href="#" class="list-group-item list-group-item-success" data-toggle="tooltip" data-placement="top" title="내가 쓴 글 2345개">
 		            	내가  쓴 글 : 2345개
 		            </a>
-		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-toggle="modal" data-target="#followModal" title="팔로잉 ${follow}명">
+		            <a href="#" id="followingModal" class="list-group-item list-group-item-info" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#followModal" title="팔로잉 ${follow}명">
 		            	팔로잉 : ${follow}명
 		            </a>
 		        </c:otherwise>				

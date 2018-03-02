@@ -7,8 +7,11 @@
   <select id="getUser" resultType="users">
         SELECT * FROM USERS 
                WHERE 1 = 1
-               <if test="loginid != null and password != null">AND LOGINID = #{loginid} AND PASSWORD = #{password} </if>
-               <if test="uid > 0">AND UID = #{uid} </if>      
+               <choose>
+               	 <when test="loginid != null and password != null">AND LOGINID = #{loginid} AND PASSWORD = #{password}</when>
+               	 <when test="uid > 0">AND UID = #{uid}</when>
+               	 <otherwise>AND LOGINID = #{loginid}</otherwise>          
+               </choose>                    
   </select>
     
   <select id="getUserList" parameterType="String" resultType="users">

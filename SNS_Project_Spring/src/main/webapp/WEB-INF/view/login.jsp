@@ -27,6 +27,7 @@ $(document).ready(function(){
   $('#email').keyup(function() {
 	 var a = email_chk(); 
   });
+  
 });
 </script>
 <script type="text/javascript">
@@ -200,10 +201,10 @@ function register_check() {
       <ul class="nav navbar-nav navbar-right">
         <li>
           <!-- login modal display -->
-          <a href="#" data-toggle="modal" data-target="#loginModal" style="color:white; text-shadow: 1px 1px 1px grey; outline:none; ">
+          <a href="#" data-toggle="modal" data-target="#loginModal" data-backdrop="static" data-keyboard="false" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey;" outline:none; ">
               <span class="glyphicon glyphicon-log-in" />&nbsp;로그인
           </a>
-
+		</li>
           <!-- Modal -->
           <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -324,7 +325,7 @@ function register_check() {
           </div>
           <!-- end of modal fade & modal -->
 
-        </li>
+        
       </ul>
 
     </div>

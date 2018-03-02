@@ -112,7 +112,7 @@
 
 												<!-- 모달 선택 영역 -->
 												<a href="#" style="color: #000;">
-													<div class="iconBox" data-toggle="modal" data-target="#subModal">
+													<div class="iconBox" data-toggle="modal" data-target="#subModal" data-backdrop="static" data-keyboard="false">
 
 														<!-- 본문 글 영역 -->
 														<div>
@@ -263,7 +263,7 @@
 													<div class="button_list">
 														<div class="reply_btn">
 															<a href="#" class="btn2" data-toggle="tooltip" data-placement="top" title="댓글달기">
-																<div class="iconBox" data-toggle="modal" data-target="#replyModal">
+																<div class="iconBox" data-toggle="modal" data-target="#replyModal" data-backdrop="static" data-keyboard="false">
 																	<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 																</div>
 															</a>

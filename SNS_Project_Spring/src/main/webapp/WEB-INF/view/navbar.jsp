@@ -19,9 +19,11 @@
 <script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="<c:url value='/common/js/listajax.js' />"></script>
 
 </head>
 <script type="text/javascript">
+
 	$(document).ready(function() {
 		$('#search_submit').bind("click", function() {
 
@@ -34,7 +36,105 @@
 				follow_search();
 			}
 		});
+		
+		$(".chkbox-all").click(function() {
+			$(".chkbox").prop("checked", this.checked);
+		});
+		
+		$("#msglist").click(function() {
+			$('#msgTable > tbody:last').empty();
+			$('ul.nav-tabs a[href="#msgTabs-1"]').trigger("click");
+			receiveMsg();
+		});
+		
+		$('ul.nav-tabs a[href="#msgTabs-1"]').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			  $('#msgTable > tbody:last').empty();
+			  $('#senderAndreceive').text("보낸 사람(ID)");
+			  receiveMsg();
+			});
+		
+		$('ul.nav-tabs a[href="#msgTabs-2"]').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			  $('#senderAndreceive').text("받는 사람(ID)");
+			  $('#msgTable > tbody:last').empty();
+			  sendMsg();
+			});
+		
+		$("#sendMessage").click(function() {
+			writeMsg();
+			history.go(0);
+		});
+
 	});
+</script>
+<script>
+	function receiveMsg(){
+		var to_uid =  { "to_uid" : "${user.uid}" };	
+		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", to_uid, msgList);
+	}
+	
+	function sendMsg(){
+		var from_uid =  { "from_uid" : "${user.uid}" };	
+		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", from_uid, msgList);
+	}
+	
+	function writeMsg(){
+		var param =  { 
+				"from_uid" : "${user.uid}",
+				"loginid" : $("#sendLoginid").val(),
+				"contents" : $("#contents").val()
+				};	
+		u.doAjaxPost("<c:url value='/message/sendMsg.do' />", param, writeMsgsucc);
+	}
+	
+	function writeMsgsucc(){
+		alert($("#sendLoginid").val() + "님에게 쪽지를 보냈습니다.")
+	}
+	
+	function writeMsgError(){
+		alert("존재하지 않는 아이디이거나 잘못 입력한 아이디입니다.")
+	}
+	
+	function msgList(data){
+		var html = "";
+			
+		$(data.msgLists).each(function(){
+		  html += "<tr>";
+		  html += "<td style='text-align: center;'><input type='checkbox' class='chkbox' aria-label='...'></td>";
+		  html += "<td style='text-align: center;'>" + this.receiverAndSender + "</td>";
+		  html += "<td class='text_count2' style='text-align: center;'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false'  data-toggle='modal' href='#messageModal' style='outline: none;'>"	
+		  				+ this.contents + 
+		  		  "</a></td>";
+		  html += "<td style='text-align: center;'>" + this.mdate + "</td>";
+		  html += "</tr>";	
+		});
+		
+		$('#msgTable > tbody:last').empty();
+		$('#msgTable > tbody:last').append(html);
+	}
+
+	function readMsg(remid){
+		var mid = remid;
+		var addr = "<c:url value='/message/readMsg.do' />";
+		
+		$.ajax({
+			url : addr,
+			type : "get",
+			data : {
+   				"mid" : mid
+   			},
+			success: function(data){
+				var readMsg = data.readMsg;
+				$('#sender').html(readMsg.sender);
+				$('#receiver').html(readMsg.receiver);
+				$('#msgDate').html(readMsg.mdate);
+				$('#msgArea').html(readMsg.contents);
+			}
+	 });
+	}
 </script>
 <script>
 	function follow_search() {
@@ -141,7 +241,7 @@ function otherUserTimeline(uid){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">BLUECOCO</a>
+				<a class="navbar-brand" href="<c:url value='/user/index.do' />">BLUECOCO</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -213,82 +313,68 @@ function otherUserTimeline(uid){
 
 
 					<li>
-						<a href="#listModal" data-toggle="modal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
+						<a href="#listModal" id="msglist" data-backdrop="static" data-keyboard="false" data-toggle="modal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
 							<span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지 <span class="badge">50</span>
 						</a>
 
 						<div class="modal fade bs-example-modal-lg" id="listModal" style="display: none; z-index: 1050;" aria-hidden="true">
 							<div class="modal-dialog modal-lg">
-								<div class="modal-content">
+								<div class="modal-content" id="tabs">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline: none;">
 											<span aria-hidden="true">&times;</span>
 										</button>
-										<h4 class="modal-title">쪽지</h4>
+										
+										<ul class="nav nav-tabs" role="tablist">
+										  <li role="presentation" class="active"><a href="#msgTabs-1" aria-controls="msgTabs-1" role="tab">받은 쪽지함</a></li>
+										  <li role="presentation"><a href="#msgTabs-2" aria-controls="msgTabs-2" role="tab">보낸 쪽지함</a></li>
+										  <li role="presentation"><a href="#writeMsg" data-backdrop="static" data-keyboard="false" data-toggle="modal">쪽지 쓰기</a></li>
+										</ul>
 									</div>
+								
+								<div class="tab-content">	
+								<div role="tabpanel" class="tab-pane active">
 									<div class="modal-body">
 
-										<table class="table">
+										<table class="table" id="msgTable">
+										  <thead>
 											<tr>
-												<th style="width: 20%; text-align: center;">작성자</th>
-												<th style="width: 60%; text-align: center;">내용</th>
+												<th style="width: 10%; text-align: center;"><input type="checkbox" class="chkbox-all" aria-label="..."></th>
+												<th style="width: 20%; text-align: center;" id="senderAndreceive"> </th>
+												<th style="width: 50%; text-align: center;">내용</th>
 												<th style="width: 20%; text-align: center;">일자</th>
 											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;">
-													<a data-toggle="modal" href="#messageModal" style="outline: none;">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-													</a>
-												</td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													href="#">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													href="#">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													href="#">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													href="#">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">김준기</td>
-												<td class="text_count2" style="text-align: center;"><a
-													href="#">
-														준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
-												</a></td>
-												<td style="text-align: center;">2017-12-16</td>
-											</tr>
+										  </thead>
+										  <tbody>
+										  
+										  </tbody>	
+											
 										</table>
 
+										<nav style="text-align: center;">
+									      <ul class="pagination">
+									        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+									        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+									        <li><a href="#">2</a></li>
+									        <li><a href="#">3</a></li>
+									        <li><a href="#">4</a></li>
+									        <li><a href="#">5</a></li>
+									        <li><a href="#">6</a></li>
+									        <li><a href="#">7</a></li>
+									        <li><a href="#">8</a></li>
+									        <li><a href="#">9</a></li>
+									        <li><a href="#">10</a></li>
+									        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+									     </ul>
+									   </nav>									   
 									</div>
+								</div>
+
+								</div>
+									
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-										<button type="button" class="btn btn-primary">확인</button>
+										<button type="button" class="btn btn-primary" data-dismiss="modal">쪽지 삭제</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 									</div>
 								</div>
 							</div>
@@ -305,16 +391,19 @@ function otherUserTimeline(uid){
 									</div>
 									<div class="modal-body">
 
-										<table class="table">
+										<table class="table">									
 											<tr>
-												<td>작성자</td>
-												<td>김준기</td>
-												<td>작성일</td>
-												<td>2017-12-16</td>
+												<td style="font-weight: bold;">보낸 사람(ID)</td>
+												<td id="sender"></td>
+												<td style="font-weight: bold;">받는 사람(ID)</td>
+												<td id="receiver"></td>
+												<td style="font-weight: bold;">작성일</td>
+												<td id="msgDate"></td>
 											</tr>
+										  	
 											<tr>
-												<td colspan="4">
-													<textarea style="width: 100%; height: 400px">준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기준기
+												<td colspan="6">
+													<textarea id="msgArea" style="width: 100%; height: 400px" readonly="readonly">
 													</textarea>
 												</td>
 											</tr>
@@ -322,15 +411,48 @@ function otherUserTimeline(uid){
 
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-										<button type="button" class="btn btn-primary">확인</button>
+										<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 									</div>
 								</div>
 							</div>
-						</div></li>
+						</div>
+						
+						<div class="modal fade bs-example-modal-lg" id="writeMsg" style="display: none; z-index: 1060;" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="outline: none;">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title">쪽지</h4>
+									</div>
+									<div class="modal-body">
+
+										<table class="table">									
+											<tr>
+												<td style="font-weight: bold; padding-top: 14px;">받는 사람(ID)</td>
+												<td><input type="text" name="loginid" id="sendLoginid" class="form-control" placeholder="받는 사람(ID) 입력" value=""></td>
+											</tr>
+										  	
+											<tr>
+												<td colspan="4">
+													<textarea id="contents" name="contents" style="width: 100%; height: 400px" value=""></textarea>
+												</td>
+											</tr>
+										</table>
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id="sendMessage">전송</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>					
+						</li>
 
 					<li>
-						<a href="#" data-toggle="modal" data-target="#profileModal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
+						<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#profileModal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
 							<span class="glyphicon glyphicon-user"></span>&nbsp;프로필
 						</a>
 					
@@ -410,7 +532,7 @@ function otherUserTimeline(uid){
 						<label class="sr-only" for="form-control">팔로우 검색</label>
 						<input type="text" name="searchKeyword" id="searchKeyword" class="form-control" placeholder="팔로우 검색">
 					</div>
-					<button type="button" id="search_submit" class="btn btn-default" data-toggle="modal" data-target="#followSearchModal">검색</button>
+					<button type="button" id="search_submit" class="btn btn-default" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#followSearchModal">검색</button>
 				</form>
 
 				<!-- Modal -->
@@ -457,7 +579,7 @@ function otherUserTimeline(uid){
 
 				<!-- 글쓰기 영역 -->
 				<form class="navbar-form navbar-right">
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#writeModal" style="font-weight: bold; outline: none;">
+					<button type="button" class="btn btn-info" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#writeModal" style="font-weight: bold; outline: none;">
 						글 쓰기
 					</button>
 

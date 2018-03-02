@@ -9,6 +9,7 @@
         <typeAlias alias="post" type="com.sns.post.PostVO"/>
         <typeAlias alias="postfile" type="com.sns.post.file.PostFileVO"/>
         <typeAlias alias="follow" type="com.sns.follow.FollowVO"/>
+        <typeAlias alias="message" type="com.sns.message.MessageVO"/>
     </typeAliases>
 
     <!-- Sql Mapper 설정 -->
@@ -17,5 +18,6 @@
         <mapper resource="sqlmap/mariadb/Post_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/PostFile_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/Follow_SQL.xml"/>
+        <mapper resource="sqlmap/mariadb/Message_SQL.xml"/>
     </mappers>
 </configuration>
