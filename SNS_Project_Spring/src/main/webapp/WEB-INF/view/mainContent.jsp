@@ -82,6 +82,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="content_header" style="display: flex;">
+												<div style="width:95%;">
 													<a href="#" style="margin-right: 5px;">
 													
 													<!-- 사용자 프로필 이미지 -->
@@ -97,28 +98,32 @@
 															<b style="font-weight: normal">${postInfoList.loginid}</b>
 														</span>
 													</a>
+													
 													<!-- 작성일 -->
 													<small class="time" data-toggle="tooltip" data-placement="top" title="${postInfoList.datetime}">
 														· ${postInfoList.date}
 													</small>
-													<div style="width:80%;">&nbsp;</div>
+													
+												</div>
+													<!-- <div style="width:30%;">&nbsp;</div> -->
+													
 													<!-- 수정 & 삭제 -->
 													<c:if test="${sessionScope.user.loginid eq postInfoList.loginid}">
-													<div class="dropdown">
-														<span class="dropdown-toggle" id="writeAndDel" data-toggle="dropdown" aria-expanded="true">
-															&nbsp;
-															<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-															<span class="caret"></span>
-														</span>
-														<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
-															<li role="presentation">
-																<a role="menuitem" tabindex="-1" href="#">수정</a>
-															</li>
-															<li role="presentation">
-																<a role="menuitem" tabindex="-1" href="#" onclick="javascript:postDelete(${postInfoList.pid});">삭제</a>
-															</li>
-														</ul>
-													</div>
+														<div class="dropdown">
+															<span class="dropdown-toggle" id="writeAndDel" data-toggle="dropdown" aria-expanded="true">
+																&nbsp;
+																<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+																<span class="caret"></span>
+															</span>
+															<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
+																<li role="presentation">
+																	<a role="menuitem" tabindex="-1" href="#">수정</a>
+																</li>
+																<li role="presentation">
+																	<a role="menuitem" tabindex="-1" href="#" onclick="javascript:postDelete(${postInfoList.pid});">삭제</a>
+																</li>
+															</ul>
+														</div>
 													</c:if>
 												</div>
 											</div>
