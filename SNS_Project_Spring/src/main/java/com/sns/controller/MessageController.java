@@ -26,7 +26,7 @@ public class MessageController {
 	
 	@RequestMapping(value="receiveAndSend.do", method=RequestMethod.GET)
 	public ModelAndView getReceiveMessage(MessageVO vo, ModelAndView mav){
-		System.out.println("받은 메시지 & 보낸 메시지 확인");
+		System.out.println("받은 쪽지 & 보낸 쪽지 확인");
 		
 		List<MessageVO> msgLists;
 		
@@ -43,7 +43,7 @@ public class MessageController {
 	
 	@RequestMapping(value="readMsg.do", method=RequestMethod.GET)
 	public ModelAndView getReadMessage(MessageVO vo, ModelAndView mav){
-		System.out.println("메시지 상세페이지 이동");
+		System.out.println("쪽지 상세페이지 이동");
 		
 		MessageVO readMsg = messageService.readMessage(vo);
 
@@ -55,7 +55,7 @@ public class MessageController {
 	
 	@RequestMapping(value="sendMsg.do", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView sendMessage(ModelAndView mav, HttpServletRequest req, HttpServletResponse res) throws Exception{
-		System.out.println("메시지 상세페이지 이동");
+		System.out.println("쪽지 전송 기능");
 		
 		MessageVO vo = new MessageVO();
 		UserVO user = new UserVO();
@@ -77,6 +77,16 @@ public class MessageController {
 		}
 		
     	mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="deleteMsg.do", method={RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView deleteMessage(ModelAndView mav, MessageVO vo){
+		System.out.println("쪽지 삭제 기능");
+		
+		messageService.deleteMessage(vo);
+		mav.setViewName("jsonView");
 		
 		return mav;
 	}

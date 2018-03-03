@@ -67,6 +67,33 @@
 			writeMsg();
 			history.go(0);
 		});
+		
+		$('#delete').on("click", function() {
+			inputObjArr = document.getElementsByTagName("input"); // input 시작태그 객체들
+			cnt = 0;
+			for (i = 0; i < inputObjArr.length; i++) {
+				if (inputObjArr[i].getAttribute("type") == "checkbox" && inputObjArr[i].checked == true) { // 체크박스만
+					$.ajax({
+						url : '<c:url value="/message/deleteMsg.do" />',
+						type : 'POST',
+						data : {"mid" : inputObjArr[i].value},
+						success : function(data) {
+							//alert('쪽지가 삭제되었습니다.');						
+						},
+						error : function(data){
+							alert("삭제 하나도 안됨");
+						},
+					});
+					cnt++;
+				}
+			}
+			if(cnt > 0){
+				alert(cnt + "개의 쪽지가 삭제 되었습니다.");
+				history.go(0);
+			}else{
+				alert("삭제하실 쪽지를 선택하세요.");
+			}
+		});
 
 	});
 </script>
@@ -103,7 +130,7 @@
 			
 		$(data.msgLists).each(function(){
 		  html += "<tr>";
-		  html += "<td style='text-align: center;'><input type='checkbox' class='chkbox' aria-label='...'></td>";
+		  html += "<td style='text-align: center;'><input type='checkbox' class='chkbox' aria-label='...' value=\"" + this.mid + "\"></td>";
 		  html += "<td style='text-align: center;'>" + this.receiverAndSender + "</td>";
 		  html += "<td class='text_count2' style='text-align: center;'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false'  data-toggle='modal' href='#messageModal' style='outline: none;'>"	
 		  				+ this.contents + 
@@ -373,7 +400,7 @@ function otherUserTimeline(uid){
 								</div>
 									
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary" data-dismiss="modal">쪽지 삭제</button>
+										<button type="button" id="delete" class="btn btn-primary">쪽지 삭제</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 									</div>
 								</div>
@@ -443,7 +470,7 @@ function otherUserTimeline(uid){
 
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-primary" id="sendMessage">전송</button>
+										<button type="button" class="btn btn-primary" id="sendMessage">보내기</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 									</div>
 								</div>
