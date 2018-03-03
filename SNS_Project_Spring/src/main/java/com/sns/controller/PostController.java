@@ -255,9 +255,124 @@ public class PostController {
 	}
 	
 //	게시글 수정 실행.
-	@RequestMapping("updatePost.do")
-	public ModelAndView updatePost() {
-		return new ModelAndView();
+	@RequestMapping(value="updatePost.do", method=RequestMethod.POST)
+	public ModelAndView updatePost(MultipartHttpServletRequest req, HttpServletResponse res, HttpSession session) {
+		UserVO sessionInfo = (UserVO) session.getAttribute("user");
+		int sfilekey = 1;
+		String sGroupKey = null;
+		
+//		포스트 된 게시글 수정.
+		PostVO postvo = new PostVO();
+		postvo.setPid(Integer.parseInt(req.getParameter("pid")));
+		postvo.setContents(req.getParameter("status"));
+		postvo.setUser_uid(sessionInfo.getUid());
+		System.out.println(postvo.toString());
+		postService.updatePost(postvo);
+		
+//		기존 이미지 중 삭제되지 않은 이미지의 파일키.
+		List<Integer> old_file_key = new ArrayList<>();
+		for(int i=0; req.getParameter("oldFile-"+i) != null; i++) {
+			old_file_key.add(i, Integer.parseInt(req.getParameter("oldFile-"+i)));
+			sfilekey = Integer.parseInt(req.getParameter("oldFile-"+i));
+		}
+		
+//		파일키 오름차순 정렬.
+		Collections.sort(old_file_key, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				// TODO Auto-generated method stub
+				return o1.compareTo(o2);
+			}
+		});
+		System.out.println("view에서 전달받은 파일키 ::::: " + old_file_key.toString());
+		
+//		테이블에 저장되어 있는 이미지의 파일키.
+		PostFileVO postfilevo = new PostFileVO();
+		postfilevo.setPid(Integer.parseInt(req.getParameter("pid")));
+		List<PostFileVO> postfileList = postfileService.getPostFile(postfilevo);
+		
+		List<Integer> table_file_key = new ArrayList<>();
+		for(int j=0; j<postfileList.size(); j++) {
+			table_file_key.add(j, postfileList.get(j).getFile_key());
+			sGroupKey = postfileList.get(j).getGroup_key();
+		}
+		System.out.println("테이블에 저장된 파일키 ::::: " + table_file_key.toString());
+		
+//		테이블에서 삭제되지 말아야 할 데이터를 추출한다.
+		List<Integer> toRemove = new ArrayList<>();
+		for(int oldFile : old_file_key) {
+			for(int tableFile : table_file_key) {
+				if(Integer.toString(tableFile).equalsIgnoreCase(Integer.toString(oldFile))) {
+					toRemove.add(tableFile);
+				}
+			}
+		}
+		System.out.println("테이블에서 삭제하지 말아야할 파일키 ::::: " + toRemove.toString());
+		
+//		테이블에서 삭제되지 말아야 할 데이터를 변수에서 삭제한다.
+		table_file_key.removeAll(toRemove);
+		System.out.println("테이블에서 삭제해야 할 파일키 ::::: " + table_file_key.toString());
+		
+//		테이블 데이터 삭제.
+		for(int k=0; k<table_file_key.size(); k++) {
+			PostFileVO deletevo = new PostFileVO();
+			deletevo.setFile_key(table_file_key.get(k));
+			
+			postfileService.deletePostFile(deletevo);
+		}
+		
+//		새로 추가되는 이미지.
+		try {
+			Iterator<String> itr = req.getFileNames();
+			MultipartFile mpf = null;
+			String sPath = 	req.getSession().getServletContext().getRealPath("/common/post/");
+			if(sGroupKey == null) {
+				sGroupKey = postfileService.getGroupKey();
+			}
+			
+			while(itr.hasNext()) {
+//		1. 파일키를 생성하고 파일의 정보를 추출한다.
+			sfilekey++;
+			mpf = req.getFile(itr.next());
+			if(mpf.isEmpty()) continue;
+            
+//			2. 파일관리 테이블에 데이터를 insert한다.
+			
+			String type = mpf.getContentType();
+			String[] file_type = type.split("/");
+			
+			PostFileVO file = new PostFileVO();
+			file.setPid(Integer.parseInt(req.getParameter("pid")));
+			file.setGroup_key(sGroupKey);
+			file.setFile_key(sfilekey);
+			file.setFile_path(sPath);
+			file.setFile_realname(mpf.getOriginalFilename());
+			file.setFile_name(Long.toString(Calendar.getInstance().getTimeInMillis()));
+			file.setFile_length(mpf.getBytes().length);
+			file.setFile_type(file_type[1]);
+			file.setReg_id(sessionInfo.getLoginid());
+			
+			postfileService.insertPostFile(file);
+			
+//			3. 지정된 위치가 존재하는지 확인하고 없으면 경로를 생성한다.
+			File chkDir = new File(sPath);
+			if(!chkDir.isDirectory()) {
+				chkDir.mkdirs();
+			}
+            
+//			4. 지정된 위치에 파일을 복사한다.
+			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(sPath + File.separator + file.getFile_name() + "." + file.getFile_type()));
+			
+			}
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		Map message = new HashMap();
+		message.put("success", true);
+		
+		return new ModelAndView("jsonView", message);
 	}
 	
 //	타임라인에 포스트 된 정보를 삭제한다.

@@ -38,9 +38,9 @@
   
   <update id="updatePost" parameterType="post">
        <![CDATA[ 
-           UPDATE USERS SET
+           UPDATE POST SET
                   CONTENTS = #{contents},
-                  PDATE    = #{pdate} 
+                  USER_UID = #{user_uid} 
             WHERE PID      = ${pid}
         ]]>
   </update>

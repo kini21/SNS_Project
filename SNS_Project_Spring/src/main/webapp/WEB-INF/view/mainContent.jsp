@@ -208,7 +208,7 @@
 																		<c:if test="${empty postInfoList.firstImage and empty postInfoList.detailImage}">
 																			&nbsp;
 																		</c:if>
-																		<c:if test="${not empty postInfoList.firstImage and not empty postInfoList.detailImage}">
+																		<c:if test="${not empty postInfoList.firstImage or not empty postInfoList.detailImage}">
 																			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 100%; margin-top: 50px;">
 
 																				<!-- Wrapper for slides -->
@@ -231,16 +231,17 @@
 																						</c:forEach>
 																					
 																				</div>
-
-																				<!-- Controls -->
-																				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-																					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-																					<span class="sr-only">Previous</span>
-																				</a>
-																				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-																					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-																					<span class="sr-only">Next</span>
-																				</a>
+																				<c:if test="${not empty postInfoList.detailImage}">
+																					<!-- Controls -->
+																					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+																						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+																						<span class="sr-only">Previous</span>
+																					</a>
+																					<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+																						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+																						<span class="sr-only">Next</span>
+																					</a>
+																				</c:if>
 																			</div>
 																			</c:if>
 																		</div>
