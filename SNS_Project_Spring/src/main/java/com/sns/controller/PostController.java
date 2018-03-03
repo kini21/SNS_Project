@@ -22,6 +22,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -158,6 +159,7 @@ public class PostController {
 				return m2.get("condition").toString().compareTo(m1.get("condition").toString());
 			}
 		});
+		System.out.println(postInfoList.toString());
 		
 //		view로 postInfoList를 전달한다.
 		model.addAttribute("postInfoList", postInfoList);
@@ -232,6 +234,30 @@ public class PostController {
 		message.put("success", true);
 		
 		return new ModelAndView("jsonView", message);
+	}
+	
+//	포스트 수정 페이지 출력.
+	@RequestMapping("contentUpdate.do")
+	public String contentUpdate(@RequestParam int pid, Model model) {
+		PostVO postvo = new PostVO();
+		postvo.setPid(pid);
+		
+		PostVO post = postService.getPost(postvo);
+		
+		PostFileVO postfilevo = new PostFileVO();
+		postfilevo.setPid(pid);
+		List<PostFileVO> postfileList = postfileService.getPostFile(postfilevo);
+		
+		model.addAttribute("post", post);
+		model.addAttribute("postfileList", postfileList);
+		
+		return "contentUpdate";
+	}
+	
+//	게시글 수정 실행.
+	@RequestMapping("updatePost.do")
+	public ModelAndView updatePost() {
+		return new ModelAndView();
 	}
 	
 //	타임라인에 포스트 된 정보를 삭제한다.

@@ -88,7 +88,7 @@ function otherUserTimeline(uid){
 
 </script>
 <script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
-<script src="<c:url value='/common/js/file.choose.js' />"></script>
+<script src="<c:url value='/common/js/fileView.js' />"></script>
 <!-- file choose -->
 
 <script>
@@ -492,7 +492,7 @@ function otherUserTimeline(uid){
 										<input type="file" id="uploadFiles" style="display: none" multiple />
 
 										<div class="col-md-8">
-											<div class="file_label_wrap" style="float: left; height: auto">
+											<div class="file_label_wrap" style="float: left; height: auto; width:100%;">
 												<span id="label_file"></span>
 											</div>
 										</div>

@@ -18,12 +18,10 @@ function findFileName(e) {
 
     var reader = new FileReader();
     reader.onload = function(e) {
-      var html = "<a href=\"javascript:void(0);\" onclick=\"deleteFileAction(" + index + ")\" id=\"fil_id_" + index + "\" style=\"float:left; height:auto\">"+
-                  "<span> &nbsp;· " + f.name + "</span>" +
+      var html = "<a href=\"javascript:void(0);\" onclick=\"deleteFileAction(" + index + ")\" id=\"fil_id_" + index + "\" style=\"float:left; height:auto; width:50%; \">"+
+                  "<span style=\"float:left;\"> &nbsp;· " + f.name + "</span>" +
                  "</a>";
-      if ((index%2)==0){
-        html+="<br>";
-      }
+      
       $(".file_label_wrap").append(html);
       index++;
 
@@ -41,4 +39,9 @@ function deleteFileAction(index) {
 
   var fil_id = "#fil_id_" + index;
   $(fil_id).remove();
+}
+
+function deleteOldFileAction(index) {
+  var old_id = "#old_id_" + index;
+  $(old_id).remove();
 }

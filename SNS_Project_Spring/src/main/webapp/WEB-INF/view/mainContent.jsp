@@ -61,8 +61,7 @@
 									<!-- 글 본문 영역 -->
 									<div class="row">
 										<div class="col-md-12" style="text-align: center;">
-											<h5 style="font-weight: bold; color: #999">첫번째 게시물을
-												작성해보세요.</h5>
+											<h5 style="font-weight: bold; color: #999">첫번째 게시물을 작성해보세요.</h5>
 										</div>
 									</div>
 								</div>
@@ -105,7 +104,6 @@
 													</small>
 													
 												</div>
-													<!-- <div style="width:30%;">&nbsp;</div> -->
 													
 													<!-- 수정 & 삭제 -->
 													<c:if test="${sessionScope.user.loginid eq postInfoList.loginid}">
@@ -117,7 +115,7 @@
 															</span>
 															<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
 																<li role="presentation">
-																	<a role="menuitem" tabindex="-1" href="#">수정</a>
+																	<a role="menuitem" tabindex="-1" href="<c:url value="/post/contentUpdate.do?pid=${postInfoList.pid}" />">수정</a>
 																</li>
 																<li role="presentation">
 																	<a role="menuitem" tabindex="-1" href="#" onclick="javascript:postDelete(${postInfoList.pid});">삭제</a>
@@ -136,7 +134,7 @@
 
 												<!-- 모달 선택 영역 -->
 												<a href="#" style="color: #000;">
-													<div class="iconBox" data-toggle="modal" data-target="#subModal">
+													<div class="iconBox" data-toggle="modal" data-target="#mainModal${postInfoList.pid}">
 
 														<!-- 본문 글 영역 -->
 														<div>
@@ -165,7 +163,7 @@
 												</a>
 
 												<!-- 글 본문 모달 -->
-												<div class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal fade" id="mainModal${postInfoList.pid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header" style="background-color: #83abc6; border-radius: 6px 6px 0 0;">
@@ -206,7 +204,7 @@
 																		</div>
 
 																		<!-- 세부페이지 모달 이미지 영역 -->
-																		<div class="row" style="width: 100%; margin-left: auto;">
+																		<div class="row" style="width: 100%; margin: auto;">
 																		<c:if test="${empty postInfoList.firstImage and empty postInfoList.detailImage}">
 																			&nbsp;
 																		</c:if>
