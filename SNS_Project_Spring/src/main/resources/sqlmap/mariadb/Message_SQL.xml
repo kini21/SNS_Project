@@ -29,9 +29,10 @@
   <select id="receiveAllMessage" resultType="message">  
         <![CDATA[
             SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID) AS RECEIVERANDSENDER,
-            M.CONTENTS, DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
+            CONCAT(LEFT(M.CONTENTS, 30),'...') AS CONTENTS, 
+            DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
             FROM MESSAGE M, USERS U 
-            WHERE M.TO_UID = #{to_uid} AND U.UID=M.TO_UID
+            WHERE M.TO_UID = #{to_uid} AND FROM_DEL='N' AND U.UID=M.TO_UID 
             ORDER BY MDATE DESC;
         ]]>
   </select>
@@ -39,11 +40,30 @@
   <select id="sendAllMessage" resultType="message">  
         <![CDATA[
             SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.TO_UID) AS RECEIVERANDSENDER,
-            M.CONTENTS, DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
+            CONCAT(LEFT(M.CONTENTS, 30),'...') AS CONTENTS, 
+            DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
             FROM MESSAGE M, USERS U 
-            WHERE M.FROM_UID = #{from_uid} AND U.UID=M.FROM_UID
+            WHERE M.FROM_UID = #{from_uid} AND TO_DEL='N' AND U.UID=M.FROM_UID
             ORDER BY MDATE DESC;
         ]]>
   </select>
+  
+  <select id="getDelCheck" resultType="message">
+            SELECT MID FROM MESSAGE WHERE 1=1
+            	<choose>
+               	 <when test="from_del != null">AND FROM_DEL = #{from_del} AND TO_DEL='Y'</when>
+               	 <otherwise>AND TO_DEL = #{to_del} AND FROM_DEL='Y'</otherwise>          
+               </choose>  
+           AND MID = #{mid};
+  </select>
+  
+  <update id="delUpdateMessage" parameterType="message"> 
+           UPDATE MESSAGE SET
+               <choose>
+               	 <when test="from_del != null">FROM_DEL = #{from_del}</when>
+               	 <otherwise>TO_DEL = #{to_del}</otherwise>          
+               </choose>   
+            WHERE MID = #{mid}       
+  </update>
   
 </mapper>

@@ -37,4 +37,14 @@ public class MessageServiceImpl implements MessageService{
 	public void deleteMessage(MessageVO vo) {
 		messageDAO.deleteMessage(vo);
 	}
+	
+	@Override
+	public void delUpdateMessage(MessageVO vo) {
+		messageDAO.delUpdateMessage(vo);
+	}
+	
+	@Override
+	public List<MessageVO> getDelCheck(MessageVO vo){
+		return messageDAO.getDelCheck(vo);
+	}
 }

@@ -4,6 +4,8 @@ public class MessageVO {
 	private int mid;
 	private int from_uid;
 	private int to_uid;
+	private String from_del;
+	private String to_del;
 	private String contents;
 	private String mdate;
 	private String receiver;
@@ -28,6 +30,18 @@ public class MessageVO {
 	}
 	public void setTo_uid(int to_uid) {
 		this.to_uid = to_uid;
+	}
+	public String getFrom_del() {
+		return from_del;
+	}
+	public void setFrom_del(String from_del) {
+		this.from_del = from_del;
+	}
+	public String getTo_del() {
+		return to_del;
+	}
+	public void setTo_del(String to_del) {
+		this.to_del = to_del;
 	}
 	public String getContents() {
 		return contents;
@@ -68,9 +82,9 @@ public class MessageVO {
 	
 	@Override
 	public String toString() {
-		return "MessageVO [mid=" + mid + ", from_uid=" + from_uid + ", to_uid=" + to_uid + ", contents=" + contents
-				+ ", mdate=" + mdate + ", receiver=" + receiver + ", sender=" + sender + ", receiverAndSender="
-				+ receiverAndSender + ", loginid=" + loginid + "]";
+		return "MessageVO [mid=" + mid + ", from_uid=" + from_uid + ", to_uid=" + to_uid + ", from_del=" + from_del
+				+ ", to_del=" + to_del + ", contents=" + contents + ", mdate=" + mdate + ", receiver=" + receiver
+				+ ", sender=" + sender + ", receiverAndSender=" + receiverAndSender + ", loginid=" + loginid + "]";
 	}
 	
 }

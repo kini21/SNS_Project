@@ -13,4 +13,8 @@ public interface MessageService {
 	void insertMessage(MessageVO vo);
 	
 	void deleteMessage(MessageVO vo);
+	
+	void delUpdateMessage(MessageVO vo);
+	
+	List<MessageVO> getDelCheck(MessageVO vo);
 }

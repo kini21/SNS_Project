@@ -81,11 +81,31 @@ public class MessageController {
 		return mav;
 	}
 	
-	@RequestMapping(value="deleteMsg.do", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="deleteMsg.do", method=RequestMethod.POST)
 	public ModelAndView deleteMessage(ModelAndView mav, MessageVO vo){
 		System.out.println("쪽지 삭제 기능");
 		
-		messageService.deleteMessage(vo);
+		/*messageService.deleteMessage(vo);*/
+		List<MessageVO> delLists;
+		
+		if(vo.getFrom_del() != null) {
+			messageService.delUpdateMessage(vo);
+			delLists = messageService.getDelCheck(vo);
+			if(delLists != null) {
+				for(MessageVO delList : delLists) {
+					messageService.deleteMessage(delList);
+				}
+			}
+		} else if(vo.getTo_del() != null) {
+			messageService.delUpdateMessage(vo);
+			delLists = messageService.getDelCheck(vo);
+			if(delLists != null) {
+				for(MessageVO delList : delLists) {
+					messageService.deleteMessage(delList);
+				}
+			}
+		}
+		
 		mav.setViewName("jsonView");
 		
 		return mav;

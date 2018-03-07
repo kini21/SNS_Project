@@ -37,4 +37,14 @@ public class MessageDAO {
         System.out.println("===> Mybatis로 deleteMessage() 기능 처리");
         mybatis.insert("messageDAO.deleteMessage", vo);
     }
+	
+	public void delUpdateMessage(MessageVO vo) {
+		System.out.println("===> Mybatis로 delUpdateMessage() 기능 처리");
+		mybatis.update("messageDAO.delUpdateMessage",vo);
+	}
+	
+	public List<MessageVO> getDelCheck(MessageVO vo){
+		System.out.println("===> Mybatis로 getDelCheck() 기능 처리");
+		return mybatis.selectList("messageDAO.getDelCheck", vo);
+	}
 }

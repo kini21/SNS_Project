@@ -23,7 +23,6 @@
 
 </head>
 <script type="text/javascript">
-
 	$(document).ready(function() {
 		$('#search_submit').bind("click", function() {
 
@@ -44,6 +43,7 @@
 		$("#msglist").click(function() {
 			$('#msgTable > tbody:last').empty();
 			$('ul.nav-tabs a[href="#msgTabs-1"]').trigger("click");
+			$('#senderAndreceive').attr('data-del','receive');
 			receiveMsg();
 		});
 		
@@ -52,7 +52,9 @@
 			  $(this).tab('show')
 			  $('#msgTable > tbody:last').empty();
 			  $('#senderAndreceive').text("보낸 사람(ID)");
+			  $('#senderAndreceive').attr('data-del','receive');
 			  receiveMsg();
+			  		  
 			});
 		
 		$('ul.nav-tabs a[href="#msgTabs-2"]').click(function (e) {
@@ -60,30 +62,38 @@
 			  $(this).tab('show')
 			  $('#senderAndreceive').text("받는 사람(ID)");
 			  $('#msgTable > tbody:last').empty();
+			  $('#senderAndreceive').attr('data-del','send');
 			  sendMsg();
 			});
 		
 		$("#sendMessage").click(function() {
-			writeMsg();
-			history.go(0);
+			if($('#sendLoginid').val() === ""){
+				alert("받는사람(ID)을 입력하세요.");
+				return; 
+			} else if ($('#contents').val() === ""){
+				alert("보내실 쪽지 내용을 입력해주세요.");
+			} else if ($('#contents').val().length > 300){
+				alert("쪽지는 공백 포함 300자 미만으로 입력해주세요.");
+			} else {
+				writeMsg();
+				history.go(0);
+			}
 		});
 		
 		$('#delete').on("click", function() {
 			inputObjArr = document.getElementsByTagName("input"); // input 시작태그 객체들
 			cnt = 0;
 			for (i = 0; i < inputObjArr.length; i++) {
-				if (inputObjArr[i].getAttribute("type") == "checkbox" && inputObjArr[i].checked == true) { // 체크박스만
-					$.ajax({
-						url : '<c:url value="/message/deleteMsg.do" />',
-						type : 'POST',
-						data : {"mid" : inputObjArr[i].value},
-						success : function(data) {
-							//alert('쪽지가 삭제되었습니다.');						
-						},
-						error : function(data){
-							alert("삭제 하나도 안됨");
-						},
-					});
+				if (inputObjArr[i].getAttribute("type") == "checkbox" && inputObjArr[i].checked == true
+					&& inputObjArr[i].value != "on" && $('#senderAndreceive').attr('data-del') == 'receive') { // 체크박스만
+					
+				    $.post('<c:url value="/message/deleteMsg.do" />', {"mid": inputObjArr[i].value, "from_del":"Y"} , function(data){});
+					cnt++;
+					
+				} else if(inputObjArr[i].getAttribute("type") == "checkbox" && inputObjArr[i].checked == true
+						&& inputObjArr[i].value != "on" && $('#senderAndreceive').attr('data-del') == 'send'){
+										
+					$.post('<c:url value="/message/deleteMsg.do" />', {"mid": inputObjArr[i].value, "to_del":"Y"} , function(data){});
 					cnt++;
 				}
 			}
@@ -132,7 +142,7 @@
 		  html += "<tr>";
 		  html += "<td style='text-align: center;'><input type='checkbox' class='chkbox' aria-label='...' value=\"" + this.mid + "\"></td>";
 		  html += "<td style='text-align: center;'>" + this.receiverAndSender + "</td>";
-		  html += "<td class='text_count2' style='text-align: center;'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false'  data-toggle='modal' href='#messageModal' style='outline: none;'>"	
+		  html += "<td style='text-align: center;' 'text-overflow:ellipsis;' 'overflow:hidden'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false' data-toggle='modal' href='#messageModal' style='outline: none;'>"	
 		  				+ this.contents + 
 		  		  "</a></td>";
 		  html += "<td style='text-align: center;'>" + this.mdate + "</td>";
@@ -362,14 +372,15 @@ function otherUserTimeline(uid){
 								<div class="tab-content">	
 								<div role="tabpanel" class="tab-pane active">
 									<div class="modal-body">
-
-										<table class="table" id="msgTable">
+										
+										<div class="table-responsive">
+										<table class="table" id="msgTable" width="100" style="table-layout:fixed;">
 										  <thead>
 											<tr>
 												<th style="width: 10%; text-align: center;"><input type="checkbox" class="chkbox-all" aria-label="..."></th>
 												<th style="width: 20%; text-align: center;" id="senderAndreceive"> </th>
 												<th style="width: 50%; text-align: center;">내용</th>
-												<th style="width: 20%; text-align: center;">일자</th>
+												<th style="width: 20%; text-align: center;">날짜</th>
 											</tr>
 										  </thead>
 										  <tbody>
@@ -377,6 +388,7 @@ function otherUserTimeline(uid){
 										  </tbody>	
 											
 										</table>
+										</div>
 
 										<nav style="text-align: center;">
 									      <ul class="pagination">
@@ -400,7 +412,7 @@ function otherUserTimeline(uid){
 								</div>
 									
 									<div class="modal-footer">
-										<button type="button" id="delete" class="btn btn-primary">쪽지 삭제</button>
+										<button type="button" id="delete" class="btn btn-primary" data-del="receive">쪽지 삭제</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 									</div>
 								</div>
