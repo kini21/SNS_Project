@@ -265,6 +265,8 @@ function otherUserTimeline(uid){
 </script>
 
 <!-- file choose -->
+<script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
+<script src="<c:url value='/common/js/fileView.js' />"></script>
 
 <script>
 	$('[data-toggle="tooltip"]').tooltip('toggle');
