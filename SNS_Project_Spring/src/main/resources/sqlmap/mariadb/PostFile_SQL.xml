@@ -43,7 +43,9 @@
   </insert>
   
   <delete id="deletePostFile" parameterType="postfile" >
-       <![CDATA[ DELETE FROM POST_FILE WHERE PID = #{pid} ]]>
+       DELETE FROM POST_FILE
+       <if test="pid > 0">WHERE PID = ${pid}</if>
+       <if test="file_key > 0">WHERE FILE_KEY = ${file_key}</if>
   </delete>
   
 </mapper>

@@ -36,8 +36,7 @@
 
 	<jsp:include page="footer.jsp" flush="false" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
+
 
 </body>
 

@@ -61,8 +61,7 @@
 									<!-- 글 본문 영역 -->
 									<div class="row">
 										<div class="col-md-12" style="text-align: center;">
-											<h5 style="font-weight: bold; color: #999">첫번째 게시물을
-												작성해보세요.</h5>
+											<h5 style="font-weight: bold; color: #999">첫번째 게시물을 작성해보세요.</h5>
 										</div>
 									</div>
 								</div>
@@ -82,6 +81,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="content_header" style="display: flex;">
+												<div style="width:95%;">
 													<a href="#" style="margin-right: 5px;">
 													
 													<!-- 사용자 프로필 이미지 -->
@@ -97,10 +97,32 @@
 															<b style="font-weight: normal">${postInfoList.loginid}</b>
 														</span>
 													</a>
+													
 													<!-- 작성일 -->
 													<small class="time" data-toggle="tooltip" data-placement="top" title="${postInfoList.datetime}">
 														· ${postInfoList.date}
 													</small>
+													
+												</div>
+													
+													<!-- 수정 & 삭제 -->
+													<c:if test="${sessionScope.user.loginid eq postInfoList.loginid}">
+														<div class="dropdown">
+															<span class="dropdown-toggle" id="writeAndDel" data-toggle="dropdown" aria-expanded="true">
+																&nbsp;
+																<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+																<span class="caret"></span>
+															</span>
+															<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="writeAndDel">
+																<li role="presentation">
+																	<a role="menuitem" tabindex="-1" href="<c:url value="/post/contentUpdate.do?pid=${postInfoList.pid}" />">수정</a>
+																</li>
+																<li role="presentation">
+																	<a role="menuitem" tabindex="-1" href="#" onclick="javascript:postDelete(${postInfoList.pid});">삭제</a>
+																</li>
+															</ul>
+														</div>
+													</c:if>
 												</div>
 											</div>
 										</div>
@@ -112,7 +134,7 @@
 
 												<!-- 모달 선택 영역 -->
 												<a href="#" style="color: #000;">
-													<div class="iconBox" data-toggle="modal" data-target="#subModal" data-backdrop="static" data-keyboard="false">
+													<div class="iconBox" data-toggle="modal" data-target="#mainModal${postInfoList.pid}">
 
 														<!-- 본문 글 영역 -->
 														<div>
@@ -123,17 +145,25 @@
 														<c:if test="${not empty postInfoList.mainImage}">
 															<div class="imgBoxContainer">
 																<c:forEach items="${postInfoList.mainImage}" var="mainImage" varStatus="status2">
-																	<div class="imgBox">
-																		<img src="<c:url value='${mainImage.image}' />" style="width: 100%; height: 100%" />
-																	</div>
+																	<c:if test="${status2.count lt 4}">
+																		<div class="imgBox">
+																			<img src="<c:url value='${mainImage.image}' />" style="width: 100%; height: 100%" />
+																		</div>
+																	</c:if>
+																	<c:if test="${status2.count eq 4}">
+																		<div class="imgBox">
+																			<p>...</p>
+																		</div>
+																	</c:if>
 																</c:forEach>
 															</div>
 														</c:if>
+														
 													</div>
 												</a>
 
 												<!-- 글 본문 모달 -->
-												<div class="modal fade" id="subModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal fade" id="mainModal${postInfoList.pid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 													<div class="modal-dialog">
 														<div class="modal-content">
 															<div class="modal-header" style="background-color: #83abc6; border-radius: 6px 6px 0 0;">
@@ -174,12 +204,16 @@
 																		</div>
 
 																		<!-- 세부페이지 모달 이미지 영역 -->
-																		<div class="row" style="width: 100%; margin-left: auto;">
+																		<div class="row" style="width: 100%; margin: auto;">
+																		<c:if test="${empty postInfoList.firstImage and empty postInfoList.detailImage}">
+																			&nbsp;
+																		</c:if>
+																		<c:if test="${not empty postInfoList.firstImage or not empty postInfoList.detailImage}">
 																			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 100%; margin-top: 50px;">
 
 																				<!-- Wrapper for slides -->
 																				<div class="carousel-inner" role="listbox">
-																					<c:if test="${not empty postInfoList.firstImage}">
+																					
 																						<c:forEach items="${postInfoList.firstImage}" var="firstImage" varStatus="status">
 
 																							<div class="item active">
@@ -187,29 +221,29 @@
 																								<div class="carousel-caption"></div>
 																							</div>
 																						</c:forEach>
-																					</c:if>
-																					<c:if test="${not empty postInfoList.detailImage}">
+																					
+																					
 																						<c:forEach items="${postInfoList.detailImage}" var="detailImage" varStatus="status">
 																							<div class="item">
 																								<img src="<c:url value='${detailImage.image}' />" alt="">
 																								<div class="carousel-caption"></div>
 																							</div>
 																						</c:forEach>
-																					</c:if>
-
+																					
 																				</div>
-
-																				<!-- Controls -->
-																				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-																					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-																					<span class="sr-only">Previous</span>
-																				</a>
-																				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-																					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-																					<span class="sr-only">Next</span>
-																				</a>
+																				<c:if test="${not empty postInfoList.detailImage}">
+																					<!-- Controls -->
+																					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+																						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+																						<span class="sr-only">Previous</span>
+																					</a>
+																					<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+																						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+																						<span class="sr-only">Next</span>
+																					</a>
+																				</c:if>
 																			</div>
-
+																			</c:if>
 																		</div>
 																	</div>
 
@@ -263,7 +297,7 @@
 													<div class="button_list">
 														<div class="reply_btn">
 															<a href="#" class="btn2" data-toggle="tooltip" data-placement="top" title="댓글달기">
-																<div class="iconBox" data-toggle="modal" data-target="#replyModal" data-backdrop="static" data-keyboard="false">
+																<div class="iconBox" data-toggle="modal" data-target="#replyModal">
 																	<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 																</div>
 															</a>
@@ -374,6 +408,42 @@
 	<script>
 		$('[data-toggle="tooltip"]').tooltip('toggle');
 		$('[data-toggle="tooltip"]').tooltip('hide');
+	</script>
+	
+	<script src='<c:url value="https://code.jquery.com/jquery-1.10.2.js"/>'></script>
+	<!-- ajax javascript -->
+	<script>
+		function postDelete(pid) {
+			event.preventDefault();
+			
+			if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+				var param = JSON.stringify({
+					"pid" : pid
+				});
+	
+				$.ajax({
+					contentType : "application/json;charset=UTF-8",
+					url : "<c:url value='/post/postDelete.do' />",
+					method : "POST",
+					dataType : "JSON",
+					data : param,
+					success : function() {
+	
+						alert("삭제되었습니다.");
+						
+						window.location.href="<c:url value='/user/index.do' />";
+						
+					},// success end
+					error : function() {
+						alert("에러!!!");
+					}
+				});// end ajax
+			} else {   //취소
+			    return;
+			}
+			
+			
+		}
 	</script>
 </body>
 </html>
