@@ -87,8 +87,7 @@ function otherUserTimeline(uid){
 }
 
 </script>
-<script src='<c:url value="/common/js/bootstrap.min.js"/>'></script>
-<script src="<c:url value='/common/js/fileView.js' />"></script>
+
 <!-- file choose -->
 
 <script>
