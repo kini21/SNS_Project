@@ -1,7 +1,9 @@
 package com.sns.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,12 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sns.message.MessageService;
 import com.sns.message.MessageVO;
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
+import com.sns.util.Criteria;
+import com.sns.util.PageMaker;
 
 @Controller
 @RequestMapping("message")
@@ -25,17 +30,33 @@ public class MessageController {
 	@Autowired private UserService userService;
 	
 	@RequestMapping(value="receiveAndSend.do", method=RequestMethod.GET)
-	public ModelAndView getReceiveMessage(MessageVO vo, ModelAndView mav){
-		System.out.println("받은 쪽지 & 보낸 쪽지 확인");
+	public ModelAndView getReceiveMessage(MessageVO vo, @RequestParam("pageNum") int pageNum, ModelAndView mav){
+		System.out.println("받은 쪽지 & 보낸 쪽지 확인, 페이징 처리");
 		
 		List<MessageVO> msgLists;
 		
+		Criteria cri = new Criteria();
+		cri.setPage(pageNum);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("cri", cri);
+		
 		if(vo.getFrom_uid() > 0) {
-			msgLists = messageService.getSendAllMessage(vo);
-		} else {	
-			msgLists = messageService.getReceiveAllMessage(vo);
+			paramMap.put("from_uid", vo.getFrom_uid());
+			msgLists = messageService.getSendAllMessage(paramMap);
+		} else {
+			paramMap.put("to_uid", vo.getTo_uid());
+			msgLists = messageService.getReceiveAllMessage(paramMap);
 		}
+		
+		int msgCount = messageService.getMsgCount(vo);
+		pageMaker.setTotalCount(msgCount);
+				
 		mav.addObject("msgLists", msgLists);
+		mav.addObject("pageMaker", pageMaker);
     	mav.setViewName("jsonView");
 		
 		return mav;
@@ -85,7 +106,6 @@ public class MessageController {
 	public ModelAndView deleteMessage(ModelAndView mav, MessageVO vo){
 		System.out.println("쪽지 삭제 기능");
 		
-		/*messageService.deleteMessage(vo);*/
 		List<MessageVO> delLists;
 		
 		if(vo.getFrom_del() != null) {

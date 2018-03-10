@@ -26,26 +26,44 @@
         ]]>
   </select>
   
-  <select id="receiveAllMessage" resultType="message">  
+  <select id="receiveAllMessage" parameterType="hashmap" resultType="message">  
         <![CDATA[
             SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID) AS RECEIVERANDSENDER,
             IF(CHAR_LENGTH(M.CONTENTS) >= 30, CONCAT(LEFT(M.CONTENTS, 30),'...'), M.CONTENTS) AS CONTENTS, 
             DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
             FROM MESSAGE M, USERS U 
             WHERE M.TO_UID = #{to_uid} AND FROM_DEL='N' AND U.UID=M.TO_UID 
-            ORDER BY MDATE DESC;
+            ORDER BY MDATE DESC
+            LIMIT #{cri.pageStart}, #{cri.perPageNum};
         ]]>
   </select>
   
-  <select id="sendAllMessage" resultType="message">  
+  <select id="sendAllMessage" parameterType="hashmap" resultType="message">  
         <![CDATA[
             SELECT M.MID, (SELECT LOGINID FROM USERS WHERE UID=M.TO_UID) AS RECEIVERANDSENDER,
             IF(CHAR_LENGTH(M.CONTENTS) >= 30, CONCAT(LEFT(M.CONTENTS, 30),'...'), M.CONTENTS) AS CONTENTS, 
             DATE_FORMAT(M.MDATE,"%Y-%m-%d %T") AS MDATE 
             FROM MESSAGE M, USERS U 
             WHERE M.FROM_UID = #{from_uid} AND TO_DEL='N' AND U.UID=M.FROM_UID
-            ORDER BY MDATE DESC;
+            ORDER BY MDATE DESC
+            LIMIT #{cri.pageStart}, #{cri.perPageNum};
         ]]>
+  </select>
+  
+  <select id="sendMsgCount" resultType="int">
+  		<![CDATA[
+  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.TO_UID)) 
+  			FROM MESSAGE M, USERS U 
+  			WHERE M.FROM_UID = #{from_uid} AND M.TO_DEL='N' AND U.UID=M.FROM_UID;
+  		]]>
+  </select>
+  
+  <select id="receiveMsgCount" resultType="int">
+  		<![CDATA[
+  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID)) 
+  			FROM MESSAGE M, USERS U 
+  			WHERE M.TO_UID = #{to_uid} AND M.FROM_DEL='N' AND U.UID=M.TO_UID;
+  		]]>
   </select>
   
   <select id="getDelCheck" resultType="message">

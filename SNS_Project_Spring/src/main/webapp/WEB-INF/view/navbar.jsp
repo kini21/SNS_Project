@@ -44,7 +44,7 @@
 			$('#msgTable > tbody:last').empty();
 			$('ul.nav-tabs a[href="#msgTabs-1"]').trigger("click");
 			$('#senderAndreceive').attr('data-del','receive');
-			receiveMsg();
+			receiveMsg(1);
 		});
 		
 		$('ul.nav-tabs a[href="#msgTabs-1"]').click(function (e) {
@@ -53,7 +53,7 @@
 			  $('#msgTable > tbody:last').empty();
 			  $('#senderAndreceive').text("보낸 사람(ID)");
 			  $('#senderAndreceive').attr('data-del','receive');
-			  receiveMsg();
+			  receiveMsg(1);
 			  		  
 			});
 		
@@ -63,8 +63,20 @@
 			  $('#senderAndreceive').text("받는 사람(ID)");
 			  $('#msgTable > tbody:last').empty();
 			  $('#senderAndreceive').attr('data-del','send');
-			  sendMsg();
+			  sendMsg(1);
 			});
+		
+		
+		$(".pagination").on("click", "li a", function(event){		
+			event.preventDefault();
+
+			pageNum = $(this).attr("href");
+			if($('#senderAndreceive').attr('data-del') == 'receive') {
+				receiveMsg(pageNum);
+			} else {
+				sendMsg(pageNum);
+			}
+		});
 		
 		$("#sendMessage").click(function() {
 			if($('#sendLoginid').val() === ""){
@@ -108,14 +120,19 @@
 	});
 </script>
 <script>
-	function receiveMsg(){
-		var to_uid =  { "to_uid" : "${user.uid}" };	
-		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", to_uid, msgList);
+	function receiveMsg(pageNum){
+		var param =  { "to_uid" : "${user.uid}", 
+				       "pageNum" : pageNum
+					};	
+		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", param, msgList);
 	}
 	
-	function sendMsg(){
-		var from_uid =  { "from_uid" : "${user.uid}" };	
-		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", from_uid, msgList);
+	function sendMsg(pageNum){
+		var param =  { 
+				"from_uid" : "${user.uid}",
+				"pageNum" : pageNum
+				 };	
+		u.doAjaxGet("<c:url value='/message/receiveAndSend.do' />", param, msgList);
 	}
 	
 	function writeMsg(){
@@ -142,7 +159,7 @@
 		  html += "<tr>";
 		  html += "<td style='text-align: center;'><input type='checkbox' class='chkbox' aria-label='...' value=\"" + this.mid + "\"></td>";
 		  html += "<td style='text-align: center;'>" + this.receiverAndSender + "</td>";
-		  html += "<td style='text-align: center;' 'text-overflow:ellipsis;' 'overflow:hidden'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false' data-toggle='modal' href='#messageModal' style='outline: none;'>"	
+		  html += "<td style='text-align: center;'><a class='readmsg' onclick=\'readMsg(\"" + this.mid + "\")\'  data-backdrop='static' data-keyboard='false' data-toggle='modal' href='#messageModal' style='outline: none;'>"	
 		  				+ this.contents + 
 		  		  "</a></td>";
 		  html += "<td style='text-align: center;'>" + this.mdate + "</td>";
@@ -151,6 +168,28 @@
 		
 		$('#msgTable > tbody:last').empty();
 		$('#msgTable > tbody:last').append(html);
+		
+		printPaging(data.pageMaker);
+	}
+	
+	function printPaging(pageMaker){
+		
+		var html="";
+		
+		if(pageMaker.prev){
+			html += "<li><a href'"+(pageMaker.startPage-1)+"' aria-label='Previous'><span aria-hidden='true'>«</span></a></li>";
+		}
+		
+		for(var i=pageMaker.startPage, len = pageMaker.endPage; i <= len; i++){
+			var htmlclass = pageMaker.cri.page == i ? 'class=active' : '';
+			html +="<li " +htmlclass+"><a href='"+i+"'>"+i+"</a></li>";
+		}
+		
+		if(pageMaker.next){
+			html += "<li><a href='"+(pageMaker.endPage + 1)+"' aria-label='Next'><span aria-hidden='true'> » </span></a></li>";
+		}
+		
+		$('.pagination').html(html);
 	}
 
 	function readMsg(remid){
@@ -388,11 +427,11 @@ function otherUserTimeline(uid){
 										  </tbody>	
 											
 										</table>
-										</div>
+										</div> 
 
-										<nav style="text-align: center;">
+										<div class="text-Center" style="text-align: center;">
 									      <ul class="pagination">
-									        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+									        <!-- <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
 									        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
 									        <li><a href="#">2</a></li>
 									        <li><a href="#">3</a></li>
@@ -403,9 +442,10 @@ function otherUserTimeline(uid){
 									        <li><a href="#">8</a></li>
 									        <li><a href="#">9</a></li>
 									        <li><a href="#">10</a></li>
-									        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+									        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
 									     </ul>
-									   </nav>									   
+									   	</div>
+									   									   
 									</div>
 								</div>
 

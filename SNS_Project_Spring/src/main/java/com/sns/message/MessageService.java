@@ -1,12 +1,15 @@
 package com.sns.message;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MessageService {
 	
-	List<MessageVO> getReceiveAllMessage(MessageVO vo);
+	List<MessageVO> getReceiveAllMessage(Map<String, Object> map);
 	
-	List<MessageVO> getSendAllMessage(MessageVO vo);
+	List<MessageVO> getSendAllMessage(Map<String, Object> map);
+	
+	int getMsgCount(MessageVO vo);
 	
 	MessageVO readMessage(MessageVO vo);
 	

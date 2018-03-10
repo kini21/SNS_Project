@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import com.sns.message.MessageService;
 import com.sns.message.MessageVO;
 
@@ -14,13 +15,18 @@ public class MessageServiceImpl implements MessageService{
     private MessageDAO messageDAO;
 	
 	@Override
-    public List<MessageVO> getReceiveAllMessage(MessageVO vo) {
-        return messageDAO.getReceiveAllMessage(vo);
+    public List<MessageVO> getReceiveAllMessage(Map<String, Object> map) {
+        return messageDAO.getReceiveAllMessage(map);
     }
 	
 	@Override
-    public List<MessageVO> getSendAllMessage(MessageVO vo) {
-        return messageDAO.getSendAllMessage(vo);
+	public int getMsgCount(MessageVO vo) {
+		return messageDAO.getMsgCount(vo);
+	}
+	
+	@Override
+    public List<MessageVO> getSendAllMessage(Map<String, Object> map) {
+        return messageDAO.getSendAllMessage(map);
     }
 	
 	@Override
