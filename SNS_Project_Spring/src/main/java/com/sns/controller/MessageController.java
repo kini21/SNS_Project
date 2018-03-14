@@ -130,4 +130,16 @@ public class MessageController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value="receiveMsgCount.do", method=RequestMethod.GET)
+	public ModelAndView getReceiveMsgCount(MessageVO vo, ModelAndView mav){
+		System.out.println("쪽지 카운트 작동");
+		
+		int msgCount = messageService.getMsgCount(vo);
+
+		mav.addObject("msgCount", msgCount);
+    	mav.setViewName("jsonView");
+		
+		return mav;
+	}
 }

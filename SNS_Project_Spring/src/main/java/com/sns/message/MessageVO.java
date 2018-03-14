@@ -12,6 +12,7 @@ public class MessageVO {
 	private String sender;
 	private String receiverAndSender;
 	private String loginid;
+	private int msgCnt;
 
 	public int getMid() {
 		return mid;
@@ -79,12 +80,18 @@ public class MessageVO {
 	public void setLoginid(String loginid) {
 		this.loginid = loginid;
 	}
+	public int getMsgCnt() {
+		return msgCnt;
+	}
+	public void setMsgCnt(int msgCnt) {
+		this.msgCnt = msgCnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "MessageVO [mid=" + mid + ", from_uid=" + from_uid + ", to_uid=" + to_uid + ", from_del=" + from_del
 				+ ", to_del=" + to_del + ", contents=" + contents + ", mdate=" + mdate + ", receiver=" + receiver
-				+ ", sender=" + sender + ", receiverAndSender=" + receiverAndSender + ", loginid=" + loginid + "]";
+				+ ", sender=" + sender + ", receiverAndSender=" + receiverAndSender + ", loginid=" + loginid
+				+ ", msgCnt=" + msgCnt + "]";
 	}
-	
 }

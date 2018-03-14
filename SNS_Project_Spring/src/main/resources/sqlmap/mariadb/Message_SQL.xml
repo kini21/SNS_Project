@@ -52,7 +52,7 @@
   
   <select id="sendMsgCount" resultType="int">
   		<![CDATA[
-  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.TO_UID)) 
+  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.TO_UID)) AS MSGCNT
   			FROM MESSAGE M, USERS U 
   			WHERE M.FROM_UID = #{from_uid} AND M.TO_DEL='N' AND U.UID=M.FROM_UID;
   		]]>
@@ -60,7 +60,7 @@
   
   <select id="receiveMsgCount" resultType="int">
   		<![CDATA[
-  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID)) 
+  			SELECT COUNT((SELECT LOGINID FROM USERS WHERE UID=M.FROM_UID)) AS MSGCNT
   			FROM MESSAGE M, USERS U 
   			WHERE M.TO_UID = #{to_uid} AND M.FROM_DEL='N' AND U.UID=M.TO_UID;
   		]]>

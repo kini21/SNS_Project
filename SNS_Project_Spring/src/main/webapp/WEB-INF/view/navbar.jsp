@@ -24,6 +24,11 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		receiveMsgCount();
+		
+		setInterval(function(){ receiveMsgCount(); }, 30000);
+		
 		$('#search_submit').bind("click", function() {
 
 			var searchKeyword = $("#searchKeyword").val();
@@ -120,6 +125,15 @@
 	});
 </script>
 <script>
+	function receiveMsgCount(){
+		$.get('<c:url value="/message/receiveMsgCount.do" />', {"to_uid" : "${user.uid}"} , function(data){
+			if(data.msgCount >= 99){
+				$('#msgCnt').text("99+");
+			} else{
+				$('#msgCnt').text(data.msgCount);
+			}
+		});
+	}
 	function receiveMsg(pageNum){
 		var param =  { "to_uid" : "${user.uid}", 
 				       "pageNum" : pageNum
@@ -177,7 +191,7 @@
 		var html="";
 		
 		if(pageMaker.prev){
-			html += "<li><a href'"+(pageMaker.startPage-1)+"' aria-label='Previous'><span aria-hidden='true'>«</span></a></li>";
+			html += "<li><a href='"+(pageMaker.startPage-1)+"' aria-label='Previous'><span aria-hidden='true'>«</span></a></li>";
 		}
 		
 		for(var i=pageMaker.startPage, len = pageMaker.endPage; i <= len; i++){
@@ -391,7 +405,7 @@ function otherUserTimeline(uid){
 
 					<li>
 						<a href="#listModal" id="msglist" data-backdrop="static" data-keyboard="false" data-toggle="modal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
-							<span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지 <span class="badge">50</span>
+							<span class="glyphicon glyphicon-envelope"></span>&nbsp;쪽지 <span class="badge" id="msgCnt"> </span>
 						</a>
 
 						<div class="modal fade bs-example-modal-lg" id="listModal" style="display: none; z-index: 1050;" aria-hidden="true">
