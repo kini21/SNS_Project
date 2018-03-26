@@ -7,7 +7,7 @@
   <select id="getFollowList" resultType="users">
         <![CDATA[
             SELECT UID AS UID, LOGINID AS LOGINID, NICK AS NICK 
-            FROM USERS WHERE UID IN 
+            FROM USERS WHERE USER_DEL = 'N' AND UID IN 
             (SELECT TO_UID FROM FOLLOW WHERE FROM_UID = ${from_uid});
         ]]>
   </select>
@@ -39,7 +39,7 @@
   <select id="countFollow" resultType="int">  
             SELECT COUNT(*) AS COUNTFOLLOW
               FROM FOLLOW
-             WHERE FROM_UID = ${from_uid}
+             WHERE FROM_UID = ${from_uid} AND TO_UID IN (SELECT UID FROM USERS WHERE USER_DEL='N')
   </select>
   
 </mapper>

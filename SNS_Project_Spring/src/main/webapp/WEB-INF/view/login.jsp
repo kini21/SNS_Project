@@ -21,6 +21,15 @@
 
 </head>
 <script>
+$(document).ready(function(){
+	 var userDel = "${userDelete}";
+	
+	  if(userDel === "1"){
+		  alert("이용해 주셔서 감사합니다.");
+	  }
+});
+</script>
+<script>
 	function jsrun(i) {
 		var j = "";
 		var k = "";

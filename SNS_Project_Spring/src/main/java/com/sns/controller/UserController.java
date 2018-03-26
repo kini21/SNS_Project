@@ -99,7 +99,20 @@ public class UserController {
     		session.setAttribute("user", user);
     		
     		return "index";
-    	}
+    }
+    
+    // 회원정보 삭제  user_del 컬럼을 Y로 변경
+    @RequestMapping(value="deleteUser.do")
+    public String deleteUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
+    		System.out.println("회원정보 삭제 처리");
+    		
+    		userService.deleteUser(vo);
+    		session.invalidate();
+    		
+    		model.addAttribute("userDelete",1);
+    		
+    		return "login";
+    }
    
    @RequestMapping(value="getUserList.do", method=RequestMethod.GET) 
    public ModelAndView getUserList(@RequestParam("searchKeyword") String searchKeyword, ModelAndView mav) {

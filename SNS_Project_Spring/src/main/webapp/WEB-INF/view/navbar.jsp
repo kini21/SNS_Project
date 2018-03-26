@@ -275,7 +275,27 @@ function otherUserTimeline(uid){
 	}
 	
 }
+</script>
+<script>
+function doProfileSubmit(type)
+{
+	if(type === "update"){
+		$("#profile-form").attr("action", "<c:url value='/user/updateUser.do' />");
+	} else if(type === "delete"){
+		
+		var pw = "${user.password}";
+		
+		if(pw != $("#password").val()){
+			alert("비밀번호가 일치하지 않습니다.");
+			return;
+		} else{
+			alert("정말 회원 탈퇴를 하시겠습니까?");
+			$("#profile-form").attr("action", "<c:url value='/user/deleteUser.do' />");
+		}
+	}
 
+	$("form#profile-form").submit();
+}
 </script>
 
 <!-- file choose -->
@@ -446,18 +466,7 @@ function otherUserTimeline(uid){
 
 										<div class="text-Center" style="text-align: center;">
 									      <ul class="pagination">
-									        <!-- <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-									        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-									        <li><a href="#">2</a></li>
-									        <li><a href="#">3</a></li>
-									        <li><a href="#">4</a></li>
-									        <li><a href="#">5</a></li>
-									        <li><a href="#">6</a></li>
-									        <li><a href="#">7</a></li>
-									        <li><a href="#">8</a></li>
-									        <li><a href="#">9</a></li>
-									        <li><a href="#">10</a></li>
-									        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li> -->
+									       
 									     </ul>
 									   	</div>
 									   									   
@@ -568,7 +577,7 @@ function otherUserTimeline(uid){
 											<div class="col-lg-12">
 
 												<!-- profile form -->
-												<form id="profile-form" action='<c:url value="/user/updateUser.do" />' method="post" role="form">
+												<form id="profile-form" method="post" role="form">
 													<h2>프로필 수정</h2>
 
 													<!-- insert id -->
@@ -598,8 +607,11 @@ function otherUserTimeline(uid){
 													<!-- register button -->
 													<div class="form-group">
 														<div class="row">
-															<div class="col-sm-6 col-sm-offset-3">
-																<input type="submit" name="profile-submit" id="profile-submit" tabindex="4" class="form-control btn btn-profile" value="정보수정">
+															<div class="col-sm-3 col-sm-offset-3">
+																<input type="button" name="profile_update" id="profile_update" tabindex="4" class="form-control btn btn-profile" value="정보수정" onclick="doProfileSubmit('update');">
+															</div>
+															<div class="col-sm-3">
+																<input type="button" name="profile_delete" id="profile_delete" tabindex="5" class="form-control btn btn-profile" value="회원탈퇴" onclick="doProfileSubmit('delete');">
 															</div>
 														</div>
 													</div>
