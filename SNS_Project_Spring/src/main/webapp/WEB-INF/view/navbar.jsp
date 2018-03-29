@@ -121,6 +121,20 @@
 				alert("삭제하실 쪽지를 선택하세요.");
 			}
 		});
+		
+		
+		$("#profile_PWupdate").click(function() {
+			if($('#curruntPassword').val() === ""){
+				alert("현재 비밀번호를 입력하세요.");
+				return false; 
+			} else if ($('#newPassword').val() === ""){
+				alert("새 비밀번호를 입력해주세요.");
+				return false; 
+			} else if ($('#curruntPassword').val() === $('#newPassword').val()){
+				alert("현재 비밀번호와 새 비밀번호가 같아선 안됩니다.");
+				return false; 
+			} 
+		});
 
 	});
 </script>
@@ -277,7 +291,7 @@ function otherUserTimeline(uid){
 }
 </script>
 <script>
-function doProfileSubmit(type)
+/* function doProfileSubmit(type)
 {
 	if(type === "update"){
 		$("#profile-form").attr("action", "<c:url value='/user/updateUser.do' />");
@@ -295,7 +309,7 @@ function doProfileSubmit(type)
 	}
 
 	$("form#profile-form").submit();
-}
+} */
 </script>
 
 <!-- file choose -->
@@ -555,7 +569,7 @@ function doProfileSubmit(type)
 						</li>
 
 					<li>
-						<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#profileModal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
+						<a href="#" id="prof" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#profileModal" style="font-weight: bold; color: white; text-shadow: 1px 1px 1px grey; outline: none;">
 							<span class="glyphicon glyphicon-user"></span>&nbsp;프로필
 						</a>
 					
@@ -566,7 +580,6 @@ function doProfileSubmit(type)
 								<!-- profile view -->
 								<div class="panel panel-profile">
 
-
 									<!-- profile body -->
 									<div class="panel-body">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -575,49 +588,92 @@ function doProfileSubmit(type)
 										
 										<div class="row">
 											<div class="col-lg-12">
-
+												
+												<ul class="nav nav-tabs" role="tablist">
+												  <li role="presentation" class="active">
+												  	<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+												  		프로필 수정 & 회원 탈퇴
+												  	</a>
+												  </li>
+												  <li role="presentation">
+												  	<a href="#profilePW" aria-controls="profilePW" role="tab" data-toggle="tab">
+												  		비밀번호 변경
+												  	</a>
+												  </li>
+												</ul>
+												
+											<div class="tab-content">	
+												<div role="tabpanel" class="tab-pane active" id="profile">
 												<!-- profile form -->
-												<form id="profile-form" method="post" role="form">
-													<h2>프로필 수정</h2>
+												<form id="profile-form" action='<c:url value="/user/updateUser.do" />' method="post" role="form">
 
 													<!-- insert id -->
 													<div class="form-group">
 														<label>아이디</label>
-														<input type="text" name="loginid" id="loginid" tabindex="1" class="form-control" value="${user.loginid}" readonly>
-													</div>
-
-													<!-- insert password -->
-													<div class="form-group">
-														<label>비밀번호</label>
-														<input type="password" name="password" id="password" tabindex="1" class="form-control" value="${user.password}">
+														<input type="text" name="loginid" id="loginid" class="form-control" value="${user.loginid}" readonly>
 													</div>
 
 													<!-- insert email -->
 													<div class="form-group">
 														<label>이메일</label>
-														<input type="text" name="email" id="email" tabindex="2" class="form-control" value="${user.email}">
+														<input type="text" name="email" id="email" tabindex="1" class="form-control" value="${user.email}">
 													</div>
 
 													<!-- insert nick -->
 													<div class="form-group">
 														<label>닉네임</label>
-														<input type="text" name="nick" id="nick" tabindex="3" class="form-control" value="${user.nick}">
+														<input type="text" name="nick" id="nick" tabindex="2" class="form-control" value="${user.nick}">
 													</div>
 
 													<!-- register button -->
 													<div class="form-group">
 														<div class="row">
 															<div class="col-sm-3 col-sm-offset-3">
-																<input type="button" name="profile_update" id="profile_update" tabindex="4" class="form-control btn btn-profile" value="정보수정" onclick="doProfileSubmit('update');">
+																<input type="submit" name="profile_update" id="profile_update" tabindex="3" class="form-control btn btn-profile" value="프로필 수정" >
 															</div>
 															<div class="col-sm-3">
-																<input type="button" name="profile_delete" id="profile_delete" tabindex="5" class="form-control btn btn-profile" value="회원탈퇴" onclick="doProfileSubmit('delete');">
+																<input type="button" name="profile_del" id="profile_del" tabindex="4" class="form-control btn btn-profile" value="회원 탈퇴" >
 															</div>
 														</div>
 													</div>
 
 												</form>
 												<!-- end of profile form -->
+												</div>
+												
+												
+												<div role="tabpanel" class="tab-pane" id="profilePW">
+												<!-- profilePW form -->
+												<form id="profilePW-form" action='<c:url value="/user/updateUserPW.do" />' method="post" role="form">
+													
+													<input type="hidden" name="loginid" value="${user.loginid}" />
+									
+													<!-- insert CurruntPassword -->
+													<div class="form-group">
+														<label>현재 비밀번호</label>
+														<input type="password" name="curruntPassword" id="curruntPassword" tabindex="1" class="form-control" value="">
+													</div>
+
+													<!-- insert newPassword -->
+													<div class="form-group">
+														<label>새 비밀번호</label>
+														<input type="password" name="newPassword" id="newPassword" tabindex="2" class="form-control" value="">
+													</div>
+
+													<!-- register button -->
+													<div class="form-group">
+														<div class="row">
+															<div class="col-sm-6 col-sm-offset-3">
+																<input type="submit" name="profile_PWupdate" id="profile_PWupdate" tabindex="3" class="form-control btn btn-profile" value="비밀번호 변경">
+															</div>
+														</div>
+													</div>
+
+												</form>
+												
+											 </div>
+											 
+											 	
 											</div>
 										</div>
 									</div>

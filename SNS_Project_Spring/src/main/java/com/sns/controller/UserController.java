@@ -98,18 +98,48 @@ public class UserController {
     		return "redirect:index.do";
     	}
     
- // 회원정보 수정
-    @RequestMapping(value="updateUser.do")
-    public String updateUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
-    		System.out.println("회원정보 수정 처리");
-    		model.addAttribute("updateCompleteMsg",true);
-    		userService.updateUser(vo);
-    		
-    		UserVO user = userService.getUser(vo);
-    		session.setAttribute("user", user);
-    		
-    		return "index";
-    }
+
+       // 회원정보 수정
+       @RequestMapping(value="updateUser.do")
+       public String updateUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
+       		System.out.println("회원정보 수정 처리");
+       		model.addAttribute("updateCompleteMsg",true);
+
+       		userService.updateUser(vo);
+       		
+       		UserVO user = userService.getUser(vo);
+       		session.setAttribute("user", user);
+       		
+       		return "index";
+       }
+       
+    // 회원정보 수정(비밀번호)
+       @RequestMapping(value="updateUserPW.do")
+       public String updateUserPW(UserVO vo, Model model, HttpSession session, HttpServletRequest req, HttpServletResponse res) throws IOException {    		
+       		System.out.println("회원정보 수정(비밀번호) 처리");
+       		model.addAttribute("updateCompleteMsg2",true);
+       		
+       		String curruntPw = req.getParameter("curruntPassword");
+       		String newPw = req.getParameter("newPassword");
+       		
+       		UserVO chkUser = (UserVO) session.getAttribute("user");
+       		
+       		if(passwordEncoder.matches(curruntPw, chkUser.getPassword())) {         	    
+       			String encryptPW = passwordEncoder.encode(newPw);
+       			vo.setPassword(encryptPW);
+       			userService.updateUser(vo);
+       			
+       			UserVO user = userService.getUser(vo);
+           		session.setAttribute("user", user);
+            } else {
+            	res.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = res.getWriter();
+                out.println("<script>alert('현재 비밀번호와 일치하지 않습니다.');</script>");
+                out.flush();
+            }
+	
+       		return "index";
+       }
     
     // 회원정보 삭제  user_del 컬럼을 Y로 변경
     @RequestMapping(value="deleteUser.do")

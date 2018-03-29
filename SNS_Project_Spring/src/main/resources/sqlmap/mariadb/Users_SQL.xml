@@ -48,14 +48,13 @@
 		]]>
   </insert>
   
-  <update id="updateUser" parameterType="users">
-       <![CDATA[ 
+  <update id="updateUser" parameterType="users">     
        UPDATE USERS SET
-              PASSWORD = #{password},
-              EMAIL = #{email},
-              NICK = #{nick} 
+        <choose>
+           <when test="password != null"> PASSWORD = #{password}</when>
+           <otherwise>EMAIL = #{email}, NICK = #{nick}</otherwise>          
+        </choose>
         WHERE LOGINID = #{loginid}
-        ]]>
   </update>
   
   <delete id="deleteUser" parameterType="users" >
