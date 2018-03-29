@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,8 @@ import com.sns.user.UserVO;
 @RestController
 public class UserCheckController {
 	
-   @Autowired
-   private UserService userService;
+   @Autowired private UserService userService;
+   @Autowired BCryptPasswordEncoder passwordEncoder;
 	
    @RequestMapping(value="/user/existloginIdCheck.do", method = {RequestMethod.GET,RequestMethod.POST}, produces="application/json")
    public @ResponseBody Map<String, String> existloginIdCheck(@RequestParam("loginid")String loginid){
@@ -44,15 +45,16 @@ public class UserCheckController {
 	   
 	   UserVO vo = new UserVO();
 	   vo.setLoginid(loginid);
-	   vo.setPassword(password);
-	   
+	       
        UserVO user = userService.getUser(vo);
-       
        Map<String, String> map = new HashMap<>();
-       map.put("idpwcheck", "yes");
-       if(user != null){
-           map.put("idpwcheck", "no");
+       
+       if(passwordEncoder.matches(password, user.getPassword())) {
+    	   map.put("idpwcheck", "no"); 
+       } else {
+    	   map.put("idpwcheck", "yes");    	   
        }
+       
        return map;
    }
    

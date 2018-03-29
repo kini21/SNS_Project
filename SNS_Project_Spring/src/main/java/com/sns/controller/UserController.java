@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sns.follow.FollowService;
 import com.sns.follow.FollowVO;
@@ -33,9 +35,12 @@ public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private FollowService followService;
 	@Autowired private JavaMailSender mailSender;
-	
+	@Autowired BCryptPasswordEncoder passwordEncoder;
+
 	@RequestMapping(value="index.do")
-	public String index(HttpSession session) {
+	public String index(@RequestParam(value="welcomeMsg", required=false) boolean welcomeMsg, Model model, HttpSession session) {
+		model.addAttribute("welcomeMsg", welcomeMsg);
+		
 		UserVO user = (UserVO) session.getAttribute("user");
 		FollowVO fvo = new FollowVO();
 		fvo.setFrom_uid(user.getUid());
@@ -50,14 +55,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String login(HttpServletRequest req, HttpSession session, Model model) {		
+	public String login(HttpServletRequest req, HttpSession session) {		
 		
 		String loginid = req.getParameter("loginid");
-		String password = req.getParameter("password");
 		   
 		UserVO vo = new UserVO();
-		vo.setLoginid(loginid);
-	    vo.setPassword(password);
+		vo.setLoginid(loginid); 
 		
 		UserVO user = userService.getUser(vo);
 		
@@ -77,9 +80,16 @@ public class UserController {
 	
     // 회원가입 
     @RequestMapping(value="insertUser.do")
-    public String insertUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
+    public String insertUser(UserVO vo, RedirectAttributes rttr /*Model model*/, HttpSession session) throws IOException {    		
     		System.out.println("회원가입 처리");
-    		model.addAttribute("welcomeMsg",true);
+    		/*model.addAttribute("welcomeMsg",true);*/
+    		rttr.addFlashAttribute("welcomeMsg", true);
+    		
+    		String pw = vo.getPassword();
+    		String encryptPW = passwordEncoder.encode(pw);
+    		
+    		vo.setPassword(encryptPW);
+    		
     		userService.insertUser(vo);
     		
     		UserVO user = userService.getUser(vo);
