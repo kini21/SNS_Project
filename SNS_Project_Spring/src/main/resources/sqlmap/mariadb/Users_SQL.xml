@@ -61,7 +61,7 @@
        <![CDATA[ 
        		UPDATE USERS SET
        			   USER_DEL = 'Y'
-       			   WHERE LOGINID = #{loginid} AND PASSWORD = #{password}	
+       			   WHERE LOGINID = #{loginid} AND UID = #{uid}	
         ]]>
   </delete>
   

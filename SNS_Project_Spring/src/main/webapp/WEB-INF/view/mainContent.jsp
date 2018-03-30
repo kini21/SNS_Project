@@ -27,12 +27,20 @@
 				<strong>환영합니다!</strong> 회원가입이 완료되었습니다!
 			</div>
 		</c:when>
-		<c:when test="${updateCompleteMsg eq true}">
+		<c:when test="${updateMsg eq true}">
 			<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<strong>프로필</strong> 수정이 완료되었습니다!
+			</div>
+		</c:when>
+		<c:when test="${updatePwMsg eq true}">
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>비밀번호</strong> 변경이 완료되었습니다!
 			</div>
 		</c:when>
 	</c:choose>

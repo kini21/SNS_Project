@@ -291,25 +291,16 @@ function otherUserTimeline(uid){
 }
 </script>
 <script>
-/* function doProfileSubmit(type)
+function doProfileSubmit(type)
 {
 	if(type === "update"){
 		$("#profile-form").attr("action", "<c:url value='/user/updateUser.do' />");
 	} else if(type === "delete"){
-		
-		var pw = "${user.password}";
-		
-		if(pw != $("#password").val()){
-			alert("비밀번호가 일치하지 않습니다.");
-			return;
-		} else{
-			alert("정말 회원 탈퇴를 하시겠습니까?");
-			$("#profile-form").attr("action", "<c:url value='/user/deleteUser.do' />");
-		}
+		alert("정말 회원 탈퇴를 하시겠습니까?");
+		$("#profile-form").attr("action", "<c:url value='/user/deleteUser.do' />");
 	}
-
 	$("form#profile-form").submit();
-} */
+}
 </script>
 
 <!-- file choose -->
@@ -605,8 +596,10 @@ function otherUserTimeline(uid){
 											<div class="tab-content">	
 												<div role="tabpanel" class="tab-pane active" id="profile">
 												<!-- profile form -->
-												<form id="profile-form" action='<c:url value="/user/updateUser.do" />' method="post" role="form">
-
+												<form id="profile-form" method="post" role="form">
+													
+													<input type="hidden" name="uid" value="${user.uid}" />
+													
 													<!-- insert id -->
 													<div class="form-group">
 														<label>아이디</label>
@@ -629,10 +622,10 @@ function otherUserTimeline(uid){
 													<div class="form-group">
 														<div class="row">
 															<div class="col-sm-3 col-sm-offset-3">
-																<input type="submit" name="profile_update" id="profile_update" tabindex="3" class="form-control btn btn-profile" value="프로필 수정" >
+																<input type="button" name="profile_update" id="profile_update" tabindex="3" class="form-control btn btn-profile" onclick="doProfileSubmit('update');" value="프로필 수정" >
 															</div>
 															<div class="col-sm-3">
-																<input type="button" name="profile_del" id="profile_del" tabindex="4" class="form-control btn btn-profile" value="회원 탈퇴" >
+																<input type="button" name="profile_del" id="profile_del" tabindex="4" class="form-control btn btn-profile" onclick="doProfileSubmit('delete');" value="회원 탈퇴" >
 															</div>
 														</div>
 													</div>

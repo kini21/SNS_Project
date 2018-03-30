@@ -103,7 +103,7 @@ public class UserController {
        @RequestMapping(value="updateUser.do")
        public String updateUser(UserVO vo, Model model, HttpSession session) throws IOException {    		
        		System.out.println("회원정보 수정 처리");
-       		model.addAttribute("updateCompleteMsg",true);
+       		model.addAttribute("updateMsg",true);
 
        		userService.updateUser(vo);
        		
@@ -117,7 +117,6 @@ public class UserController {
        @RequestMapping(value="updateUserPW.do")
        public String updateUserPW(UserVO vo, Model model, HttpSession session, HttpServletRequest req, HttpServletResponse res) throws IOException {    		
        		System.out.println("회원정보 수정(비밀번호) 처리");
-       		model.addAttribute("updateCompleteMsg2",true);
        		
        		String curruntPw = req.getParameter("curruntPassword");
        		String newPw = req.getParameter("newPassword");
@@ -125,6 +124,7 @@ public class UserController {
        		UserVO chkUser = (UserVO) session.getAttribute("user");
        		
        		if(passwordEncoder.matches(curruntPw, chkUser.getPassword())) {         	    
+       			model.addAttribute("updatePwMsg",true);
        			String encryptPW = passwordEncoder.encode(newPw);
        			vo.setPassword(encryptPW);
        			userService.updateUser(vo);
@@ -184,7 +184,7 @@ public class UserController {
                          + user.getLoginid()
                          + " 비밀번호는 "
                          + user.getPassword()
-                         + " 입니다.";    // 내용
+                         + " 입니다. (암호화된 비밀번호)";    // 내용
     
      try {
        MimeMessage message = mailSender.createMimeMessage();
