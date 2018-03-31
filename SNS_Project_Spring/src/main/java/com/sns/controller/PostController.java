@@ -33,6 +33,10 @@ import com.sns.post.PostService;
 import com.sns.post.PostVO;
 import com.sns.post.file.PostFileService;
 import com.sns.post.file.PostFileVO;
+import com.sns.reply.ReplyService;
+import com.sns.reply.ReplyVO;
+import com.sns.reply.file.ReplyFileService;
+import com.sns.reply.file.ReplyFileVO;
 import com.sns.user.UserService;
 import com.sns.user.UserVO;
 
@@ -44,8 +48,10 @@ public class PostController {
 	@Autowired private PostService postService;
 	@Autowired private PostFileService postfileService;
 	@Autowired private FollowService followService;
+	@Autowired private ReplyService replyService;
+	@Autowired private ReplyFileService replyfileService;
 	
-//	timeline view.
+//	timeline view.(댓글 보이도록 해야됨.)
 	@RequestMapping(value="mainContent.do")
 	public String mainContent(UserVO vo, Model model, HttpSession session) {
 		System.out.println(vo.toString());
@@ -146,6 +152,46 @@ public class PostController {
 				postInfo.put("mainImage", mainImage);
 				postInfo.put("firstImage", firstImage);
 				postInfo.put("detailImage", detailImage);
+				
+//				댓글에 대한 정보를 가져온다.
+				ReplyVO replyvo = new ReplyVO();
+				replyvo.setPost_pid(postList.get(j).getPid());
+				
+				List<ReplyVO> replyList = replyService.getPostReplyList(replyvo);
+				int replyCount = replyService.getReplyCount(replyvo);
+				
+				List replyInfo = new ArrayList();
+				for(int k=0; k<replyList.size(); k++) {
+//					닉네임을 찾아온다.
+					UserVO nickvo = new UserVO();
+					nickvo.setUid(replyList.get(k).getRp_user_uid());
+					UserVO replyUser = userService.getUser(nickvo);
+					
+//					댓글의 정보를 입력한다.
+					Map reply = new HashMap();
+					reply.put("nick", replyUser.getNick());
+					reply.put("rid", replyList.get(k).getRid());
+					reply.put("post_pid", replyList.get(k).getPost_pid());
+					reply.put("rp_user_uid", replyList.get(k).getRp_user_uid());
+					reply.put("contents", replyList.get(k).getContents());
+					reply.put("rdate", replyList.get(k).getRdate());
+					
+//					댓글에 입력된 이미지 정보를 가져온다.					
+					ReplyFileVO replyfilevo = new ReplyFileVO();
+					replyfilevo.setRid(replyList.get(k).getRid());
+					
+					List<ReplyFileVO> replyfileList = replyfileService.getReplyFile(replyfilevo);
+					
+					if(replyfileList.size() > 0) {
+						String reply_image_path = File.separator + "common" + File.separator + "reply" + File.separator + replyfileList.get(0).getFile_name() + "." + replyfileList.get(0).getFile_type();
+						reply.put("image", reply_image_path);
+					}
+					
+					replyInfo.add(reply);
+				}
+				System.out.println("replyInfo ::: " + replyInfo.toString());
+				postInfo.put("replyInfo", replyInfo);
+				postInfo.put("replyCount", replyCount);
 				
 //			postInfo를 순차적으로 postInfoList에 저장한다.
 				postInfoList.add(postInfo);
@@ -331,7 +377,7 @@ public class PostController {
 			}
 			
 			while(itr.hasNext()) {
-//		1. 파일키를 생성하고 파일의 정보를 추출한다.
+//			1. 파일키를 생성하고 파일의 정보를 추출한다.
 			sfilekey++;
 			mpf = req.getFile(itr.next());
 			if(mpf.isEmpty()) continue;
@@ -378,6 +424,23 @@ public class PostController {
 //	타임라인에 포스트 된 정보를 삭제한다.
 	@RequestMapping("postDelete.do")
 	public ModelAndView postDelete(@RequestBody PostVO post) {
+//		reply 테이블 조회.
+		ReplyVO replyvo = new ReplyVO();
+		replyvo.setPost_pid(post.getPid());
+		
+		List<ReplyVO> replyList = replyService.getPostReplyList(replyvo);
+		
+//		reply file 테이블 정보 삭제.
+		for(int i=0; i<replyList.size(); i++) {
+			ReplyFileVO replyfilevo = new ReplyFileVO();
+			replyfilevo.setRid(replyList.get(i).getRid());
+			
+			replyfileService.deleteReplyFile(replyfilevo);
+		}
+		
+//		reply 테이블 정보 삭제.
+		replyService.deleteReply(replyvo);
+		
 //		file 테이블 정보 삭제.
 		PostFileVO postfile = new PostFileVO();
 		postfile.setPid(post.getPid());

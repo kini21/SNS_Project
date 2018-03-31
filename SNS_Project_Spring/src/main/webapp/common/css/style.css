@@ -195,27 +195,13 @@ ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
   padding-top: 1px;
 }
 
-.button_list {
-  font-size: 0;
-  height: 24px;
-  line-height: 1;
-  margin-bottom: 2px;
-  margin-top: -5px;
-}
-
-.reply_btn {
+.reply {
   display: inline-block;
   min-width: 80px;
 }
 
-.btn2 {
+.markers {
   color: #657786;
-  display: inline-block;
-  font-size: 16px;
-  line-height: 1;
-  padding: 0 2px;
-  position: relative;
-  text-decoration: none;
 }
 
 .iconBox {
@@ -224,15 +210,8 @@ ul.nav a:hover, ul.nav a:focus, ul.nav a:active {
   /* position: relative; */
 }
 
-.ddabongCnt {
+.infoCnt {
   color: #657786;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1;
-  margin-left: 6px;
-  position: relative;
-  vertical-align: text-bottom;
 }
 
 .content_bottom {

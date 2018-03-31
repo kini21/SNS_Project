@@ -85,8 +85,10 @@ $(document).ready(function(){
           </a>
 		</li>
           <!-- Modal -->
-          <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+          <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+          <!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true"> -->
+            <div class="modal-dialog">
+            <div class="modal-content">
 
               <!-- login & register view -->
               <div class="panel panel-login">
@@ -207,6 +209,7 @@ $(document).ready(function(){
               </div>
               <!-- end of login & register view -->
 
+			</div>
             </div>
             <!-- end of modal-dialog -->
           </div>
@@ -233,6 +236,9 @@ $(document).ready(function(){
   <script src='<c:url value="/common/js/login.js"/>'></script>
   
   <script>
+  	$('#loginModal').on('shown.bs.modal', function () {
+	  $('#login_id').focus();
+	});
     $('[data-toggle="tooltip"]').tooltip('toggle');
     $('[data-toggle="tooltip"]').tooltip('hide');
   </script>
