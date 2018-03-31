@@ -9,6 +9,8 @@
         <typeAlias alias="post" type="com.sns.post.PostVO"/>
         <typeAlias alias="postfile" type="com.sns.post.file.PostFileVO"/>
         <typeAlias alias="follow" type="com.sns.follow.FollowVO"/>
+        <typeAlias alias="reply" type="com.sns.reply.ReplyVO"/>
+        <typeAlias alias="replyfile" type="com.sns.reply.file.ReplyFileVO"/>
     </typeAliases>
 
     <!-- Sql Mapper 설정 -->
@@ -17,5 +19,7 @@
         <mapper resource="sqlmap/mariadb/Post_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/PostFile_SQL.xml"/>
         <mapper resource="sqlmap/mariadb/Follow_SQL.xml"/>
+        <mapper resource="sqlmap/mariadb/Reply_SQL.xml"/>
+        <mapper resource="sqlmap/mariadb/ReplyFile_SQL.xml"/>
     </mappers>
 </configuration>

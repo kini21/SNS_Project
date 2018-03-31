@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="replyDAO">
+    
+  <select id="getReply" resultType="reply">
+       <![CDATA[ 
+           SELECT * 
+             FROM REPLY
+            WHERE RID = ${rid} 
+       ]]>
+  </select>
+  
+  <select id="getReplyList" resultType="reply">
+        <![CDATA[
+            SELECT *
+              FROM REPLY
+        ]]>
+  </select>
+  
+  <select id="getPostReplyList" resultType="reply">
+        <![CDATA[
+            SELECT *
+              FROM REPLY
+             WHERE POST_PID = ${post_pid}
+        ]]>
+  </select>
+  
+  <select id="getReplyCount" resultType="integer">
+  		<![CDATA[
+            SELECT COUNT(*)
+              FROM REPLY
+             WHERE POST_PID = ${post_pid}
+        ]]>
+  </select>
+   
+  <insert id="insertReply" parameterType="reply" >
+        <![CDATA[ 
+            INSERT INTO REPLY ( POST_PID
+                              , RP_USER_UID
+                              , CONTENTS )
+		               VALUES ( ${post_pid}
+		                      , ${rp_user_uid}
+		                      , #{contents} )
+		]]>
+  </insert>
+  
+  <update id="updateReply" parameterType="reply">
+       <![CDATA[ 
+           UPDATE REPLY SET
+                  CONTENTS = #{contents},
+                  USER_UID = #{user_uid} 
+            WHERE RID      = ${rid}
+        ]]>
+  </update>
+  
+  <delete id="deleteReply" parameterType="reply" >
+       <![CDATA[ 
+           DELETE FROM REPLY
+            WHERE RID = ${rid}
+       ]]>
+  </delete>
+  
+</mapper>
