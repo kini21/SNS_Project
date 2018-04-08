@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,75 @@ public class ReplyController {
 			
 			ReplyFileVO file = new ReplyFileVO();
 			file.setRid(replyList.get(replyList.size()-1).getRid());
+			file.setGroup_key(sGroupKey);
+			file.setFile_key(sfilekey);
+			file.setFile_path(sPath);
+			file.setFile_realname(mpf.getOriginalFilename());
+			file.setFile_name(Long.toString(Calendar.getInstance().getTimeInMillis()));
+			file.setFile_length(mpf.getBytes().length);
+			file.setFile_type(file_type[1]);
+			file.setReg_id(sessionInfo.getLoginid());
+			
+			replyfileService.insertReplyFile(file);
+			
+//			3. 지정된 위치가 존재하는지 확인하고 없으면 경로를 생성한다.
+			File chkDir = new File(sPath);
+			if(!chkDir.isDirectory()) {
+				chkDir.mkdirs();
+			}
+            
+//			4. 지정된 위치에 파일을 복사한다.
+			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(sPath + File.separator + file.getFile_name() + "." + file.getFile_type()));
+			
+			}
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		Map message = new HashMap();
+		message.put("success", true);
+		
+		return new ModelAndView("jsonView", message);
+	}
+	
+	@RequestMapping("replyUpdate.do")
+	public ModelAndView replyUpdate(MultipartHttpServletRequest req, HttpServletResponse res, HttpSession session) {
+		
+//		세션에서 현재 사용자 정보를 가져온다.
+		UserVO sessionInfo = (UserVO) session.getAttribute("user");
+		
+		ReplyVO replyvo = new ReplyVO();
+		replyvo.setContents(req.getParameter("contents"));
+		replyvo.setRid(Integer.parseInt(req.getParameter("rid")));
+		replyvo.setRp_user_uid(sessionInfo.getUid());
+		replyService.updateReply(replyvo);
+		
+		try {
+			Iterator<String> itr = req.getFileNames();
+			MultipartFile mpf = null;
+			int sfilekey = 0;
+			String sGroupKey = replyfileService.getGroupKey();
+			String sPath = 	req.getSession().getServletContext().getRealPath("/common/reply/");
+			
+			while(itr.hasNext()) {
+			
+//			저장되어 있는 파일정보 삭제.
+			ReplyFileVO replyfilevo = new ReplyFileVO();
+			replyfilevo.setRid(Integer.parseInt(req.getParameter("rid")));
+			replyfileService.deleteReplyFile(replyfilevo);
+				
+//			1. 파일키를 생성하고 파일의 정보를 추출한다.
+			sfilekey++;
+			mpf = req.getFile(itr.next());
+			if(mpf.isEmpty()) continue;
+            
+//			2. 파일관리 테이블에 데이터를 insert한다.
+			String type = mpf.getContentType();
+			String[] file_type = type.split("/");
+			
+			ReplyFileVO file = new ReplyFileVO();
+			file.setRid(Integer.parseInt(req.getParameter("rid")));
 			file.setGroup_key(sGroupKey);
 			file.setFile_key(sfilekey);
 			file.setFile_path(sPath);

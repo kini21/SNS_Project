@@ -49,9 +49,9 @@
   <update id="updateReply" parameterType="reply">
        <![CDATA[ 
            UPDATE REPLY SET
-                  CONTENTS = #{contents},
-                  USER_UID = #{user_uid} 
-            WHERE RID      = ${rid}
+                  CONTENTS    = #{contents},
+                  RP_USER_UID = #{rp_user_uid} 
+            WHERE RID         = ${rid}
         ]]>
   </update>
   

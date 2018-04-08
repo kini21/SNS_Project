@@ -290,24 +290,42 @@
 																							
 																								<c:if test="${not empty replyInfo.contents}">
 																									<div class="col-md-9">
-																										${replyInfo.contents}
+																										<textarea id="contents_${replyInfo.rid}" cols="40" style="overflow: visible; outline:none; border:0; resize:none;" disabled>${replyInfo.contents}</textarea>
 																									</div>
 																								</c:if>
 																								
-																								<div class="col-md-3" style="float:right; vertical-align:right;">
-																									<a href="#"><span>수정</span></a>
-																									&nbsp;|&nbsp;
-																									<a href="javascript:deleteReply(${replyInfo.rid})"><span>삭제</span></a>
-																								</div>
+																								<c:if test="${replyInfo.rp_user_uid eq sessionScope.user.uid}">
+																									<div id="button_${replyInfo.rid}" class="col-md-3" style="float:right; vertical-align:right;">
+																										<a href="javascript:clickUpdate(${replyInfo.rid})"><span>수정</span></a>
+																										&nbsp;|&nbsp;
+																										<a href="javascript:deleteReply(${replyInfo.rid})"><span>삭제</span></a>
+																									</div>
+																								</c:if>
 																								
 																								<c:if test="${not empty replyInfo.image}">
 																									<br/>
-																									<div style="width:250px; height:200px;">
+																									<!-- 이미지 영역 -->
+																									<div id="replyImg_${replyInfo.rid}" style="width:250px; height:200px;">
 																										<img src="<c:url value='${replyInfo.image}' />" style="width: 100%; height: 100%" alt=""/>
 																									</div>
+																									
+																									<!-- 파일 영역 -->
+																									<div id="replyFil_${replyInfo.rid}" style="display: none; float:left; width:300px;">
+																										<button type="button" class="btn btn-default" style="float: left;" onclick="javascript:replyChoose();">
+																											<span class="glyphicon glyphicon-picture"></span>
+																										</button>
+																									
+																										<input type="file" id="replyFile" style="display: none"/>
+																
+																										<div class="col-md-8" style="float:left; width:75%;">
+																											<div class="replyFile_wrap" style="float: left; height: auto; width:100%;">
+																												<a href="javascript:void(0)" onclick="deleteOldFileReplyAction(${replyInfo.rid})" id="reply_fil_id_${replyInfo.rid}" style="position:relative; top:0.5em;">&nbsp;· ${replyInfo.image_name}</a>
+																											</div>
+																										</div>
+																									</div>
+																									<br/>
+																										
 																								</c:if>
-																								
-																								
 																								
 																							</td>
 																						</tr>
@@ -402,6 +420,7 @@
 		
 		$(document).ready(function() {
 			$("#reply_uploadFiles").on("change", findReplyFileName);
+			$("#replyFile").on("change", oldReplyFileName);
 		});
 	</script>
 	
@@ -459,7 +478,6 @@
 		}
 		
 		function deleteReply(rid) {
-			event.preventDefault();
 
 			if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 				var param = JSON.stringify({
@@ -487,6 +505,64 @@
 				window.location.href="<c:url value='/user/index.do' />";
 				/* window.location.reload(); */
 			}
+		}
+		
+		function clickUpdate(rid) {
+			var textTarget = "#contents_" + rid;
+			$(textTarget).removeAttr("disabled").focus();
+			
+			var buttonTarget = "#button_" + rid;
+			var insTag = "<a href=\"javascript:updateReply(" + rid + ")\"><span>확인</span></a>"+
+			             "&nbsp;&nbsp;|&nbsp;&nbsp;" +
+			             "<a href=\"javascript:cancelReply(" + rid + ")\"><span>취소</span></a>";
+			
+			$(buttonTarget).empty();
+			$(buttonTarget).html(insTag);
+			
+			var imgTarget = "#replyImg_" + rid;
+			var filTarget = "#replyFil_" + rid;
+			$(imgTarget).css('display', 'none');
+			$(filTarget).css('display', '');
+		
+		}
+		
+		function updateReply(rid) {
+			
+			if (confirm("정말 수정하시겠습니까??") == true){    //확인
+				var formData = new FormData();
+				formData.append("contents", $('#contents_'+rid).val());
+				formData.append("rid", rid);
+
+				var fileInput = document.getElementById("replyFile"); //id로 파일 태그를 호출
+
+				var files = fileInput.files; //업로드한 파일들의 정보를 넣는다.
+
+				for (var i = 0; i < files.length; i++) {
+					formData.append('file-' + i, files[i]); //업로드한 파일을 하나하나 읽어서 FormData 안에 넣는다.
+				}
+
+				util.ajaxFileAction("<c:url value='/reply/replyUpdate.do' />", formData, result);
+			} else {   //취소
+			    return;
+			}
+		}
+		
+		function cancelReply(rid) {
+			var textTarget = "#contents_" + rid;
+			$(textTarget).attr("disabled");
+			
+			var buttonTarget = "#button_" + rid;
+			var insTag = "<a href=\"javascript:clickUpdate(" + rid + ")\"><span>수정</span></a>"+
+			             "&nbsp;&nbsp;|&nbsp;&nbsp;" +
+			             "<a href=\"javascript:deleteReply(" + rid + ")\"><span>삭제</span></a>";
+			
+			$(buttonTarget).empty();
+			$(buttonTarget).html(insTag);
+			
+			var imgTarget = "#replyImg_" + rid;
+			var filTarget = "#replyFil_" + rid;
+			$(imgTarget).css('display', '');
+			$(filTarget).css('display', 'none');
 		}
 	</script>
 </body>

@@ -184,6 +184,7 @@ public class PostController {
 					
 					if(replyfileList.size() > 0) {
 						String reply_image_path = File.separator + "common" + File.separator + "reply" + File.separator + replyfileList.get(0).getFile_name() + "." + replyfileList.get(0).getFile_type();
+						reply.put("image_name", replyfileList.get(0).getFile_realname());
 						reply.put("image", reply_image_path);
 					}
 					
